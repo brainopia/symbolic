@@ -7,6 +7,8 @@ Symbolic math can be really helpful if you want to simplify some giant equation 
 Currently I've implemented only naive optimizations to simplify math expressions, but it's pretty simple to add your own - see Symbolic::Optimizations module for examples.
 
 Simple example:
+  require 'rubygems'
+  require 'symbolic'
 
   Symbolic.enabled = true
 
