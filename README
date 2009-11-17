@@ -1,1 +1,25 @@
 Symbolic math for ruby.
+
+Available as gem from gemcutter: gem install symbolic
+
+Simple example:
+
+  Symbolic.enabled = true
+
+  x = var :name => 'x'
+  y = var :name => 'y'
+
+  f = (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2
+  g = Math.cos(y)
+
+  puts f # => (4+2*x-y)*x-2
+
+  p f.undefined_variables.map &:name # => ["x", "y"]
+  x.value = 2
+  y.value = 4
+
+  puts f.value # => 6
+
+  puts g # => cos(y)
+  y.value = 0
+  puts g.value # => 1.0
