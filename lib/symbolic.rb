@@ -176,7 +176,7 @@ module Symbolic
   end
 
   class Variable < Operatable
-    attr_accessor :value
+    attr_accessor :value, :name
 
     @@index = 0
 
