@@ -1,5 +1,9 @@
 Symbolic math for ruby.
 
+Symbolic math can be really helpful if you want to simplify some giant equation or if you don't want to get a performance hit re-evaluating big math expressions every time when few variables change.
+
+Currently I've implemented only naive optimizations to simplify math expressions, but it's pretty simple to add your own - see Symbolic::Optimizations module for examples.
+
 Available as gem from gemcutter: gem install symbolic
 
 Simple example:
