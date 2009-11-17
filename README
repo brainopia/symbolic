@@ -10,8 +10,6 @@ Simple example:
   y = var :name => 'y'
 
   f = (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2
-  g = Math.cos(y)
-
   puts f # => (4+2*x-y)*x-2
 
   p f.undefined_variables.map &:name # => ["x", "y"]
@@ -20,6 +18,8 @@ Simple example:
 
   puts f.value # => 6
 
+
+  g = Math.cos(y)
   puts g # => cos(y)
   y.value = 0
   puts g.value # => 1.0
