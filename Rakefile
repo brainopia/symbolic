@@ -7,7 +7,7 @@ begin
     gem.name = "symbolic"
     gem.version = '0.0.3'
     gem.summary = 'Symbolic math for ruby'
-    gem.description = File.read 'README.rdoc'
+    gem.description = %Q{Symbolic math can be really helpful if you want to simplify some giant equation or if you don't want to get a performance hit re-evaluating big math expressions every time when few variables change.}
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://github.com/brainopia/symbolic"
     gem.authors = ["brainopia"]
