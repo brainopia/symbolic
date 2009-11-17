@@ -200,6 +200,7 @@ module Symbolic
 
   class Expression < Operatable
     def initialize(var1, var2, operation)
+      var1, var2 = var2, var1 if operation == '*' && var2.is_a?(Numeric)
       @var1, @var2, @operation = var1, var2, operation
     end
 
