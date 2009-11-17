@@ -5,6 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "symbolic"
+    gem.version = '0.0.1'
     gem.summary = %Q{Symbolic math for ruby}
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://github.com/brainopia/symbolic"
