@@ -6,7 +6,8 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "symbolic"
     gem.version = '0.0.2'
-    gem.summary = %Q{Symbolic math for ruby}
+    gem.summary = 'Symbolic math for ruby'
+    gem.description = File.read 'README.rdoc'
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://github.com/brainopia/symbolic"
     gem.authors = ["brainopia"]
