@@ -10,7 +10,7 @@ module Symbolic
       var2 = "#{@var2}"
       if @operation == '*'
         var1 = "(#{@var1})" if @var1.is_a?(Expression) && (@var1.plus? || @var1.minus?)
-        var2 = "(#{@var2})" if @var2.is_a?(Expression) && (@var2.plus? || @var1.minus?)
+        var2 = "(#{@var2})" if @var2.is_a?(Expression) && (@var2.plus? || @var2.minus?)
       end
       "#{var1}#{@operation}#{var2}"
     end
