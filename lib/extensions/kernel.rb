@@ -5,7 +5,8 @@ module Kernel
 
   def symbolic
     Symbolic::Core.enable
-    yield
+    result = yield
     Symbolic::Core.disable
+    return result
   end
 end
