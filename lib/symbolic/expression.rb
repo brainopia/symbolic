@@ -8,9 +8,9 @@ module Symbolic
     def to_s
       var1 = "#{@var1}"
       var2 = "#{@var2}"
-      if @operation == '*'
-        var1 = "(#{@var1})" if @var1.is_a?(Expression) && (@var1.plus? || @var1.minus?)
-        var2 = "(#{@var2})" if @var2.is_a?(Expression) && (@var2.plus? || @var2.minus?)
+      if ['*', '/'].include? @operation
+        var1 = "(#{@var1})" if @var1.is_a?(Expression) && (@var1.plus? || @var1.minus?) || @var1.is_a?(UnaryMinus)
+        var2 = "(#{@var2})" if @var2.is_a?(Expression) && (@var2.plus? || @var2.minus?) || @var2.is_a?(UnaryMinus)
       end
       "#{var1}#{@operation}#{var2}"
     end

@@ -4,6 +4,10 @@ module Symbolic
       UnaryMinus.create self
     end
 
+    def +@
+      self
+    end
+
     Symbolic.operations.each do |operation_sign, operation_name|
       method = <<-CODE
         def #{operation_sign}(value)

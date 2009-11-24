@@ -2,7 +2,8 @@ module Symbolic
   def self.operations
     { :* => :multiplication,
       :+ => :addition,
-      :- => :subtraction }
+      :- => :subtraction,
+      :/ => :division }
   end
 
   def self.math_operations

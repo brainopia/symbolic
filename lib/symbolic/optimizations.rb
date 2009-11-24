@@ -53,5 +53,17 @@ module Symbolic
         end
       end
     end
+
+    def self.division(symbolic_var, var, reverse=false)
+      if var == 1
+        symbolic_var
+      else
+        if reverse
+          Expression.new var, symbolic_var, '/'
+        else
+          Expression.new symbolic_var, var, '/'
+        end
+      end
+    end
   end
 end

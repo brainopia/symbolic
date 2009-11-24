@@ -48,7 +48,7 @@ module Symbolic
       end # redefine_numerical_methods
 
       def redefine_math_methods
-        math_operations.each do |operation|
+        Symbolic.math_operations.each do |operation|
           code = <<-CODE
             alias non_symbolic_#{operation} #{operation}
 
