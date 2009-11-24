@@ -10,7 +10,7 @@ Simple example:
   require 'rubygems'
   require 'symbolic'
 
-  Symbolic.enabled = true
+  Symbolic.enable
 
   x = var :name => 'x'
   y = var :name => 'y'

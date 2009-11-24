@@ -13,33 +13,8 @@ module Symbolic
       @enabled
     end
 
-    def enabled=(enable_flag)
-      if enable_flag && !@enabled
-        enable
-      elsif !enable_flag && @enabled
-        disable
-      end
-    end
-
-    def aliases
-      { :* => :non_symbolic_multiplication,
-        :+ => :non_symbolic_addition,
-        :- => :non_symbolic_substraction }
-    end
-
-    def math_operations
-      [:cos, :sin]
-    end
-
-    private
-
-    def numerical_context(&proc)
-      [Fixnum, Bignum, Float].each do |klass|
-        klass.class_eval &proc
-      end
-    end
-
     def enable
+      return if @enabled
       @enabled = true
       numerical_context do
         Symbolic.aliases.each do |standard_operation, non_symbolic_operation|
@@ -89,6 +64,7 @@ module Symbolic
     end # enable
 
     def disable
+      return if !@enabled
       @enabled = false
       numerical_context do
         Symbolic.aliases.each do |standard_operation, non_symbolic_operation|
@@ -107,5 +83,23 @@ module Symbolic
         end
       end
     end # disable
+
+    def aliases
+      { :* => :non_symbolic_multiplication,
+        :+ => :non_symbolic_addition,
+        :- => :non_symbolic_substraction }
+    end
+
+    def math_operations
+      [:cos, :sin]
+    end
+
+    private
+
+    def numerical_context(&proc)
+      [Fixnum, Bignum, Float].each do |klass|
+        klass.class_eval &proc
+      end
+    end
   end # class << self
 end
