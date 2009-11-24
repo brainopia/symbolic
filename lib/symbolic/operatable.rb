@@ -4,16 +4,13 @@ module Symbolic
       UnaryMinus.create self
     end
 
-    def *(value)
-      Optimizations.multiply self, value
-    end
-
-    def +(value)
-      Optimizations.plus self, value
-    end
-
-    def -(value)
-      Optimizations.minus self, value
+    Symbolic.aliases.each do |operation_sign, operation_name|
+      method = <<-CODE
+        def #{operation_sign}(value)
+          Optimizations.#{operation_name} self, value
+        end
+      CODE
+      class_eval method, __FILE__, __LINE__
     end
   end
 end

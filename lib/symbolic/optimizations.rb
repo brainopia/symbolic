@@ -1,6 +1,6 @@
 module Symbolic
   module Optimizations
-    def self.plus(symbolic_var, var, reverse=false)
+    def self.addition(symbolic_var, var, reverse=false)
       if var == 0
         symbolic_var
       elsif var.is_a? UnaryMinus
@@ -16,7 +16,7 @@ module Symbolic
       end
     end
 
-    def self.minus(symbolic_var, var, reverse=false)
+    def self.subtraction(symbolic_var, var, reverse=false)
       if var == 0
         symbolic_var
       elsif var.is_a? UnaryMinus
@@ -32,7 +32,7 @@ module Symbolic
       end
     end
 
-    def self.multiply(symbolic_var, var, reverse=false)
+    def self.multiplication(symbolic_var, var, reverse=false)
       if var == 0
         var
       elsif var == 1
