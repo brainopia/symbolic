@@ -4,8 +4,8 @@ module Kernel
   end
 
   def symbolic
-    Symbolic.enable
+    Symbolic::Core.enable
     yield
-    Symbolic.disable
+    Symbolic::Core.disable
   end
 end

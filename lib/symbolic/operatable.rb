@@ -4,7 +4,7 @@ module Symbolic
       UnaryMinus.create self
     end
 
-    Symbolic.aliases.each do |operation_sign, operation_name|
+    Symbolic.operations.each do |operation_sign, operation_name|
       method = <<-CODE
         def #{operation_sign}(value)
           Optimizations.#{operation_name} self, value
