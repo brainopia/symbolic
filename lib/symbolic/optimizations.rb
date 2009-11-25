@@ -9,8 +9,6 @@ module Symbolic
         symbolic_var - var.variable
       elsif symbolic_var.is_a? UnaryMinus
         var - symbolic_var.variable
-      elsif reverse && symbolic_var.is_a?(UnaryMinus)
-        var - symbolic_var.variable
       else
         if reverse
           Expression.new var, symbolic_var, '+'
@@ -25,6 +23,8 @@ module Symbolic
         symbolic_var * (reverse ? -1 : 1)
       elsif var.is_a? UnaryMinus
         symbolic_var + var.variable
+      elsif !reverse && var.is_a?(Numeric) && var < 0
+        symbolic_var + (-var)
       elsif reverse && symbolic_var.is_a?(UnaryMinus)
         var + symbolic_var.variable
       else
