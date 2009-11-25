@@ -1,5 +1,7 @@
 module Symbolic
   class Expression < Operatable
+    attr_reader :var1, :var2, :operation
+
     def initialize(var1, var2, operation)
       var1, var2 = var2, var1 if operation == '*' && var2.is_a?(Numeric)
       @var1, @var2, @operation = var1, var2, operation
@@ -29,6 +31,10 @@ module Symbolic
 
     def undefined_variables
       (undefined_variables_of(@var1) + undefined_variables_of(@var2)).uniq
+    end
+
+    def ==(object)
+      object.var1 == @var1 && object.var2 == @var2 && object.operation == @operation
     end
 
     private
