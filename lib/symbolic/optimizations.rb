@@ -7,6 +7,8 @@ module Symbolic
         symbolic_var - (-var)
       elsif var.is_a? UnaryMinus
         symbolic_var - var.variable
+      elsif symbolic_var.is_a? UnaryMinus
+        var - symbolic_var.variable
       elsif reverse && symbolic_var.is_a?(UnaryMinus)
         var - symbolic_var.variable
       else
