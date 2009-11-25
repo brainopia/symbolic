@@ -5,7 +5,7 @@ module Symbolic
     @@index = 0
 
     def initialize(options)
-      unless @name = options[:name]
+      unless @name = options[:name].to_s
         @@index += 1
         @name = "var#{@@index}"
       end
