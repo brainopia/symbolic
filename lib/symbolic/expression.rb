@@ -6,13 +6,7 @@ module Symbolic
     end
 
     def to_s
-      var1 = "#{@var1}"
-      var2 = "#{@var2}"
-      if ['*', '/'].include? @operation
-        var1 = "(#{@var1})" if @var1.is_a?(Expression) && (@var1.plus? || @var1.minus?) || @var1.is_a?(UnaryMinus)
-        var2 = "(#{@var2})" if @var2.is_a?(Expression) && (@var2.plus? || @var2.minus?) || @var2.is_a?(UnaryMinus)
-      end
-      "#{var1}#{@operation}#{var2}"
+      "#{brackets @var1}#{@operation}#{brackets @var2}"
     end
 
     def plus?
@@ -38,6 +32,14 @@ module Symbolic
     end
 
     private
+
+    def brackets(var)
+      brackets_conditional(var) ? "(#{var})" : var.to_s
+    end
+
+    def brackets_conditional(var)
+      %w(* /).include?(@operation) && (var.is_a?(UnaryMinus) || var.is_a?(Expression) && (var.plus? || var.minus?))
+    end
 
     def undefined_variables_of(variable)
       variable.is_a?(Operatable) ? variable.undefined_variables : []
