@@ -1,14 +1,16 @@
 Symbolic math for ruby.
 
-Installation:
+== Installation:
+
 gem install symbolic
 
-Introduction:
+== Introduction:
+
 Symbolic math can be really helpful if you want to simplify some giant equation or if you don't want to get a performance hit re-evaluating big math expressions every time when few variables change.
 
 Currently I've implemented only naive optimizations to simplify math expressions, but it's pretty simple to add your own - see Symbolic::Optimizations module for examples.
 
-Examples:
+== Examples:
   x = var :name => 'x'
   y = var :name => 'y'
 
