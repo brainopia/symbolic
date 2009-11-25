@@ -18,7 +18,7 @@ module Symbolic
 
     def self.subtraction(symbolic_var, var, reverse=false)
       if var == 0
-        symbolic_var
+        symbolic_var * (reverse ? -1 : 1)
       elsif var.is_a? UnaryMinus
         symbolic_var + var.variable
       elsif reverse && symbolic_var.is_a?(UnaryMinus)
