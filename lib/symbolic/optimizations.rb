@@ -3,6 +3,8 @@ module Symbolic
     def self.addition(symbolic_var, var, reverse=false)
       if var == 0
         symbolic_var
+      elsif var.is_a?(Numeric) && var < 0
+        symbolic_var - (-var)
       elsif var.is_a? UnaryMinus
         symbolic_var - var.variable
       elsif reverse && symbolic_var.is_a?(UnaryMinus)
