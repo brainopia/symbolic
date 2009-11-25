@@ -29,5 +29,9 @@ module Symbolic
     def undefined_variables
       @variable.undefined_variables
     end
+
+    def ==(object)
+      object.is_a?(UnaryMinus) && object.variable == @variable
+    end
   end
 end
