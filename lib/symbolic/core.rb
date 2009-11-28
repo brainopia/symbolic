@@ -21,16 +21,15 @@ module Symbolic
 
       private
 
-      def numerical_context(&proc)
+      def numerical_eval(*args)
         [Fixnum, Bignum, Float].each do |klass|
-          klass.class_eval &proc
+          klass.class_eval *args
         end
       end
 
       def redefine_numerical_methods
         Symbolic.operations.each do |sign, name|
-          method = numerical_method sign, name
-          numerical_context { class_eval method, __FILE__, __LINE__ }
+          numerical_eval numerical_method(sign,name), __FILE__, __LINE__
         end
       end
 
