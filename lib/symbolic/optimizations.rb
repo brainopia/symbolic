@@ -1,19 +1,12 @@
 module Symbolic
   module Optimizations
-    def self.addition(var1, var2)
-      Addition.optimize(var1, var2) || Expression.new(var1, var2, '+')
-    end
-
-    def self.subtraction(var1, var2)
-      Subtraction.optimize(var1, var2) || Expression.new(var1, var2, '-')
-    end
-
-    def self.multiplication(var1, var2)
-      Multiplication.optimize(var1, var2) || Expression.new(var1, var2, '*')
-    end
-
-    def self.division(var1, var2)
-      Division.optimize(var1, var2) || Expression.new(var1, var2, '/')
+    Symbolic.operations.each do |operation_sign, operation_name|
+      method = <<-CODE
+        def #{operation_name}(var1, var2)
+          #{operation_name.to_s.capitalize}.optimize(var1, var2) || Expression.new(var1, var2, '#{operation_sign}')
+        end
+      CODE
+      instance_eval method, __FILE__, __LINE__
     end
   end
 end
