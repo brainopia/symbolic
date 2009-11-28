@@ -35,7 +35,7 @@ module Symbolic
             method = <<-CODE
               def #{operation_sign}(value)
                 if value.is_a?(Operatable)
-                  Optimizations.#{operation_name} value, self, :reverse
+                  Optimizations.#{operation_name} self, value
                 else
                   non_symbolic_#{operation_name}(value)
                 end

@@ -3,6 +3,7 @@ module Symbolic
     attr_reader :variable
 
     def self.create(expression)
+      # move to optimizations module
       if expression.is_a? UnaryMinus
         expression.variable
       else
@@ -20,6 +21,10 @@ module Symbolic
       else
         "(-#{@variable})"
       end
+    end
+
+    def abs
+      @variable
     end
 
     def value

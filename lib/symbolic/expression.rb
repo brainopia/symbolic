@@ -34,7 +34,8 @@ module Symbolic
     end
 
     def ==(object)
-      object.var1 == @var1 && object.var2 == @var2 && object.operation == @operation
+      object.is_a?(Expression) && (object.operation == @operation) &&
+      ((object.var1 == @var1 && object.var2 == @var2) || ((%w(+ *).include? @operation) && (object.var1 == @var2 && object.var2 == @var1)))
     end
 
     private
