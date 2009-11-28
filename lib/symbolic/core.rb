@@ -28,41 +28,45 @@ module Symbolic
       end
 
       def redefine_numerical_methods
-        numerical_context do
-          Symbolic.operations.each do |operation_sign, operation_name|
-            alias_method "non_symbolic_#{operation_name}", operation_sign
+        Symbolic.operations.each do |sign, name|
+          method = numerical_method sign, name
+          numerical_context { class_eval method, __FILE__, __LINE__ }
+        end
+      end
 
-            method = <<-CODE
-              def #{operation_sign}(value)
-                if value.is_a?(Operatable)
-                  Optimizations.#{operation_name} self, value
-                else
-                  non_symbolic_#{operation_name}(value)
-                end
-              end
-            CODE
+      def numerical_method(sign, name)
+        <<-CODE
+          alias non_symbolic_#{name} #{sign}
 
-            class_eval method, __FILE__, __LINE__
+          def #{sign}(value)
+            if value.is_a?(Operatable)
+              Optimizations.#{name} self, value
+            else
+              non_symbolic_#{name}(value)
+            end
           end
-        end # numerical_context
-      end # redefine_numerical_methods
+        CODE
+      end
 
       def redefine_math_methods
         Symbolic.math_operations.each do |operation|
-          code = <<-CODE
-            alias non_symbolic_#{operation} #{operation}
-
-            def #{operation}(value)
-              if value.is_a? Operatable
-                Symbolic::Method.new value, :#{operation}
-              else
-                non_symbolic_#{operation} value
-              end
-            end
-          CODE
-          Math.instance_eval code, __FILE__, __LINE__
+          Math.instance_eval math_method(operation), __FILE__, __LINE__
         end
-      end # redefine_math_methods
+      end
+
+      def math_method(operation)
+        <<-CODE
+          alias non_symbolic_#{operation} #{operation}
+
+          def #{operation}(value)
+            if value.is_a?(Operatable)
+              Symbolic::Method.new value, :#{operation}
+            else
+              non_symbolic_#{operation} value
+            end
+          end
+        CODE
+      end
 
       def restore_numerical_methods
         numerical_context do
