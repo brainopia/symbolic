@@ -21,9 +21,9 @@ module Symbolic
 
       private
 
-      def numerical_eval(*args)
+      def numerical_eval(*args, &proc)
         [Fixnum, Bignum, Float].each do |klass|
-          klass.class_eval *args
+          klass.class_eval *args, &proc
         end
       end
 
@@ -68,7 +68,7 @@ module Symbolic
       end
 
       def restore_numerical_methods
-        numerical_context do
+        numerical_eval do
           Symbolic.operations.each do |operation_sign, operation_name|
             alias_method operation_sign, "non_symbolic_#{operation_name}"
             remove_method "non_symbolic_#{operation_name}"
