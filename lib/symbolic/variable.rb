@@ -1,9 +1,15 @@
 module Symbolic
   class Variable < Operatable
-    attr_accessor :value, :name
+    attr_accessor :name, :proc
+    attr_writer :value
 
-    def initialize(options)
+    def initialize(options={}, &proc)
       @name, @value = options.values_at(:name, :value)
+      @proc = proc
+    end
+
+    def value
+      @value || @proc && @proc.call
     end
 
     def to_s
@@ -11,7 +17,7 @@ module Symbolic
     end
 
     def undefined_variables
-      @value ? [] : [self]
+      value ? [] : [self]
     end
   end
 end

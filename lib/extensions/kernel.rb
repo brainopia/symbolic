@@ -1,6 +1,6 @@
 module Kernel
-  def var(options={})
-    Symbolic::Variable.new options
+  def var(options={}, &proc)
+    Symbolic::Variable.new options, &proc
   end
 
   def symbolic
