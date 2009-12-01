@@ -23,4 +23,7 @@ require 'symbolic/variable'
 require 'symbolic/expression'
 require 'symbolic/method'
 require 'symbolic/unary_minus'
+
 require 'extensions/kernel'
+require 'extensions/numeric'
+require 'extensions/matrix'
