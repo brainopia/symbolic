@@ -2,13 +2,8 @@ module Symbolic
   class UnaryMinus < Operatable
     attr_reader :variable
 
-    def self.create(expression)
-      # move to optimizations module
-      if expression.is_a? UnaryMinus
-        expression.variable
-      else
-        new expression
-      end
+    def self.create(var)
+      var.is_a?(UnaryMinus) ? var.variable : new(var)
     end
 
     def initialize(variable)
