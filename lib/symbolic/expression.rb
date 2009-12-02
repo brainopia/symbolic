@@ -25,7 +25,7 @@ module Symbolic
 
     def value
       if undefined_variables.empty?
-        value_of(@var1).send @operation, value_of(@var2)
+        @var1.value.send @operation, @var2.value
       end
     end
 
@@ -52,12 +52,8 @@ module Symbolic
       %w(* /).include?(@operation) && (var.is_a?(UnaryMinus) || var.is_a?(Expression) && (var.plus? || var.minus?))
     end
 
-    def variables_of(variable)
-      variable.is_a?(Operatable) ? variable.variables : []
-    end
-
-    def value_of(variable)
-      variable.is_a?(Operatable) ? variable.value : variable
+    def variables_of(object)
+      object.symbolic? ? object.variables : []
     end
   end
 end

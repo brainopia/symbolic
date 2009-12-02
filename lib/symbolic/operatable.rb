@@ -20,5 +20,9 @@ module Symbolic
     def undefined?
       !value
     end
+
+    def symbolic?
+      true
+    end
   end
 end
