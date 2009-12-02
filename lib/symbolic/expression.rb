@@ -22,6 +22,10 @@ module Symbolic
       @operation == '*'
     end
 
+    def divide?
+      @operation == '/'
+    end
+
     def value
       if undefined_variables.empty?
         @var1.value.send @operation, @var2.value
@@ -38,7 +42,7 @@ module Symbolic
 
     def ==(object)
       object.is_a?(Expression) && (object.operation == @operation) &&
-      ((object.var1 == @var1 && object.var2 == @var2) || ((%w(+ *).include? @operation) && (object.var1 == @var2 && object.var2 == @var1)))
+      ((object.var1 == @var1 && object.var2 == @var2) || ((plus? || multiply?) && (object.var1 == @var2 && object.var2 == @var1)))
     end
 
     private
