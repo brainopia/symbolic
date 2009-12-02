@@ -16,8 +16,12 @@ module Symbolic
       @name || 'unnamed_variable'
     end
 
+    def variables
+      [self]
+    end
+
     def undefined_variables
-      value ? [] : [self]
+      value ? [] : variables
     end
   end
 end

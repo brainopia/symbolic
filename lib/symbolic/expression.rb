@@ -29,8 +29,12 @@ module Symbolic
       end
     end
 
+    def variables
+      variables_of(@var1) | variables_of(@var2)
+    end
+
     def undefined_variables
-      (undefined_variables_of(@var1) + undefined_variables_of(@var2)).uniq
+      variables.select &:undefined?
     end
 
     def ==(object)
@@ -48,8 +52,8 @@ module Symbolic
       %w(* /).include?(@operation) && (var.is_a?(UnaryMinus) || var.is_a?(Expression) && (var.plus? || var.minus?))
     end
 
-    def undefined_variables_of(variable)
-      variable.is_a?(Operatable) ? variable.undefined_variables : []
+    def variables_of(variable)
+      variable.is_a?(Operatable) ? variable.variables : []
     end
 
     def value_of(variable)

@@ -25,6 +25,10 @@ module Symbolic
       -@variable.value if undefined_variables.empty?
     end
 
+    def variables
+      [@variable]
+    end
+
     def undefined_variables
       @variable.undefined_variables
     end

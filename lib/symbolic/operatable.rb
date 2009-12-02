@@ -16,5 +16,9 @@ module Symbolic
       CODE
       class_eval method, __FILE__, __LINE__
     end
+
+    def undefined?
+      !value
+    end
   end
 end
