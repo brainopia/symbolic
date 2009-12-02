@@ -1,5 +1,5 @@
-module Symbolic::Optimizations::Multiplication
-  extend Symbolic::Optimizations::Base
+module Symbolic::Optimization::Multiplication
+  extend Symbolic::Optimization::Base
 
   def self.optimize_first_arg(var1, var2)
     if var1 == 0

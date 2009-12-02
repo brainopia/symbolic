@@ -1,5 +1,5 @@
 module Symbolic
-  module Optimizations
+  module Optimization
     Symbolic.operations.each do |operation_sign, operation_name|
       method = <<-CODE
         def #{operation_name}(var1, var2)

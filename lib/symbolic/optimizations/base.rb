@@ -1,4 +1,4 @@
-module Symbolic::Optimizations::Base
+module Symbolic::Optimization::Base
   def optimize(var1, var2)
     optimize_first_arg(var1, var2) || optimize_second_arg(var1, var2)
   end

@@ -39,7 +39,7 @@ module Symbolic
 
           def #{sign}(value)
             if value.symbolic?
-              Optimizations.#{name} self, value
+              Optimization.#{name} self, value
             else
               non_symbolic_#{name}(value)
             end

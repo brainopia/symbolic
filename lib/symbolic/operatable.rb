@@ -11,7 +11,7 @@ module Symbolic
     Symbolic.operations.each do |operation_sign, operation_name|
       method = <<-CODE
         def #{operation_sign}(value)
-          Optimizations.#{operation_name} self, value
+          Optimization.#{operation_name} self, value
         end
       CODE
       class_eval method, __FILE__, __LINE__
