@@ -1,9 +1,7 @@
 module Symbolic
   class UnaryMinus < Operatable
-    attr_reader :variable
-
     def self.create(var)
-      var.is_a?(UnaryMinus) ? var.variable : new(var)
+      var.is_a?(UnaryMinus) ? var.abs : new(var)
     end
 
     def initialize(variable)
@@ -19,6 +17,7 @@ module Symbolic
     end
 
     def abs
+      # add a common method for Operatable which will point to an instance of Abs(magnitude) class
       @variable
     end
 
@@ -31,7 +30,7 @@ module Symbolic
     end
 
     def ==(object)
-      object.is_a?(UnaryMinus) && object.variable == @variable
+      object.is_a?(UnaryMinus) && object.abs == @variable
     end
   end
 end
