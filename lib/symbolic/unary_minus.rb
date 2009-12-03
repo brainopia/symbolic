@@ -26,7 +26,7 @@ module Symbolic
     end
 
     def variables
-      [@variable]
+      @variable.variables
     end
 
     def undefined_variables

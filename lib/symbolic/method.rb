@@ -12,6 +12,10 @@ module Symbolic
       Math.send @operation, @variable.value if undefined_variables.empty?
     end
 
+    def variables
+      @variable.variables
+    end
+
     def undefined_variables
       @variable.undefined_variables
     end
