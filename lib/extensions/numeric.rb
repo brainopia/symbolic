@@ -3,6 +3,10 @@ class Numeric
     self
   end
 
+  def variables
+    []
+  end
+
   def symbolic?
     false
   end
