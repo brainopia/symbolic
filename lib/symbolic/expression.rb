@@ -35,7 +35,7 @@ module Symbolic
     end
 
     def variables
-      variables_of(@var1) | variables_of(@var2)
+      @var1.variables | @var2.variables
     end
 
     def undefined_variables
@@ -55,10 +55,6 @@ module Symbolic
 
     def brackets_conditional(var)
       %w(* /).include?(@operation) && (var.is_a?(UnaryMinus) || var.is_a?(Expression) && (var.plus? || var.minus?))
-    end
-
-    def variables_of(object)
-      object.is_a?(Symbolic) ? object.variables : []
     end
   end
 end
