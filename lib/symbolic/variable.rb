@@ -25,5 +25,9 @@ module Symbolic
     def undefined_variables
       value ? [] : variables
     end
+
+    def detailed_operations
+      Hash.new 0
+    end
   end
 end

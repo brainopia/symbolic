@@ -38,5 +38,11 @@ module Symbolic
     def ==(object)
       object.is_a?(UnaryMinus) && object.abs == @variable
     end
+
+    def detailed_operations
+      stats = @variable.detailed_operations.dup
+      stats['-@'] += 1
+      stats
+    end
   end
 end

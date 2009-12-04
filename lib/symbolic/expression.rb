@@ -47,6 +47,12 @@ module Symbolic
       ((object.var1 == @var1 && object.var2 == @var2) || ((plus? || multiply?) && (object.var1 == @var2 && object.var2 == @var1)))
     end
 
+    def detailed_operations
+      stats = operations_of(@var1).merge(operations_of @var2) {|k,v1,v2| v1 + v2 }
+      stats[@operation] += 1
+      stats
+    end
+
     private
 
     def brackets(var)
@@ -55,6 +61,10 @@ module Symbolic
 
     def brackets_conditional(var)
       %w(* /).include?(@operation) && (var.is_a?(UnaryMinus) || var.is_a?(Expression) && (var.plus? || var.minus?))
+    end
+
+    def operations_of(var)
+      var.is_a?(Symbolic) ? var.detailed_operations : Hash.new(0)
     end
   end
 end

@@ -21,5 +21,11 @@ module Symbolic
     def undefined_variables
       @variable.undefined_variables
     end
+
+    def detailed_operations
+      stats = @variable.detailed_operations.dup
+      stats[@operation] += 1
+      stats
+    end
   end
 end

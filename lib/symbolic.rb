@@ -30,6 +30,10 @@ module Symbolic
   def undefined?
     !value
   end
+
+  def operations
+    detailed_operations.values.inject(0) {|sum,it| sum + it }
+  end
 end
 
 require 'symbolic/core'
