@@ -1,5 +1,7 @@
 module Symbolic
-  class Method < Operatable
+  class Method
+    include Symbolic
+
     def initialize(variable, operation)
       @variable, @operation = variable, operation
     end

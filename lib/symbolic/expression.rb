@@ -1,5 +1,7 @@
 module Symbolic
-  class Expression < Operatable
+  class Expression
+    include Symbolic
+
     attr_reader :var1, :var2, :operation
 
     def initialize(var1, var2, operation)

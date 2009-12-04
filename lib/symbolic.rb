@@ -6,13 +6,37 @@ module Symbolic
       :/ => :division }
   end
 
+  operations.each do |sign, name|
+    method = <<-CODE
+      def #{sign}(value)
+        Optimization.#{name} self, value
+      end
+    CODE
+    class_eval method, __FILE__, __LINE__
+  end
+
   def self.math_operations
     [:cos, :sin]
+  end
+
+  def -@
+    UnaryMinus.create self
+  end
+
+  def +@
+    self
+  end
+
+  def undefined?
+    !value
+  end
+
+  def symbolic?
+    true
   end
 end
 
 require 'symbolic/core'
-require 'symbolic/operatable'
 require 'symbolic/optimizations'
 require 'symbolic/optimizations/base'
 require 'symbolic/optimizations/addition'

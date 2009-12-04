@@ -1,5 +1,7 @@
 module Symbolic
-  class UnaryMinus < Operatable
+  class UnaryMinus
+    include Symbolic
+
     def self.create(var)
       var.is_a?(UnaryMinus) ? var.abs : new(var)
     end
@@ -17,7 +19,7 @@ module Symbolic
     end
 
     def abs
-      # add a common method for Operatable which will point to an instance of Abs(magnitude) class
+      # TODO: add a common method for Symbolic which will point to an instance of Abs(magnitude) class
       @variable
     end
 
