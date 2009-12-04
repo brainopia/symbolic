@@ -37,12 +37,12 @@ module Symbolic
 end
 
 require 'symbolic/core'
-require 'symbolic/optimizations'
-require 'symbolic/optimizations/base'
-require 'symbolic/optimizations/addition'
-require 'symbolic/optimizations/subtraction'
-require 'symbolic/optimizations/multiplication'
-require 'symbolic/optimizations/division'
+require 'symbolic/optimization'
+require 'symbolic/optimization/base'
+require 'symbolic/optimization/addition'
+require 'symbolic/optimization/subtraction'
+require 'symbolic/optimization/multiplication'
+require 'symbolic/optimization/division'
 require 'symbolic/variable'
 require 'symbolic/expression'
 require 'symbolic/method'
