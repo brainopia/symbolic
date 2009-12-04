@@ -38,7 +38,7 @@ module Symbolic
           alias non_symbolic_#{name} #{sign}
 
           def #{sign}(value)
-            if value.symbolic?
+            if value.is_a? Symbolic
               Optimization.#{name} self, value
             else
               non_symbolic_#{name}(value)
@@ -58,7 +58,7 @@ module Symbolic
           alias non_symbolic_#{operation} #{operation}
 
           def #{operation}(value)
-            if value.symbolic?
+            if value.is_a? Symbolic
               Symbolic::Method.new value, :#{operation}
             else
               non_symbolic_#{operation} value

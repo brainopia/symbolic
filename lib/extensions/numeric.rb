@@ -6,8 +6,4 @@ class Numeric
   def variables
     []
   end
-
-  def symbolic?
-    false
-  end
 end

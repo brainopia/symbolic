@@ -58,7 +58,7 @@ module Symbolic
     end
 
     def variables_of(object)
-      object.symbolic? ? object.variables : []
+      object.is_a?(Symbolic) ? object.variables : []
     end
   end
 end
