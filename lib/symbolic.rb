@@ -7,10 +7,6 @@ module Symbolic
     return Coerced.new(self), numeric
   end
 
-  def undefined?
-    !value
-  end
-
   def operations
     detailed_operations.values.inject(0) {|sum,it| sum + it }
   end

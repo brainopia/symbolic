@@ -37,7 +37,7 @@ module Symbolic
     end
 
     def undefined_variables
-      variables.select &:undefined?
+      variables.select {|it| it.value.nil? }
     end
 
     def ==(object)
