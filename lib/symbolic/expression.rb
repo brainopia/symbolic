@@ -1,7 +1,5 @@
 module Symbolic
-  class Expression
-    include Symbolic::Operations
-
+  class Expression < Symbolic::Operations
     attr_reader :var1, :var2, :operation
 
     def initialize(var1, var2, operation)
@@ -56,7 +54,7 @@ module Symbolic
     end
 
     def brackets_conditional(var)
-      %w(* /).include?(@operation) && (var.is_a?(Operation::Unary::Minus) || var.is_a?(Expression) && (var.plus? || var.minus?))
+      %w(* /).include?(@operation) && (var.is_a?(Operations::Unary::Minus) || var.is_a?(Expression) && (var.plus? || var.minus?))
     end
 
     def operations_of(var)

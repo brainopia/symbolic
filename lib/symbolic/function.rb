@@ -1,7 +1,5 @@
 module Symbolic
-  class Function
-    include Symbolic::Operations
-
+  class Function < Symbolic::Operations
     def initialize(variable, operation)
       @variable, @operation = variable, operation
     end

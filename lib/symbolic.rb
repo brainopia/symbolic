@@ -1,14 +1,14 @@
 Symbolic = Module.new
 
 require 'symbolic/operations'
+require 'symbolic/operations/unary'
+require 'symbolic/operations/unary/minus'
+
 require 'symbolic/coerced'
 require 'symbolic/variable'
 require 'symbolic/function'
 require 'symbolic/math'
 require 'symbolic/expression'
-require 'symbolic/operation'
-require 'symbolic/operation/unary'
-require 'symbolic/operation/unary/minus'
 
 require 'symbolic/optimization'
 require 'symbolic/optimization/base'
