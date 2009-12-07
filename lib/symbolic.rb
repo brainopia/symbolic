@@ -17,17 +17,18 @@ module Symbolic
 end
 
 require 'symbolic/coerced'
+require 'symbolic/variable'
+require 'symbolic/function'
+require 'symbolic/math'
+require 'symbolic/unary_minus'
+require 'symbolic/expression'
+
 require 'symbolic/optimization'
 require 'symbolic/optimization/base'
 require 'symbolic/optimization/addition'
 require 'symbolic/optimization/subtraction'
 require 'symbolic/optimization/multiplication'
 require 'symbolic/optimization/division'
-require 'symbolic/variable'
-require 'symbolic/expression'
-require 'symbolic/function'
-require 'symbolic/math'
-require 'symbolic/unary_minus'
 
 require 'extensions/kernel'
 require 'extensions/numeric'
