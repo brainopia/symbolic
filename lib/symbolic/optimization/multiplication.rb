@@ -12,10 +12,6 @@ module Symbolic::Optimization::Multiplication
   end
 
   def self.optimize_second_arg(var1, var2)
-    if var2.is_a? Numeric
-      var2 * var1
-    else
-      optimize_first_arg var2, var1
-    end
+    optimize_first_arg var2, var1
   end
 end

@@ -3,5 +3,3 @@ require 'symbolic'
 require 'rubygems'
 require 'spec'
 require 'spec/autorun'
-
-Symbolic::Core.enable

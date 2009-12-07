@@ -27,6 +27,10 @@ module Symbolic
     self
   end
 
+  def coerce(numeric)
+    return Coerced.new(self), numeric
+  end
+
   def undefined?
     !value
   end
@@ -36,7 +40,7 @@ module Symbolic
   end
 end
 
-require 'symbolic/core'
+require 'symbolic/coerced'
 require 'symbolic/optimization'
 require 'symbolic/optimization/base'
 require 'symbolic/optimization/addition'
