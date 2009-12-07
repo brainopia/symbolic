@@ -1,5 +1,5 @@
 class Symbolic::Operation
-  include Symbolic
+  include Symbolic::Operations
 
   def self.for(*args)
     simplify(*args) || new(*args)

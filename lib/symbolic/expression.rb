@@ -1,6 +1,6 @@
 module Symbolic
   class Expression
-    include Symbolic
+    include Symbolic::Operations
 
     attr_reader :var1, :var2, :operation
 

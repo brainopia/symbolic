@@ -1,17 +1,4 @@
 require 'symbolic/operations'
-
-module Symbolic
-  include Operations
-
-  def coerce(numeric)
-    return Coerced.new(self), numeric
-  end
-
-  def operations
-    detailed_operations.values.inject(0) {|sum,it| sum + it }
-  end
-end
-
 require 'symbolic/coerced'
 require 'symbolic/variable'
 require 'symbolic/function'

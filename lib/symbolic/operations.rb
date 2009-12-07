@@ -23,5 +23,13 @@ module Symbolic
       CODE
       class_eval method, __FILE__, __LINE__
     end
+
+    def coerce(numeric)
+      return Coerced.new(self), numeric
+    end
+
+    def operations
+      detailed_operations.values.inject(0) {|sum,it| sum + it }
+    end
   end
 end

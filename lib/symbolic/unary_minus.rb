@@ -1,6 +1,6 @@
 module Symbolic
   class UnaryMinus
-    include Symbolic
+    include Symbolic::Operations
 
     def self.create(var)
       var.is_a?(UnaryMinus) ? var.abs : new(var)
