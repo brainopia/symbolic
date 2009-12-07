@@ -14,7 +14,7 @@ Currently I've implemented only naive optimizations to simplify math expressions
   x = var :name => 'x'
   y = var :name => 'y'
 
-  f = symbolic { (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2 }
+  f = (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2
   puts f # => (4+2*x-y)*x-2
 
   p f.detailed_operations # => {"+"=>1, "-"=>2, "*"=>2}
@@ -26,7 +26,7 @@ Currently I've implemented only naive optimizations to simplify math expressions
   puts f.value # => 6
 
 
-  g = symbolic { Math.cos(y) }
+  g = Symbolic::Math.cos(y)
   puts g # => cos(y)
   y.value = 0
   puts g.value # => 1.0
