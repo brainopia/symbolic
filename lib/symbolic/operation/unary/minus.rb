@@ -10,7 +10,7 @@ class Symbolic::Operation
     end
 
     def to_s
-      if @expression.is_a?(Variable)
+      if [:variable, :multiplication, :division].include? operation(@expression)
         "-#{@expression}"
       else
         "(-#{@expression})"

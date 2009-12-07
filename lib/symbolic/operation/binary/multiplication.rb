@@ -25,6 +25,6 @@ class Symbolic::Operation::Binary::Multiplication < Symbolic::Operation::Binary
   private
 
   def brackets_conditional(var)
-    var.is_a?(Operation::Unary::Minus) || var.is_a?(Operation::Binary::Addition) || var.is_a?(Operation::Binary::Subtraction)
+    [:unary_minus, :addition, :subtraction].include? operation(var)
   end
 end
