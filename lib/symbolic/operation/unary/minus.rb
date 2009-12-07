@@ -21,14 +21,6 @@ class Symbolic::Operation
       -@expression.value if undefined_variables.empty?
     end
 
-    def variables
-      @expression.variables
-    end
-
-    def undefined_variables
-      @expression.undefined_variables
-    end
-
     def ==(object)
       object.is_a?(Unary::Minus) && object.abs == @expression
     end
