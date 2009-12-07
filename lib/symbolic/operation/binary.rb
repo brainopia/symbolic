@@ -37,7 +37,7 @@ class Symbolic::Operation::Binary < Symbolic::Operation
   end
 
   def detailed_operations
-    operations_of(@var1).tap {|it| it.merge!(operations_of @var2)[@operation] += 1 }
+    operations_of(@var1).tap {|it| it.merge!(operations_of @var2)[sign] += 1 }
   end
 
   def to_s
