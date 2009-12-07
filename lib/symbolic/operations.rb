@@ -1,12 +1,5 @@
 module Symbolic
   module Operations
-    def self.binary
-      { :* => :multiplication,
-        :+ => :addition,
-        :- => :subtraction,
-        :/ => :division }
-    end
-
     def -@
       Operation::Unary::Minus.for self
     end
@@ -15,13 +8,20 @@ module Symbolic
       self
     end
 
-    binary.each do |sign, name|
-      method = <<-CODE
-        def #{sign}(value)
-          Optimization.#{name} self, value
-        end
-      CODE
-      class_eval method, __FILE__, __LINE__
+    def +(var)
+      Optimization.addition self, var
+    end
+
+    def -(var)
+      Optimization.subtraction self, var
+    end
+
+    def *(var)
+      Optimization.multiplication self, var
+    end
+
+    def /(var)
+      Optimization.division self, var
     end
 
     def coerce(numeric)
