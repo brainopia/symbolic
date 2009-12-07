@@ -7,7 +7,15 @@ describe "Symbolic" do
   end
 
   def expression(string)
-    eval string.gsub(/[a-z]+/, '@\0')
+    eval string.gsub(/[xy]/, '@\0')
+  end
+
+  def self.should_equal(conditions)
+    conditions.each do |non_optimized, optimized|
+      it non_optimized do
+        expression(non_optimized).should == expression(optimized)
+      end
+    end
   end
 
   describe "evaluation (x=1, y=2):" do
@@ -43,14 +51,6 @@ describe "Symbolic" do
    end
 
   describe "optimization:" do
-    def self.should_equal(conditions)
-      conditions.each do |non_optimized, optimized|
-        it non_optimized do
-          expression(non_optimized).should == expression(optimized)
-        end
-      end
-    end
-
     should_equal \
     '-(-x)'       => 'x',
 
@@ -82,6 +82,15 @@ describe "Symbolic" do
     '(-x)*(-y)'   => 'x*y',
 
     'x / 1'       => 'x'
+  end
+
+  describe 'general methods:' do
+    should_equal \
+    'x.variables' => '[x]',
+    '(-(x-y)).variables' => '[x,y]',
+    '(x+y).undefined_variables' => '[]',
+    '(-x-4*y+5-y/x).detailed_operations' =>
+    '{"+" => 1, "-" => 2, "*" => 1, "/" => 1, "-@" => 1}'
   end
 
   describe "formulas" do
