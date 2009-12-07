@@ -4,13 +4,13 @@ module Symbolic
       @symbolic = symbolic
     end
 
-    Symbolic.operations.each do |sign, name|
+    Operations.binary.each do |sign, name|
       method = <<-CODE
         def #{sign}(numeric)
           Optimization.#{name} numeric, @symbolic
         end
       CODE
       class_eval method, __FILE__, __LINE__
-    end # Symbolic.operations.each
+    end # Operations.binary.each
   end # Coerced
 end # Symbolic

@@ -1,27 +1,7 @@
+require 'symbolic/operations'
+
 module Symbolic
-  def self.operations
-    { :* => :multiplication,
-      :+ => :addition,
-      :- => :subtraction,
-      :/ => :division }
-  end
-
-  operations.each do |sign, name|
-    method = <<-CODE
-      def #{sign}(value)
-        Optimization.#{name} self, value
-      end
-    CODE
-    class_eval method, __FILE__, __LINE__
-  end
-
-  def -@
-    UnaryMinus.create self
-  end
-
-  def +@
-    self
-  end
+  include Operations
 
   def coerce(numeric)
     return Coerced.new(self), numeric
