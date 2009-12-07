@@ -48,9 +48,7 @@ module Symbolic
     end
 
     def detailed_operations
-      stats = operations_of(@var1).merge(operations_of @var2) {|k,v1,v2| v1 + v2 }
-      stats[@operation] += 1
-      stats
+      operations_of(@var1).tap {|it| it.merge!(operations_of @var2)[@operation] += 1 }
     end
 
     private

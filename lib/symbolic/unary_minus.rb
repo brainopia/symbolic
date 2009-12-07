@@ -40,9 +40,7 @@ module Symbolic
     end
 
     def detailed_operations
-      stats = @variable.detailed_operations.dup
-      stats['-@'] += 1
-      stats
+      @variable.detailed_operations.tap {|it| it['-@'] += 1}
     end
   end
 end
