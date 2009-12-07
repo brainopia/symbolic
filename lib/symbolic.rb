@@ -15,10 +15,6 @@ module Symbolic
     class_eval method, __FILE__, __LINE__
   end
 
-  def self.math_operations
-    [:cos, :sin]
-  end
-
   def -@
     UnaryMinus.create self
   end
@@ -49,7 +45,8 @@ require 'symbolic/optimization/multiplication'
 require 'symbolic/optimization/division'
 require 'symbolic/variable'
 require 'symbolic/expression'
-require 'symbolic/method'
+require 'symbolic/function'
+require 'symbolic/math'
 require 'symbolic/unary_minus'
 
 require 'extensions/kernel'
