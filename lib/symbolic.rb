@@ -3,19 +3,24 @@ Symbolic = Module.new
 require 'symbolic/operation'
 require 'symbolic/operation/unary'
 require 'symbolic/operation/unary/minus'
+require 'symbolic/operation/binary'
+require 'symbolic/operation/binary/addition'
+require 'symbolic/operation/binary/subtraction'
+require 'symbolic/operation/binary/multiplication'
+require 'symbolic/operation/binary/division'
 
 require 'symbolic/coerced'
 require 'symbolic/variable'
 require 'symbolic/function'
 require 'symbolic/math'
-require 'symbolic/expression'
+# require 'symbolic/expression'
 
-require 'symbolic/optimization'
-require 'symbolic/optimization/base'
-require 'symbolic/optimization/addition'
-require 'symbolic/optimization/subtraction'
-require 'symbolic/optimization/multiplication'
-require 'symbolic/optimization/division'
+# require 'symbolic/optimization'
+# require 'symbolic/optimization/base'
+# require 'symbolic/optimization/addition'
+# require 'symbolic/optimization/subtraction'
+# require 'symbolic/optimization/multiplication'
+# require 'symbolic/optimization/division'
 
 require 'extensions/kernel'
 require 'extensions/numeric'
@@ -31,19 +36,19 @@ module Symbolic
   end
 
   def +(var)
-    Optimization.addition self, var
+    Operation::Binary::Addition.for self, var
   end
 
   def -(var)
-    Optimization.subtraction self, var
+    Operation::Binary::Subtraction.for self, var
   end
 
   def *(var)
-    Optimization.multiplication self, var
+    Operation::Binary::Multiplication.for self, var
   end
 
   def /(var)
-    Optimization.division self, var
+    Operation::Binary::Division.for self, var
   end
 
   def coerce(numeric)

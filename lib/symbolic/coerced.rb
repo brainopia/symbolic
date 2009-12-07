@@ -5,19 +5,19 @@ module Symbolic
     end
 
     def +(numeric)
-      Optimization.addition numeric, @symbolic
+      Operation::Binary::Addition.for numeric, @symbolic
     end
 
     def -(numeric)
-      Optimization.subtraction numeric, @symbolic
+      Operation::Binary::Subtraction.for numeric, @symbolic
     end
 
     def *(numeric)
-      Optimization.multiplication numeric, @symbolic
+      Operation::Binary::Multiplication.for numeric, @symbolic
     end
 
     def /(numeric)
-      Optimization.division numeric, @symbolic
+      Operation::Binary::Division.for numeric, @symbolic
     end
   end
 end

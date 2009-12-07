@@ -1,9 +1,11 @@
-class Symbolic::Operation::Binary::Addition < Symbolic::Operation::Binary
+class Symbolic::Operation::Binary::Multiplication < Symbolic::Operation::Binary
   def self.simplify_first_arg(var1, var2)
     if var1 == 0
+      0
+    elsif var1 == 1
       var2
     elsif negative?(var1)
-      var2 - var1.abs
+      -(var1.abs * var2)
     end
   end
 
@@ -17,12 +19,12 @@ class Symbolic::Operation::Binary::Addition < Symbolic::Operation::Binary
   end
 
   def value
-    @var1.value.send '+', @var2.value if undefined_variables.empty?
+    @var1.value.send '*', @var2.value if undefined_variables.empty?
   end
 
   private
 
   def brackets_conditional(var)
-    false
+    var.is_a?(Operation::Unary::Minus) || var.is_a?(Operation::Binary::Addition) || var.is_a?(Operation::Binary::Subtraction)
   end
 end
