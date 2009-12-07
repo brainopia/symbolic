@@ -1,3 +1,5 @@
+Symbolic = Module.new
+
 require 'symbolic/operations'
 require 'symbolic/coerced'
 require 'symbolic/variable'
