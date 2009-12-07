@@ -1,5 +1,6 @@
 module Symbolic
-  class Variable < Symbolic::Operations
+  class Variable
+    include Symbolic
     attr_accessor :name, :proc
     attr_writer :value
 

@@ -4,6 +4,6 @@ module Symbolic::Optimization::Base
   end
 
   def negative?(var)
-    var.is_a?(Symbolic::Operations::Unary::Minus) || (var.is_a?(Numeric) && var < 0)
+    var.is_a?(Symbolic::Operation::Unary::Minus) || (var.is_a?(Numeric) && var < 0)
   end
 end
