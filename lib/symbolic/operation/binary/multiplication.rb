@@ -18,8 +18,8 @@ class Symbolic::Operation::Binary::Multiplication < Symbolic::Operation::Binary
     (object.var1 == @var2 && object.var2 == @var1))
   end
 
-  def value
-    @var1.value.send '*', @var2.value if undefined_variables.empty?
+  def sign
+    '*'
   end
 
   private

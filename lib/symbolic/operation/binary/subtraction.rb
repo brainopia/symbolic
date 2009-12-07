@@ -11,8 +11,8 @@ class Symbolic::Operation::Binary::Subtraction < Symbolic::Operation::Binary
     end
   end
 
-  def value
-    @var1.value.send '-', @var2.value if undefined_variables.empty?
+  def sign
+    '-'
   end
 
   private

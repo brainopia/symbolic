@@ -11,13 +11,13 @@ class Symbolic::Operation::Binary::Addition < Symbolic::Operation::Binary
     simplify_first_arg var2, var1
   end
 
+  def sign
+    '+'
+  end
+
   def ==(object)
     (object.class == self.class) && ((object.var1 == @var1 && object.var2 == @var2) ||
     (object.var1 == @var2 && object.var2 == @var1))
-  end
-
-  def value
-    @var1.value.send '+', @var2.value if undefined_variables.empty?
   end
 
   private

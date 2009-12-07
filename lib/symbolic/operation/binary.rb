@@ -15,6 +15,10 @@ class Symbolic::Operation::Binary < Symbolic::Operation
     variables.select {|it| it.value.nil? }
   end
 
+  def value
+    @var1.value.send sign, @var2.value if undefined_variables.empty?
+  end
+
   def detailed_operations
     operations_of(@var1).tap {|it| it.merge!(operations_of @var2)[@operation] += 1 }
   end
