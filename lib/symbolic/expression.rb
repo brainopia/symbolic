@@ -29,9 +29,7 @@ module Symbolic
     end
 
     def value
-      if undefined_variables.empty?
-        @var1.value.send @operation, @var2.value
-      end
+      @var1.value.send @operation, @var2.value if undefined_variables.empty?
     end
 
     def variables
