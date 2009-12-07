@@ -14,10 +14,4 @@ class Symbolic::Operation::Binary::Subtraction < Symbolic::Operation::Binary
   def sign
     '-'
   end
-
-  private
-
-  def brackets_conditional(var)
-    false
-  end
 end

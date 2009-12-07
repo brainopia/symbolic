@@ -1,4 +1,6 @@
 class Symbolic::Operation::Binary::Division < Symbolic::Operation::Binary
+  brackets_for :unary_minus, :addition, :subtraction
+  
   def self.simplify_first_arg(var1, var2)
     if var1 == 0
       0
@@ -17,11 +19,5 @@ class Symbolic::Operation::Binary::Division < Symbolic::Operation::Binary
 
   def sign
     '/'
-  end
-
-  private
-
-  def brackets_conditional(var)
-    [:unary_minus, :addition, :subtraction].include? operation(var)
   end
 end

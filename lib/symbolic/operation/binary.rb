@@ -3,6 +3,23 @@ class Symbolic::Operation::Binary < Symbolic::Operation
     simplify_first_arg(var1, var2) || simplify_second_arg(var1, var2)
   end
 
+  def self.symmetric
+    def self.simplify(var1, var2)
+      simplify_first_arg(var1, var2) || simplify_first_arg(var2, var1)
+    end
+
+    def ==(object)
+      (object.class == self.class) &&
+      ((object.var1 == @var1 && object.var2 == @var2) || (object.var1 == @var2 && object.var2 == @var1))
+    end
+  end
+
+  def self.brackets_for(*operations)
+    def brackets(var)
+      operations.include?(operation var) ? "(#{var})" : var.to_s
+    end
+  end
+
   def initialize(var1, var2)
     @var1, @var2 = var1, var2
   end
@@ -42,6 +59,6 @@ class Symbolic::Operation::Binary < Symbolic::Operation
   end
 
   def brackets(var)
-    brackets_conditional(var) ? "(#{var})" : var.to_s
+    var.to_s
   end
 end
