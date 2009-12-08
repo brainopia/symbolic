@@ -47,7 +47,10 @@ describe "Symbolic" do
      'y/2'       => 1,
      'x/2.0'     => 0.5,
      '-2/x'      => -2,
-     '4/(-y)'    => -2
+     '4/(-y)'    => -2,
+     'x**2'      => 1,
+     '4**y'      => 16,
+     'y**x'      => 2
    end
 
   describe "optimization:" do
@@ -81,7 +84,13 @@ describe "Symbolic" do
     '-x*y'        => '-(x*y)',
     '(-x)*(-y)'   => 'x*y',
 
-    'x / 1'       => 'x'
+    '0 / x'       => '0',
+    'x / 1'       => 'x',
+
+    '0**x'        => '0',
+    '1**x'        => '1',
+    'x**0'        => '1',
+    'x**1'        => 'x'
   end
 
   describe 'general methods:' do

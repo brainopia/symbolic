@@ -8,6 +8,7 @@ require 'symbolic/operation/binary/addition'
 require 'symbolic/operation/binary/subtraction'
 require 'symbolic/operation/binary/multiplication'
 require 'symbolic/operation/binary/division'
+require 'symbolic/operation/binary/exponentiation'
 
 require 'symbolic/coerced'
 require 'symbolic/variable'
@@ -41,6 +42,10 @@ module Symbolic
 
   def /(var)
     Operation::Binary::Division.for self, var
+  end
+
+  def **(var)
+    Operation::Binary::Exponentiation.for self, var
   end
 
   def coerce(numeric)

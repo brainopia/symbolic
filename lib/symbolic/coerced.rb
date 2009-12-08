@@ -19,5 +19,9 @@ module Symbolic
     def /(numeric)
       Operation::Binary::Division.for numeric, @symbolic
     end
+
+    def **(numeric)
+      Operation::Binary::Exponentiation.for numeric, @symbolic
+    end
   end
 end
