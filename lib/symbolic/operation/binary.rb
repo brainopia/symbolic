@@ -14,12 +14,6 @@ class Symbolic::Operation::Binary < Symbolic::Operation
     end
   end
 
-  def self.brackets_for(*operations)
-    def brackets(var)
-      operations.include?(operation var) ? "(#{var})" : var.to_s
-    end
-  end
-
   def initialize(var1, var2)
     @var1, @var2 = var1, var2
   end
@@ -56,9 +50,5 @@ class Symbolic::Operation::Binary < Symbolic::Operation
 
   def operations_of(var)
     var.is_a?(Symbolic) ? var.detailed_operations : Hash.new(0)
-  end
-
-  def brackets(var)
-    var.to_s
   end
 end

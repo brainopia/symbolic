@@ -11,7 +11,7 @@ class Symbolic::Operation
 
   private
 
-  def operation(expression)
+  def self.operation(expression)
     case expression
     when Unary::Minus           then :unary_minus
     when Binary::Addition       then :addition
@@ -20,6 +20,10 @@ class Symbolic::Operation
     when Binary::Division       then :division
     when Symbolic::Variable     then :variable
     end
+  end
+
+  def operation(expression)
+    self.class.operation expression
   end
 
   def unary_minus?(expression)
@@ -44,5 +48,13 @@ class Symbolic::Operation
 
   def variable?(expression)
     operation(expession) == :variable
+  end
+
+  def brackets(var)
+    brackets_for.include?(operation var) ? "(#{var})" : var.to_s
+  end
+
+  def brackets_for
+    []
   end
 end

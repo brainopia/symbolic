@@ -1,6 +1,4 @@
 class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
-  brackets_for :unary_minus, :addition, :subtraction, :multiplication, :division
-
   def self.simplify_first_arg(var1, var2)
     # add conditional for negative?(var1) and even or odd values of var2
     if var1 == 0
@@ -16,6 +14,10 @@ class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
     elsif var2 == 1
       var1
     end
+  end
+
+  def brackets_for
+    [:unary_minus, :addition, :subtraction, :multiplication, :division]
   end
 
   def sign

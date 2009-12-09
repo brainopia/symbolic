@@ -1,7 +1,14 @@
 class Symbolic::Operation
   class Unary::Minus < Unary
     def self.simplify(expression)
-      expression.abs if expression.is_a? Unary::Minus
+      case operation(expression)
+      when :unary_minus
+        expression.abs
+      when :addition
+        -expression.send(:var1)-expression.send(:var2)
+      when :subtraction
+        expression.send(:var2) - expression.send(:var1)
+      end
     end
 
     def abs
@@ -9,12 +16,8 @@ class Symbolic::Operation
       @expression
     end
 
-    def to_s
-      if [:variable, :multiplication, :division].include? operation(@expression)
-        "-#{@expression}"
-      else
-        "(-#{@expression})"
-      end
+    def brackets_for
+      [:addition, :subtraction]
     end
 
     def value
@@ -27,6 +30,10 @@ class Symbolic::Operation
 
     def detailed_operations
       @expression.detailed_operations.tap {|it| it['-@'] += 1}
+    end
+
+    def to_s
+      "-#{brackets @expression}"
     end
   end
 end

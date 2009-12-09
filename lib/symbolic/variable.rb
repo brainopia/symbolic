@@ -6,6 +6,7 @@ module Symbolic
 
     def initialize(options={}, &proc)
       @name, @value = options.values_at(:name, :value)
+      @name = @name.to_s if @name
       @proc = proc
     end
 
