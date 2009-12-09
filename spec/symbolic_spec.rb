@@ -96,12 +96,37 @@ describe "Symbolic" do
   describe 'general methods:' do
     should_equal \
     'x.variables' => '[x]',
-    '(-(x-y)).variables' => '[x,y]',
+    '(-(x+y)).variables' => '[x,y]',
     '(x+y).undefined_variables' => '[]',
-    '(-x-4*y+5-y/x).detailed_operations' =>
-    '{"+" => 1, "-" => 2, "*" => 1, "/" => 1, "-@" => 1}'
+    '(-x**y-4*y+5-y/x).detailed_operations' =>
+    '{"+" => 1, "-" => 2, "*" => 1, "/" => 1, "-@" => 1, "**" => 1}',
+    '(-x**y-4*y+5-y/x).operations' => '7'
   end
 
-  describe "formulas" do
+  describe "to_s:" do
+    def self.should_print(conditions)
+      conditions.each do |symbolic_expression, result|
+        it symbolic_expression do
+          expression(symbolic_expression).to_s.should == result
+        end
+      end
+    end
+
+    should_print \
+    'x' => 'x',
+    '-x' => '-x',
+    'x+1' => 'x+1',
+    'x-4' => 'x-4',
+    '-(x+y)' => '-x-y',
+    '-(x-y)' => 'y-x',
+    'x*y' => 'x*y',
+    '(-x)*y' => '-x*y',
+    '(x+2)*(y+3)*4' => '(x+2)*(y+3)*4',
+    '4/x' => '4/x',
+    '(-(2+x))/(-(-y))' => '(-2-x)/y',
+    'x**y' => 'x**y',
+    'x**(y-4)' => 'x**(y-4)',
+    '(x+1)**(y*2)' => '(x+1)**(y*2)',
+    '-(x**y -2)+5' => '2-x**y+5'
   end
 end
