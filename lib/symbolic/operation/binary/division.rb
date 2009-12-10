@@ -20,6 +20,6 @@ class Symbolic::Operation::Binary::Division < Symbolic::Operation::Binary
   end
 
   def brackets_for
-    [:unary_minus, :addition, :subtraction]
+    [:addition, :subtraction]
   end
 end

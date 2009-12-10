@@ -5,6 +5,9 @@ class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
       0
     elsif var1 == 1
       1
+    elsif negative?(var1) && var2.respond_to?(:even?)
+      without_sign = var1.abs ** var2
+      var2.even? ? without_sign : -without_sign
     end
   end
 
@@ -23,4 +26,9 @@ class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
   def sign
     '**'
   end
+
+  protected
+
+  alias base var1
+  alias exponent var2
 end
