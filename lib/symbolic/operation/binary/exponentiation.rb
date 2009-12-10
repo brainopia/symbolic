@@ -1,6 +1,5 @@
 class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
   def self.simplify_first_arg(var1, var2)
-    # add conditional for negative?(var1) and even or odd values of var2
     if var1 == 0
       0
     elsif var1 == 1
