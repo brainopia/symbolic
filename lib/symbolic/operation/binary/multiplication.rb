@@ -26,16 +26,13 @@ class Symbolic::Operation
 
       def unite_by_exponent(factors1, factors2)
         exponents(factors1).
-          merge(exponents factors2) {|k,v1,v2| [v1.first, v1.last + v2.last] }.
-          delete_if {|key, (base,exponent)| exponent == 0 }.
-          map {|key, (b,e)| b**e }
+          merge(exponents factors2) {|base,exponent1,exponent2| exponent1 + exponent2 }.
+          delete_if {|base, exponent| exponent == 0 }.
+          map {|base, exponent| base**exponent }
       end
 
       def exponents(factors)
-        exponents = factors.map do |it|
-          base, exponent = base_and_exponent it
-          [base.to_s, [base, exponent]]
-        end
+        exponents = factors.map {|it| base_and_exponent it }
         Hash[exponents]
       end
 
