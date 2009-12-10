@@ -1,6 +1,5 @@
 class Symbolic::Operation
   class Binary::Multiplication < Binary
-    symmetric
 
     class << self
       def for(var1, var2)
