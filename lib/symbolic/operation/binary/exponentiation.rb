@@ -8,6 +8,8 @@ class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
     elsif negative?(var1) && var2.respond_to?(:even?)
       without_sign = var1.abs ** var2
       var2.even? ? without_sign : -without_sign
+    elsif operation(var1) == :exponentiation
+      var1.send(:base) ** (var1.send(:exponent) + var2)
     end
   end
 
@@ -27,7 +29,7 @@ class Symbolic::Operation::Binary::Exponentiation < Symbolic::Operation::Binary
     '**'
   end
 
-  protected
+  private
 
   alias base var1
   alias exponent var2

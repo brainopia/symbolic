@@ -18,6 +18,7 @@ class Symbolic::Operation
     when Binary::Subtraction    then :subtraction
     when Binary::Multiplication then :multiplication
     when Binary::Division       then :division
+    when Binary::Exponentiation then :exponentiation
     when Symbolic::Variable     then :variable
     end
   end
