@@ -49,7 +49,7 @@ class Symbolic::Operation
       end
 
       def factors(var)
-        var.respond_to?(:factors) ? var.send(:factors) : [var]
+        var.respond_to?(:factors) ? var.send(:factors).dup : [var]
       end
     end
 
