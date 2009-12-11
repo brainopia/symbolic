@@ -10,7 +10,7 @@ class Symbolic::Function
   end
 
   def value
-    Math.send @operation, @variable.value if undefined_variables.empty?
+    ::Math.send @operation, @variable.value if undefined_variables.empty?
   end
 
   def variables
