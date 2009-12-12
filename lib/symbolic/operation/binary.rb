@@ -30,10 +30,6 @@ class Symbolic::Operation::Binary < Symbolic::Operation
     @var1.value.send sign, @var2.value if undefined_variables.empty?
   end
 
-  def detailed_operations
-    operations_of(@var1).tap {|it| it.merge!(operations_of @var2)[sign] += 1 }
-  end
-
   def to_s
     "#{brackets @var1}#{sign}#{brackets @var2}"
   end
@@ -45,10 +41,4 @@ class Symbolic::Operation::Binary < Symbolic::Operation
   protected
 
   attr_reader :var1, :var2
-
-  private
-
-  def operations_of(var)
-    var.is_a?(Symbolic) ? var.detailed_operations : Hash.new(0)
-  end
 end

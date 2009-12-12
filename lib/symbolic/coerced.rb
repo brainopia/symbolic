@@ -13,7 +13,7 @@ module Symbolic
     end
 
     def *(numeric)
-      Operation::Binary::Multiplication.for numeric, @symbolic
+      Factor.multiply numeric, @symbolic
     end
 
     def /(numeric)
@@ -21,7 +21,7 @@ module Symbolic
     end
 
     def **(numeric)
-      Operation::Binary::Exponentiation.for numeric, @symbolic
+      Factor.exponent numeric, @symbolic
     end
   end
 end

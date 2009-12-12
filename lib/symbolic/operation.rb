@@ -16,7 +16,7 @@ class Symbolic::Operation
     when Unary::Minus           then :unary_minus
     when Binary::Addition       then :addition
     when Binary::Subtraction    then :subtraction
-    when Binary::Multiplication then :multiplication
+    when Symbolic::Factor       then :multiplication
     when Binary::Division       then :division
     when Binary::Exponentiation then :exponentiation
     when Symbolic::Variable     then :variable
