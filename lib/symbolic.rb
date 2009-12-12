@@ -17,7 +17,8 @@ require 'symbolic/math'
 
 require 'extensions/kernel'
 require 'extensions/numeric'
-require 'extensions/matrix'
+require 'extensions/matrix' if const_defined? 'Matrix'
+
 
 module Symbolic
   def -@
