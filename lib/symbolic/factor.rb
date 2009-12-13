@@ -101,7 +101,7 @@ class Symbolic::Factor
   end
 
   def brackets(var)
-    [Numeric, Symbolic::Variable].include?(var.class) ? var : "(#{var})"
+    [Numeric, Symbolic::Variable].any? {|klass| var.is_a? klass } ? var : "(#{var})"
   end
 
   def simplify_output

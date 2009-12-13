@@ -12,7 +12,7 @@ Symbolic math can be really helpful if you want to simplify some giant equation 
   x = var :name => 'x'
   y = var :name => 'y'
 
-  f = (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2
+  f = (- 2*(-x) + y*(-1.0) + 6*x/(3*x))*x - 2*y + 2*y - (2**x)**y
   puts f # => (2*x-y+4)*x-2
 
   p f.operations # => {"+"=>1, "-"=>2, "*"=>2}
