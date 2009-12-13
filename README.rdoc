@@ -12,15 +12,16 @@ Symbolic math can be really helpful if you want to simplify some giant equation 
   x = var :name => 'x'
   y = var :name => 'y'
 
-  f = (- 2*(-x) + y*(-1.0) + 6*x/(3*x))*x - 2*y + 2*y - (2**x)**y
-  puts f # => (2*x-y+4)*x-2
+  f = (-2*(-x) + y*(-1.0) + 6*x/(3*x))*x - 2*y + 2*y - (2**x)**y
+  puts f # => (2*x-y+2)*x-2**(x*y)
 
-  p f.operations # => {"+"=>1, "-"=>2, "*"=>2}
-  p f.undefined_variables.map &:name # => ["x", "y"]
+  p f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
+  p f.variables.map &:name # => ["x", "y"]
   x.value = 2
+  p f.undefined_variables.map &:name # => ["y"]
   y.value = 4
 
-  puts f.value # => 6
+  puts f.value # => -252.0
 
 
   g = Symbolic::Math.cos(y)
