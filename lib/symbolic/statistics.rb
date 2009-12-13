@@ -1,4 +1,4 @@
-module Symbolic::Statistics
+module Symbolic
   def operations
     formula = to_s
     stats = {}

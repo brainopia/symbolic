@@ -14,8 +14,6 @@ require 'symbolic/extensions/matrix' if Object.const_defined? 'Matrix'
 require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
-  include Statistics
-
   def -@
     Factor.multiply self, -1
   end
