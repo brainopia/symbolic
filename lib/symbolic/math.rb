@@ -1,9 +1,9 @@
 module Symbolic::Math
-  def self.cos(argument)
-    Symbolic::Function.new argument, :cos
-  end
-
-  def self.sin(argument)
-    Symbolic::Function.new argument, :sin
+  Math.methods(false).each do |method|
+    instance_eval <<-CODE, __FILE__, __LINE__
+      def #{method}(argument)
+        Symbolic::Function.new argument, :#{method}
+      end
+    CODE
   end
 end
