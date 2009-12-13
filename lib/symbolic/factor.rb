@@ -12,6 +12,32 @@ class Symbolic::Factor
       simplify(*factors) || new(factors)
     end
 
+    def divide(var1, var2)
+      simplify_exponents! factors = unite(factors(var1), reverse(var2))
+      simplify(*factors) || new(factors)
+    end
+
+    def simplify_exponents!(factors)
+      factors[1].delete_if {|base, exp| (base == 1) || (exp == 0) }
+      factors[0] = 0 if factors[1].any? {|base, exp| base == 0 }
+    end
+
+    def simplify(numeric, symbolic)
+      if numeric == 0 || symbolic.empty?
+        numeric
+      elsif numeric == 1 && symbolic.size == 1 && symbolic.values.first == 1
+        symbolic.keys.first
+      end
+    end
+
+    def reverse(var)
+      factors(var).dup.tap do |it|
+        numeric, symbolic = it
+        it[0] = numeric**-1
+        it[1] = Hash[*it[1].map {|b,e| [b,-e] }.flatten]
+      end
+    end
+
     def factors(var)
       var.is_a?(Symbolic) ? var.send(:factors) : [var, {}]
     end
@@ -33,19 +59,6 @@ class Symbolic::Factor
         [1, { base => exponent }]
       end
     end
-
-    def simplify_exponents!(factors)
-      factors[1].delete_if {|base, exp| (base == 1) || (exp == 0) }
-      factors[0] = 0 if factors[1].any? {|base, exp| base == 0 }
-    end
-
-    def simplify(numeric, symbolic)
-      if numeric == 0 || symbolic.empty?
-        numeric
-      elsif numeric == 1 && symbolic.size == 1 && symbolic.values.first == 1
-        symbolic.keys.first
-      end
-    end
   end
 
   def initialize(factors)
@@ -61,8 +74,7 @@ class Symbolic::Factor
   end
 
   def to_s
-    coefficient_to_string(@factors[0]) <<
-    @factors[1].map {|base,exp| exponent_to_string base,exp }.join('*')
+    simplify_output
   end
 
   def ==(object)
@@ -74,7 +86,7 @@ class Symbolic::Factor
   attr_reader :factors
 
   def coefficient_to_string(numeric)
-    "#{'-' if numeric < 0}#{"#{numeric.abs}*" if numeric.abs != 1}"
+    "#{'-' if numeric < 0}#{"#{rational_to_string numeric.abs}*" if numeric.abs != 1}"
   end
 
   def exponent_to_string(base, exponent)
@@ -83,5 +95,28 @@ class Symbolic::Factor
 
   def brackets(var)
     [Numeric, Symbolic::Variable].include?(var.class) ? var : "(#{var})"
+  end
+
+  def simplify_output
+    groups = @factors[1].group_by {|b,e| e.is_a?(Numeric) && e < 0 }
+    reversed_factors = groups[true] ? [1, Hash[*groups[true].flatten] ] : nil
+    factors = groups[false] ? [@factors[0], Hash[*groups[false].flatten] ] : nil
+    output = '' << (factors ? output(factors) : rational_to_string(@factors[0]))
+    output << "/#{reversed_output reversed_factors}" if reversed_factors
+    output
+  end
+
+  def output(factors)
+    coefficient_to_string(factors[0]) <<
+    factors[1].map {|base,exp| exponent_to_string base,exp }.join('*')
+  end
+
+  def reversed_output(factors)
+    result = output [factors[0], Hash[*factors[1].map {|b,e| [b,-e] }.flatten]]
+    (factors[1].length > 1) ? "(#{result})" : result
+  end
+
+  def rational_to_string(numeric)
+    ((numeric.round == numeric) ? numeric.to_i : numeric.to_f).to_s
   end
 end

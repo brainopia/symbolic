@@ -8,7 +8,7 @@ class Symbolic::Operation::Binary::Subtraction < Symbolic::Operation::Binary
       var1
     elsif negative?(var2)
       var1 + var2.abs
-    elsif [:addition, :subtraction].include? operation(var2)
+    elsif [Addition, Subtraction].include? var2.class
       var1 + (-var2)
     end
   end

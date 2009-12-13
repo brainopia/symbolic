@@ -31,7 +31,7 @@ class Symbolic::Operation::Binary < Symbolic::Operation
   end
 
   def to_s
-    "#{brackets @var1}#{sign}#{brackets @var2}"
+    "#{@var1}#{sign}#{@var2}"
   end
 
   def ==(object)

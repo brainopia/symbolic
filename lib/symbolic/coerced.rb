@@ -17,7 +17,7 @@ module Symbolic
     end
 
     def /(numeric)
-      Operation::Binary::Division.for numeric, @symbolic
+      Factor.divide numeric, @symbolic
     end
 
     def **(numeric)

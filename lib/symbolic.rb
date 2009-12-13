@@ -7,9 +7,6 @@ require 'symbolic/operation/binary'
 require 'symbolic/operation/binary/addition'
 require 'symbolic/operation/binary/subtraction'
 require 'symbolic/factor'
-# require 'symbolic/operation/binary/multiplication'
-require 'symbolic/operation/binary/division'
-require 'symbolic/operation/binary/exponentiation'
 
 require 'symbolic/coerced'
 require 'symbolic/variable'
@@ -44,7 +41,7 @@ module Symbolic
   end
 
   def /(var)
-    Operation::Binary::Division.for self, var
+    Factor.divide self, var
   end
 
   def **(var)
