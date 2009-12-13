@@ -1,8 +1,6 @@
 Symbolic = Module.new
 
 require 'symbolic/operation'
-require 'symbolic/operation/unary'
-require 'symbolic/operation/unary/minus'
 require 'symbolic/operation/binary'
 require 'symbolic/operation/binary/addition'
 require 'symbolic/operation/binary/subtraction'
