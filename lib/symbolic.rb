@@ -1,12 +1,12 @@
 Symbolic = Module.new
 
-require 'symbolic/summand'
-require 'symbolic/factor'
-
 require 'symbolic/coerced'
 require 'symbolic/variable'
+require 'symbolic/summand'
+require 'symbolic/factor'
 require 'symbolic/function'
 require 'symbolic/math'
+require 'symbolic/statistics'
 
 require 'symbolic/extensions/kernel'
 require 'symbolic/extensions/numeric'
@@ -14,6 +14,8 @@ require 'symbolic/extensions/matrix' if Object.const_defined? 'Matrix'
 require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
+  include Statistics
+
   def -@
     Factor.multiply self, -1
   end
@@ -44,22 +46,6 @@ module Symbolic
 
   def coerce(numeric)
     return Coerced.new(self), numeric
-  end
-
-  def detailed_operations
-    formula = to_s
-    stats = {}
-    stats['+'] = formula.scan(/\+/).size
-    stats['-'] = formula.scan(/[^(]-/).size
-    stats['*'] = formula.scan(/[^*]\*[^*]/).size
-    stats['/'] = formula.scan(/\//).size
-    stats['**']= formula.scan(/\*\*/).size
-    stats['-@']= formula.scan(/\(-/).size + formula.scan(/^-/).size
-    stats
-  end
-
-  def operations
-    detailed_operations.values.inject(0) {|sum,it| sum + it }
   end
 
   def undefined_variables

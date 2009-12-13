@@ -13,10 +13,9 @@ Symbolic math can be really helpful if you want to simplify some giant equation 
   y = var :name => 'y'
 
   f = (4 - 2*(-x) + y*(-1.0))*x - 0*y + 0 - 2
-  puts f # => (4+2*x-y)*x-2
+  puts f # => (2*x-y+4)*x-2
 
-  p f.detailed_operations # => {"+"=>1, "-"=>2, "*"=>2}
-  p f.operations # => 5
+  p f.operations # => {"+"=>1, "-"=>2, "*"=>2}
   p f.undefined_variables.map &:name # => ["x", "y"]
   x.value = 2
   y.value = 4
