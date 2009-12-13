@@ -32,8 +32,7 @@ class Symbolic::Factor
 
     def reverse(var)
       factors(var).dup.tap do |it|
-        numeric, symbolic = it
-        it[0] = numeric**-1
+        it[0] = it[0]**-1
         it[1] = Hash[*it[1].map {|b,e| [b,-e] }.flatten]
       end
     end
@@ -66,11 +65,11 @@ class Symbolic::Factor
   end
 
   def value
-    @factors[1].inject(factors[0]) {|value, (base, exp)| value * base.value ** exp.value }
+    @factors[1].inject(@factors[0]) {|value, (base, exp)| value * base.value ** exp.value }
   end
 
   def variables
-    @factors[1].map {|k,v| [k.variables, v.variables] }.flatten.uniq
+    @factors[1].map {|k,v| [variables_of(k), variables_of(v)] }.flatten.uniq
   end
 
   def to_s
@@ -84,6 +83,14 @@ class Symbolic::Factor
   private
 
   attr_reader :factors
+
+  def summands
+    if @factors[0] == 1
+      super
+    else
+      [0, {(self/@factors[0]) => @factors[0]}]
+    end
+  end
 
   def coefficient_to_string(numeric)
     "#{'-' if numeric < 0}#{"#{rational_to_string numeric.abs}*" if numeric.abs != 1}"

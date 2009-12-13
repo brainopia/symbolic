@@ -5,11 +5,11 @@ module Symbolic
     end
 
     def +(numeric)
-      Operation::Binary::Addition.for numeric, @symbolic
+      Summand.add numeric, @symbolic
     end
 
     def -(numeric)
-      Operation::Binary::Subtraction.for numeric, @symbolic
+      Summand.subtract numeric, @symbolic
     end
 
     def *(numeric)

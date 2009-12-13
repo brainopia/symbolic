@@ -1,9 +1,6 @@
 Symbolic = Module.new
 
-require 'symbolic/operation'
-require 'symbolic/operation/binary'
-require 'symbolic/operation/binary/addition'
-require 'symbolic/operation/binary/subtraction'
+require 'symbolic/summand'
 require 'symbolic/factor'
 
 require 'symbolic/coerced'
@@ -11,14 +8,13 @@ require 'symbolic/variable'
 require 'symbolic/function'
 require 'symbolic/math'
 
-require 'extensions/kernel'
-require 'extensions/numeric'
-require 'extensions/matrix' if Object.const_defined? 'Matrix'
-
+require 'symbolic/extensions/kernel'
+require 'symbolic/extensions/numeric'
+require 'symbolic/extensions/matrix' if Object.const_defined? 'Matrix'
+require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
   def -@
-    # Operation::Unary::Minus.for self
     Factor.multiply self, -1
   end
 
@@ -27,11 +23,11 @@ module Symbolic
   end
 
   def +(var)
-    Operation::Binary::Addition.for self, var
+    Summand.add self, var
   end
 
   def -(var)
-    Operation::Binary::Subtraction.for self, var
+    Summand.subtract self, var
   end
 
   def *(var)
@@ -66,9 +62,21 @@ module Symbolic
     detailed_operations.values.inject(0) {|sum,it| sum + it }
   end
 
+  def undefined_variables
+    variables.select {|it| it.value.nil? }
+  end
+
   private
 
   def factors
     [1, { self => 1 }]
+  end
+
+  def summands
+    [0, { self => 1 }]
+  end
+
+  def variables_of(var)
+    var.variables rescue []
   end
 end
