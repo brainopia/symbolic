@@ -24,7 +24,7 @@ class Symbolic::Factor
 
     def simplify(numeric, symbolic)
       if numeric == 0 || symbolic.empty?
-        numeric
+        (numeric.round == numeric) ? numeric.to_i : numeric.to_f
       elsif numeric == 1 && symbolic.size == 1 && symbolic.values.first == 1
         symbolic.keys.first
       end
