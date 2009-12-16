@@ -7,7 +7,16 @@ begin
     gem.name = "symbolic"
     gem.version = '0.3.1'
     gem.summary = 'Symbolic math for ruby'
-    gem.description = %Q{Symbolic math can be really helpful if you want to simplify some giant equation or if you don't want to get a performance hit re-evaluating big math expressions every time when few variables change.}
+    gem.description = <<TEXT
+Symbolic math for ruby.
+
+This gem can help you
+- if you want to get a simplified form of a big equation
+- if you want to speed up similar calculations
+- if you need an abstraction layer for math
+
+Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 LOC (lines of code)).
+TEXT
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://github.com/brainopia/symbolic"
     gem.authors = ["brainopia"]
