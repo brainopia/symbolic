@@ -63,7 +63,7 @@ You can get a list of variables from symbolic expression:
 
   (x+y+1).variables # => [x, y]
 
-And you can get a list of variables without value:
+So you can get a list of variables without value:
 
   (x+y+1).variables.select {|var| var.value.nil? }
 
