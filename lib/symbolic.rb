@@ -13,7 +13,6 @@ require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
   def -@
-    # TODO: use Summand
     Factor.multiply self, -1
   end
 
