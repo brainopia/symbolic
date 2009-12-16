@@ -85,7 +85,7 @@ module Symbolic
         when Summand
           false
         when Factor
-          var.send(:factors).all? {|factor| simple? factor }
+          var.send(:factors)[1].all? {|k,v| simple? k }
         else
           false
         end
