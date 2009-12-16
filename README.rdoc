@@ -6,24 +6,83 @@ gem install symbolic
 
 == Introduction:
 
-Symbolic math can be really helpful if you want to simplify some giant equation or if you don't want to get a performance hit re-evaluating big math expressions every time when few variables change.
+Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 LOC (lines of code)).
 
-== Examples:
-  x = var :name => 'x'
-  y = var :name => 'y'
+This gem can help you
+- if you want to get a simplified form of a big equation
+- if you want to speed up similar calculations
+- if you need an abstraction layer for math
 
-  f = (-2*(-x) + y*(-1.0) + 6*x/(3*x))*x - 2*y + 2*y - (2**x)**y
-  puts f # => (2*x-y+2)*x-2**(x*y)
+== Tutorial
 
-  p f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
-  p f.variables.map &:name # => ["x", "y"]
-  x.value = 2
-  y.value = 4
+First, you need to create a symbolic variable.
 
-  puts f.value # => -252.0
+  x = var
+
+  # you can set a name of variable (useful if you print equations)
+  angle = var :name => 'θ'
+
+  # or starting value
+  pi = var :value => 3.14
+
+  # or bind its value to a proc
+  y = var { x ** 2 }
+
+  # you can set a value for already created variable
+  x.value = 3
+
+Now, you can do any math operations with it.
+
+  f = 2*x + 1
+  puts f # => 2*x+1
+
+To get value of symbolic expression you just call value:
+
+  f.value # => 7
+
+If symbolic expression contains variables without value then it returns nil.
+
+  z = var
+  (z+1).value # => nil
+
+All symbolic expression are automatically simplified when created:
+
+  0 * x           # => 0
+  2 + x + 1       # => x + 3
+  -(x-y) + 2*x    # => x + y
+  (x**2)**3 / x   # => x**5
+  # etc. (more examples can be found in symbolic_spec.rb)
+
+If you need to use a function from Math module with symbolic variable, use Symbolic::Math module.
+
+  cos = Symbolic::Math.cos(x)
+  x.value = 0
+  cos.value # => 1.0
+
+You can get a list of variables from symbolic expression:
+
+  (x+y+1).variables # => [x, y]
+
+And you can get a list of variables without value:
+
+  (x+y+1).variables.select {|var| var.value.nil? }
+
+You can get an information about number of different operations used in a symbolic expression:
+
+  f = (2*x-y+2)*x-2**(x*y)
+  f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
 
 
-  g = Symbolic::Math.cos(y)
-  puts g # => cos(y)
-  y.value = 0
-  puts g.value # => 1.0
+== TODO:
+- a lot of refactoring (code is pretty messy at this stage)
+- plotting capabilities
+- derivatives
+- integrals
+- thorough documentation
+
+== Author
+
+brainopia (ravwar at gmail.com).
+
+I am ready to help with any questions related to Symbolic.
+I welcome any contribution.
