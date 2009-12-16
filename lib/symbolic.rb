@@ -1,5 +1,3 @@
-Symbolic = Module.new
-
 require 'symbolic/coerced'
 require 'symbolic/variable'
 require 'symbolic/summand'
