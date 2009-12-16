@@ -46,10 +46,6 @@ module Symbolic
     [Coerced.new(self), numeric]
   end
 
-  def undefined_variables
-    variables.select {|it| it.value.nil? }
-  end
-
   private
 
   def factors
