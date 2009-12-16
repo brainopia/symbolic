@@ -1,17 +1,17 @@
 Symbolic math for ruby.
 
-== Installation:
+== Installation
 
 gem install symbolic
 
-== Introduction:
-
-Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 LOC (lines of code)).
+== Introduction
 
 This gem can help you
 - if you want to get a simplified form of a big equation
 - if you want to speed up similar calculations
 - if you need an abstraction layer for math
+
+Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 lines of code).
 
 == Tutorial
 
@@ -73,7 +73,7 @@ You can get an information about number of different operations used in a symbol
   f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
 
 
-== TODO:
+== TODO
 - a lot of refactoring (code is pretty messy at this stage)
 - plotting capabilities
 - derivatives
