@@ -29,7 +29,7 @@ class Symbolic::Summand
 
       numeric = numeric1 + numeric2
       symbolic = symbolic1.merge(symbolic2) {|base, coef1, coef2| coef1 + coef2 }
-      return numeric, symbolic
+      [numeric, symbolic]
     end
 
     def simplify_coefficients!(summands)

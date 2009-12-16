@@ -47,7 +47,7 @@ class Symbolic::Factor
 
       numeric = numeric1 * numeric2
       symbolic = symbolic1.merge(symbolic2) {|base, exp1, exp2| exp1 + exp2 }
-      return numeric, symbolic
+      [numeric, symbolic]
     end
 
     def unite_exponents(base, exponent)

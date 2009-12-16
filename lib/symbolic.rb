@@ -43,7 +43,7 @@ module Symbolic
   end
 
   def coerce(numeric)
-    return Coerced.new(self), numeric
+    [Coerced.new(self), numeric]
   end
 
   def undefined_variables
