@@ -102,9 +102,7 @@ describe "Symbolic" do
   describe 'general methods:' do
     should_equal \
     'x.variables' => '[x]',
-    '(-(x+y)).variables' => '[x,y]',
-    '(x+y).undefined_variables' => '[]',
-    '(x*y).undefined_variables' => '[]'#,
+    '(-(x+y)).variables' => '[x,y]'#,
     # '(-x**y-4*y+5-y/x).detailed_operations' =>
     # '{"+" => 1, "-" => 2, "*" => 1, "/" => 1, "-@" => 1, "**" => 1}',
     # '(-x**y-4*y+5-y/x).operations' => '7'

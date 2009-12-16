@@ -18,7 +18,6 @@ Symbolic math can be really helpful if you want to simplify some giant equation 
   p f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
   p f.variables.map &:name # => ["x", "y"]
   x.value = 2
-  p f.undefined_variables.map &:name # => ["y"]
   y.value = 4
 
   puts f.value # => -252.0

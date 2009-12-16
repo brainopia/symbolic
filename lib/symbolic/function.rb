@@ -17,10 +17,6 @@ class Symbolic::Function
     @variable.variables
   end
 
-  def undefined_variables
-    @variable.undefined_variables
-  end
-
   def detailed_operations
     @variable.detailed_operations.tap {|it| it[@operation] += 1}
   end
