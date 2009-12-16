@@ -12,12 +12,12 @@ require 'symbolic/extensions/matrix' if Object.const_defined? 'Matrix'
 require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
-  def -@
-    Factor.multiply self, -1
-  end
-
   def +@
     self
+  end
+
+  def -@
+    Factor.multiply self, -1
   end
 
   def +(var)
