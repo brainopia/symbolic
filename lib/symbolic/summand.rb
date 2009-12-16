@@ -64,7 +64,7 @@ class Symbolic::Summand
   def to_s
     output = @summands[1].map {|base, coef| coef_to_string(coef) + base.to_s }
     output << remainder_to_string(@summands[0]) if @summands[0] != 0
-    output[0] = output.first[1..-1]
+    output[0] = output.first[1..-1] if output.first[0] == '+'
     output.join
   end
 
