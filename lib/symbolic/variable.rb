@@ -21,9 +21,5 @@ module Symbolic
     def variables
       [self]
     end
-
-    def detailed_operations
-      Hash.new 0
-    end
   end
 end
