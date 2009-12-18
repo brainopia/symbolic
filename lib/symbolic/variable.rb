@@ -4,7 +4,7 @@ module Symbolic
   Symbolic variables presented by name and value.
   Name is neccessary for printing meaningful symbolic expressions.
   Value is neccesary for calculation of symbolic expressions.
-  If value isn't set for variable, but there is an associated proc, then value taken from evaluating the proc.
+  If value isn't set for variable, but there is an associated proc, then value is taken from evaluating the proc.
 =end
   class Variable
     include Symbolic
