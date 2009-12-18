@@ -47,14 +47,6 @@ module Symbolic
 
   private
 
-  def factors
-    [1, { self => 1 }]
-  end
-
-  def summands
-    Summands.one self
-  end
-
   def variables_of(var)
     var.variables rescue []
   end
