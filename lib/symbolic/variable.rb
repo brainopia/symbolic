@@ -11,7 +11,7 @@ module Symbolic
     end
 
     def value
-      @value || @proc && @proc.call
+      @value || @proc && @proc.call.value
     end
 
     def to_s
