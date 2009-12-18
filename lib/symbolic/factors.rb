@@ -13,7 +13,7 @@ module Symbolic
         factors
       end
 
-      def exponent(base, exponent)
+      def power(base, exponent)
         simplify_expression! factors = unite_exponents(base, exponent)
         simplify(*factors) || new(*factors)
       end

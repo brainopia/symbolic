@@ -38,7 +38,7 @@ module Symbolic
   end
 
   def **(var)
-    Factors.exponent self, var
+    Factors.power self, var
   end
 
   def coerce(numeric)

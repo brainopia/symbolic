@@ -27,7 +27,7 @@ module Symbolic
     end
 
     def **(numeric)
-      Factors.exponent numeric, @symbolic
+      Factors.power numeric, @symbolic
     end
   end
 end
