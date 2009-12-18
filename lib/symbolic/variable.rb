@@ -1,5 +1,11 @@
 module Symbolic
-  # This class is used to create symbolic variables.
+=begin
+  This class is used to create symbolic variables.
+  Symbolic variables presented by name and value.
+  Name is neccessary for printing meaningful symbolic expressions.
+  Value is neccesary for calculation of symbolic expressions.
+  If value isn't set for variable, but there is an associated proc, then value taken from evaluating the proc.
+=end
   class Variable
     include Symbolic
     attr_accessor :name, :proc
