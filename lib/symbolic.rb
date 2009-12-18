@@ -1,7 +1,8 @@
 require 'symbolic/coerced'
 require 'symbolic/variable'
-require 'symbolic/summand'
-require 'symbolic/factor'
+require 'symbolic/expression'
+require 'symbolic/summands'
+require 'symbolic/factors'
 require 'symbolic/function'
 require 'symbolic/math'
 require 'symbolic/statistics'
@@ -17,27 +18,27 @@ module Symbolic
   end
 
   def -@
-    Factor.multiply self, -1
+    Factors.add self, -1
   end
 
   def +(var)
-    Summand.add self, var
+    Summands.add self, var
   end
 
   def -(var)
-    Summand.subtract self, var
+    Summands.subtract self, var
   end
 
   def *(var)
-    Factor.multiply self, var
+    Factors.add self, var
   end
 
   def /(var)
-    Factor.divide self, var
+    Factors.subtract self, var
   end
 
   def **(var)
-    Factor.exponent self, var
+    Factors.exponent self, var
   end
 
   def coerce(numeric)
@@ -51,7 +52,7 @@ module Symbolic
   end
 
   def summands
-    [0, { self => 1 }]
+    Summands.one self
   end
 
   def variables_of(var)

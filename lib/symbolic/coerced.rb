@@ -11,23 +11,23 @@ module Symbolic
     end
 
     def +(numeric)
-      Summand.add numeric, @symbolic
+      Summands.add numeric, @symbolic
     end
 
     def -(numeric)
-      Summand.subtract numeric, @symbolic
+      Summands.subtract numeric, @symbolic
     end
 
     def *(numeric)
-      Factor.multiply numeric, @symbolic
+      Factors.add numeric, @symbolic
     end
 
     def /(numeric)
-      Factor.divide numeric, @symbolic
+      Factors.subtract numeric, @symbolic
     end
 
     def **(numeric)
-      Factor.exponent numeric, @symbolic
+      Factors.exponent numeric, @symbolic
     end
   end
 end
