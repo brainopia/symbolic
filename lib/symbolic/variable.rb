@@ -1,4 +1,5 @@
 module Symbolic
+  # This class is used to create symbolic variables.
   class Variable
     include Symbolic
     attr_accessor :name, :proc
