@@ -42,7 +42,7 @@ module Symbolic
     def to_s
       output = symbolic.map {|base, coef| coef_to_string(coef) + base.to_s }
       output << remainder_to_string(numeric) if numeric != 0
-      output[0].sub!(/^+/, '') # output[0] = output.first[1..-1] if output.first[0] == '+'
+      output[0] = output[0].sub(/^\+/, '') # output[0] = output.first[1..-1] if output.first[0] == '+'
       output.join
     end
 
