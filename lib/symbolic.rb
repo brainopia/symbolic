@@ -45,6 +45,10 @@ module Symbolic
     [Coerced.new(self), numeric]
   end
 
+  def inspect
+    "Symbolic: #{to_s}"
+  end
+
   private
 
   def variables_of(var)
