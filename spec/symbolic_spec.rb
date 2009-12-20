@@ -18,15 +18,23 @@ describe "Symbolic" do
     end
   end
 
-  describe "evaluation (x=1, y=2):" do
-     def self.should_evaluate_to(conditions)
-       conditions.each do |symbolic_expression, result|
-         it symbolic_expression do
-           expression(symbolic_expression).value.should == result
-         end
-       end
-     end
+  def self.should_evaluate_to(conditions)
+    conditions.each do |symbolic_expression, result|
+      it symbolic_expression do
+        expression(symbolic_expression).value.should == result
+      end
+    end
+  end
 
+  def self.should_print(conditions)
+    conditions.each do |symbolic_expression, result|
+      it symbolic_expression do
+        expression(symbolic_expression).to_s.should == result
+      end
+    end
+  end
+
+  describe "evaluation (x=1, y=2):" do
      should_evaluate_to \
      'x'         => 1,
      'y'         => 2,
@@ -111,14 +119,6 @@ describe "Symbolic" do
   end
 
   describe "to_s:" do
-    def self.should_print(conditions)
-      conditions.each do |symbolic_expression, result|
-        it symbolic_expression do
-          expression(symbolic_expression).to_s.should == result
-        end
-      end
-    end
-
     should_print \
     'x' => 'x',
     '-x' => '-x',
