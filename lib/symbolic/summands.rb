@@ -2,8 +2,12 @@
 module Symbolic
   class Summands < Expression
     class << self
-      def one(symbolic)
-        new 0, symbolic => 1
+      def operation
+        '+'
+      end
+
+      def identity_element
+        0
       end
 
       def summands(summands)
@@ -12,14 +16,10 @@ module Symbolic
 
       def factors(factors)
         if factors.symbolic.length == 1 && factors.symbolic.values.first == 1
-          new 0, factors.symbolic.keys.first => factors.numeric
+          new identity_element, factors.symbolic.keys.first => factors.numeric
         else
-          new 0, Factors.new(1, factors.symbolic) => factors.numeric
+          new identity_element, Factors.new(1, factors.symbolic) => factors.numeric
         end
-      end
-
-      def unite_numeric(numeric1, numeric2)
-        numeric1 + numeric2
       end
 
       def simplify_expression!(summands)
@@ -29,7 +29,7 @@ module Symbolic
       def simplify(numeric, symbolic)
         if symbolic.empty?
           numeric
-        elsif numeric == 0 && symbolic.size == 1
+        elsif numeric == identity_element && symbolic.size == 1
           symbolic.values.first * symbolic.keys.first
         end
       end

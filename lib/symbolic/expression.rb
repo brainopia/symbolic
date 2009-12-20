@@ -22,6 +22,10 @@ module Symbolic
         symbolic1.merge(symbolic2) {|base, coef1, coef2| coef1 + coef2 }
       end
 
+      def unite_numeric(numeric1, numeric2)
+        numeric1.send operation, numeric2
+      end
+
       def convert(var)
         case var
         when Summands then summands var
@@ -32,6 +36,10 @@ module Symbolic
 
       def numeric(numeric)
         new numeric, {}
+      end
+
+      def one(symbolic)
+        new identity_element, symbolic => 1
       end
 
       def simple?(var)
