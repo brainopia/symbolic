@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>
+  <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <title>Symbolic math for Ruby</title>
+    <link href='favicon.ico' rel='shortcut icon' type='image/x-icon' />
+    <style type="text/css">
+      @font-face {
+        font-family: Collegiate;
+        src: url("Collegiate.ttf");
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        color: white;
+        width: 32em;
+        max-width: 100%;
+        margin: 3ex auto 0 auto;
+        line-height: 150%;
+        background: #090c15 url(fractal.png) no-repeat 95% 15ex;
+        font-family: "Trebuchet MS", sans-serif;
+        padding-bottom: 2ex;
+      }
+      a {
+        color: #009ee0;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      a:visited {
+        color: #9e00e0;
+      }
+      h1 {
+        margin-bottom: 2ex;
+        font-weight: normal;
+        font: italic 200% Georgia, serif;
+        color: #009ee0;
+        }
+        h1 strong {
+          text-shadow: 0.1em 0.1em 0.1em #162983;
+        }
+      h2 {
+        margin: 1.5ex 0 0.8ex 0;
+        font-weight: normal;
+        font: italic 150% Georgia, serif;
+        color: #009ee0;
+      }
+      ul {
+        margin-left: -1em;
+        padding-left: 1em;
+        }
+        li {
+          color: #009ee0;
+          }
+          li span {
+            color: white;
+          }
+      p {
+        margin-top: 1ex;
+      }
+      pre {
+        margin: 0.8ex 0 2ex -1.0em;
+        border-left: 0.2em solid #009ee0;
+        padding-left: 0.9em;
+        line-height: 130%;
+        }
+        .comment {
+          color: #009ee0;
+        }
+      #content {
+        padding: 0 1em;
+        background: #090c15;
+        box-shadow: 6px 0 5px #090c15;
+        -moz-box-shadow: 6px 0 5px #090c15;
+        -webkit-box-shadow: 6px 0 5px #090c15;
+      }
+      .ribbon {
+         position: absolute;
+         top: 0;
+         right: 0;
+         overflow: hidden;
+         height: 10em;
+        }
+        .ribbon a {
+          display: block;
+          font-family: Collegiate;
+          text-decoration: none;
+          letter-spacing: -.1px;
+          padding: 0.25em 0;
+          position: relative;
+          top: 2.5em;
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          right: -2.5em;
+          background: #004a99;
+          color: #ecedee;
+        }
+        .ribbon a:hover span {
+          text-decoration: underline;
+        }
+        .ribbon span {
+          padding: 0.1em 3em;
+          border: 1px solid #7c7d7e;
+        }
+        @media print {
+          body {
+            width: 100%;
+            background: white;
+            color: black;
+          }
+          h1 strong {
+            text-shadow: 0.1em 0.1em 0.1em gray;
+          }
+          h1, h2, li {
+            color: black;
+          }
+          li, .comment {
+            color: gray;
+          }
+          li span {
+            color: black;
+          }
+          pre {
+            border-color: gray;
+          }
+          #content {
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            background: white;
+          }
+          a, a:visited {
+            color: black;
+            text-decoration: none;
+          }
+          .ribbon {
+            display: none;
+          }
+        }
+    </style>
+  </head>
+  <body><div id="content">
+    <div class="ribbon">
+      <a href="http://github.com/brainopia/symbolic">
+        <span>Fork me on GitHub</span>
+      </a>
+    </div>
+    <h1><strong>Symbolic</strong> math for Ruby</h1>
+    
+    <h2>Installation</h2>
+    <pre>gem install symbolic</pre>
+    
+    <h2>Introduction</h2>
+    <p>This gem can help you:</p>
+    <ul>
+	    <li><span>if you want to get a simplified form of a big equation;</span></li>
+	    <li><span>if you want to speed up similar calculations;</span></li>
+	    <li><span>if you need an abstraction layer for math.</span></li>
+    </ul>
+    <p>Symbolic doesn’t have any external dependencies.
+       It uses only pure ruby (less than 400 lines of code).</p>
+    
+    <h2>Tutorial</h2>
+    
+    <p>First, you need to create a symbolic variable.</p>
+<pre>
+x = var
+
+<span class="comment"># you can set a name of variable
+# (useful if you print equations)</span>
+angle = var :name => 'θ'
+
+<span class="comment"># or starting value</span>
+pi = var :value => 3.14
+
+<span class="comment"># or bind its value to a proc</span>
+y = var { x ** 2 }
+
+<span class="comment"># you can set a value for already created variable</span>
+x.value = 3
+</pre>
+    
+    <p>Now, you can do any math operations with it.</p>
+<pre>
+f = 2*x + 1
+puts f <span class="comment"># => 2*x+1</span>
+</pre>
+    
+    <p>To get value of symbolic expression you just call value:</p>
+<pre>
+f.value <span class="comment"># => 7</span>
+</pre>
+    
+    <p>If symbolic expression contains variables without value then it returns
+       nil.</p>
+<pre>
+z = var
+(z+1).value <span class="comment"># => nil</span>
+</pre>
+    
+    <p>All symbolic expression are automatically simplified when created:</p>
+<pre>
+0 * x           <span class="comment"># => 0</span>
+2 + x + 1       <span class="comment"># => x + 3</span>
+-(x-y) + 2*x    <span class="comment"># => x + y</span>
+(x**2)**3 / x   <span class="comment"># => x**5</span>
+<span class="comment"># etc. (more examples can be found in symbolic_spec.rb)</span>
+</pre>
+    
+    <p>If you need to use a function from Math module with symbolic variable,
+       use Symbolic::Math module.</p>
+<pre>
+cos = Symbolic::Math.cos(x)
+x.value = 0
+cos.value <span class="comment"># => 1.0</span>
+</pre>
+    
+    <p>You can get a list of variables from symbolic expression:</p>
+<pre>
+(x+y+1).variables <span class="comment"># => [x, y]</span>
+</pre>
+    
+    <p>So you can get a list of variables without value:</p>
+<pre>
+(x+y+1).variables.select {|var| var.value.nil? }
+</pre>
+    
+    <p>You can get an information about number of different operations used in
+       a symbolic expression:</p>
+<pre>
+f = (2*x-y+2)*x-2**(x*y)
+f.operations <span class="comment"># => {"+"=>1, "-"=>2, "*"=>3, "/"=>0,
+             # "**"=>1, "-@"=>0}</span>
+</pre>
+    
+    <h2>TODO</h2>
+    <ul>
+      <li><span>a lot of refactoring (code is pretty messy at this stage);</span></li>
+      <li><span>plotting capabilities;</span></li>
+      <li><span>derivatives;</span></li>
+      <li><span>integrals;</span></li>
+      <li><span>thorough documentation.</span></li>
+    </ul>
+    
+    <h2>Author</h2>
+    <p><a href="http://github.com/brainopia/">brainopia</a>
+       (<a href="mailto:ravwar@gmail.com">ravwar@gmail.com</a>).</p>
+    <p>I am ready to help with any questions related to Symbolic.
+       I welcome any contribution.</p>
+  </div></body>
+</html>
