@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "symbolic"
-    gem.version = '0.3.3'
+    gem.version = '0.3.4'
     gem.summary = 'Symbolic math for ruby'
     gem.description = <<TEXT
 Symbolic math for ruby.
@@ -20,7 +20,7 @@ This gem can help you
 Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 LOC (lines of code)).
 TEXT
     gem.email = "ravwar@gmail.com"
-    gem.homepage = "http://github.com/brainopia/symbolic"
+    gem.homepage = "http://brainopia.github.com/symbolic"
     gem.authors = ["brainopia"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
