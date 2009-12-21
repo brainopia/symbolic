@@ -147,10 +147,10 @@
       </a>
     </div>
     <h1><strong>Symbolic</strong> math for Ruby</h1>
-    
+
     <h2>Installation</h2>
     <pre>gem install symbolic</pre>
-    
+
     <h2>Introduction</h2>
     <p>This gem can help you:</p>
     <ul>
@@ -160,9 +160,9 @@
     </ul>
     <p>Symbolic doesn’t have any external dependencies.
        It uses only pure ruby (less than 400 lines of code).</p>
-    
+
     <h2>Tutorial</h2>
-    
+
     <p>First, you need to create a symbolic variable.</p>
 <pre>
 x = var
@@ -180,25 +180,25 @@ y = var { x ** 2 }
 <span class="comment"># you can set a value for already created variable</span>
 x.value = 3
 </pre>
-    
+
     <p>Now, you can do any math operations with it.</p>
 <pre>
 f = 2*x + 1
 puts f <span class="comment"># => 2*x+1</span>
 </pre>
-    
+
     <p>To get value of symbolic expression you just call value:</p>
 <pre>
 f.value <span class="comment"># => 7</span>
 </pre>
-    
+
     <p>If symbolic expression contains variables without value then it returns
        nil.</p>
 <pre>
 z = var
 (z+1).value <span class="comment"># => nil</span>
 </pre>
-    
+
     <p>All symbolic expression are automatically simplified when created:</p>
 <pre>
 0 * x           <span class="comment"># => 0</span>
@@ -207,7 +207,7 @@ z = var
 (x**2)**3 / x   <span class="comment"># => x**5</span>
 <span class="comment"># etc. (more examples can be found in symbolic_spec.rb)</span>
 </pre>
-    
+
     <p>If you need to use a function from Math module with symbolic variable,
        use Symbolic::Math module.</p>
 <pre>
@@ -215,17 +215,17 @@ cos = Symbolic::Math.cos(x)
 x.value = 0
 cos.value <span class="comment"># => 1.0</span>
 </pre>
-    
+
     <p>You can get a list of variables from symbolic expression:</p>
 <pre>
 (x+y+1).variables <span class="comment"># => [x, y]</span>
 </pre>
-    
+
     <p>So you can get a list of variables without value:</p>
 <pre>
 (x+y+1).variables.select {|var| var.value.nil? }
 </pre>
-    
+
     <p>You can get an information about number of different operations used in
        a symbolic expression:</p>
 <pre>
@@ -233,7 +233,7 @@ f = (2*x-y+2)*x-2**(x*y)
 f.operations <span class="comment"># => {"+"=>1, "-"=>2, "*"=>3, "/"=>0,
              # "**"=>1, "-@"=>0}</span>
 </pre>
-    
+
     <h2>TODO</h2>
     <ul>
       <li><span>a lot of refactoring (code is pretty messy at this stage);</span></li>
@@ -242,11 +242,11 @@ f.operations <span class="comment"># => {"+"=>1, "-"=>2, "*"=>3, "/"=>0,
       <li><span>integrals;</span></li>
       <li><span>thorough documentation.</span></li>
     </ul>
-    
+
     <h2>Author</h2>
     <p><a href="http://github.com/brainopia/">brainopia</a>
        (<a href="mailto:ravwar@gmail.com">ravwar@gmail.com</a>).</p>
     <p>I am ready to help with any questions related to Symbolic.
-       I welcome any contribution.</p>
+       I&nbsp;welcome any contribution.</p>
   </div></body>
 </html>
