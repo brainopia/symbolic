@@ -7,7 +7,7 @@ begin
     gem.name = "symbolic"
     gem.version = '0.3.6'
     gem.summary = 'Symbolic math for ruby'
-    gem.description = "This gem can help if you want to get a simplified form of a big equation or to speed up similar calculations or you need an abstraction layer for math. Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 lines of code)."
+    gem.description = 'Symbolic math for ruby. This gem can help if you want to get a simplified form of a big equation or to speed up similar calculations or you need an abstraction layer for math. Symbolic does not have any external dependencies. It uses only pure ruby (less than 400 lines of code).'
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://brainopia.github.com/symbolic"
     gem.authors = ["brainopia"]
