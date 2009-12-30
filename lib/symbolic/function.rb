@@ -1,6 +1,6 @@
 class Symbolic::Function
 =begin
-  This class is wrapper around calls to Math module.
+  This class is proxy for methods from Math module.
 =end
   include Symbolic
 
