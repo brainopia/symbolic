@@ -46,7 +46,7 @@ module Symbolic
   end
 
   def inspect
-    "Symbolic: #{to_s}"
+    "Symbolic(#{to_s})"
   end
 
   private
