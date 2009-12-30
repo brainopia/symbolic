@@ -36,7 +36,9 @@ module Symbolic
     end
 
     def value
-      symbolic.inject(numeric) {|value, (base, coef)| value + base.value * coef.value }
+      if variable.all? &:value
+        symbolic.inject(numeric) {|value, (base, coef)| value + base.value * coef.value }
+      end
     end
 
     def to_s

@@ -13,7 +13,7 @@ class Symbolic::Function
   end
 
   def value
-    ::Math.send @operation, @argument.value if variables.any? {|it| it.value.nil? }
+    ::Math.send @operation, @argument.value if variables.all? &:value
   end
 
   def variables

@@ -74,7 +74,9 @@ module Symbolic
     end
 
     def value
-      @symbolic.inject(numeric) {|value, (base, exp)| value * base.value ** exp.value }
+      if variables.all? &:value
+        @symbolic.inject(numeric) {|value, (base, exp)| value * base.value ** exp.value }
+      end
     end
 
     def to_s
