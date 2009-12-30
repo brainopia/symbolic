@@ -92,7 +92,7 @@ module Symbolic
     end
 
     def brackets(var)
-      [Numeric, Symbolic::Variable].any? {|klass| var.is_a? klass } ? var : "(#{var})"
+      [Numeric, Variable, Function].any? {|klass| var.is_a? klass } ? var : "(#{var})"
     end
 
     def simplify_output
