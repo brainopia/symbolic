@@ -1,23 +1,26 @@
 class Symbolic::Function
+=begin
+  This class is wrapper around calls to Math module.
+=end
   include Symbolic
 
-  def initialize(variable, operation)
-    @variable, @operation = variable, operation
+  def initialize(argument, operation)
+    @argument, @operation = argument, operation
   end
 
   def to_s
-    "#{@operation}(#{@variable})"
+    "#{@operation}(#{@argument})"
   end
 
   def value
-    ::Math.send @operation, @variable.value if variables.any? {|it| it.value.nil? }
+    ::Math.send @operation, @argument.value if variables.any? {|it| it.value.nil? }
   end
 
   def variables
-    @variable.variables
+    @argument.variables
   end
 
   def detailed_operations
-    @variable.detailed_operations.tap {|it| it[@operation] += 1}
+    @argument.detailed_operations.tap {|it| it[@operation] += 1}
   end
 end
