@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "symbolic"
-    gem.version = '0.3.5'
+    gem.version = '0.3.6'
     gem.summary = 'Symbolic math for ruby'
     gem.description = <<TEXT
 Symbolic math for ruby.
