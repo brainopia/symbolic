@@ -59,7 +59,7 @@ module Symbolic
     attr_reader :numeric, :symbolic
 
     def initialize(numeric, symbolic)
-      @numeric, @symbolic = numeric, symbolic
+      @numeric, @symbolic = numeric.freeze, symbolic.freeze
     end
 
     def variables
