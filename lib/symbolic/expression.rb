@@ -44,9 +44,9 @@ module Symbolic
 
       def simple?(var)
         case var
-        when Numeric, Variable
+        when Numeric, Variable, Function
           true
-        when Function, Summands
+        when Summands
           false
         when Factors
           var.symbolic.all? {|k,v| simple? k }
