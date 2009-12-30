@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "symbolic"
-    gem.version = '0.3.6'
+    gem.version = '0.3.7'
     gem.summary = 'Symbolic math for ruby'
     gem.description = 'Symbolic math for ruby. This gem can help if you want to get a simplified form of a big equation or to speed up similar calculations or you need an abstraction layer for math. Symbolic does not have any external dependencies. It uses only pure ruby (less than 400 lines of code).'
     gem.email = "ravwar@gmail.com"
