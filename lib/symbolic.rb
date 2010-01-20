@@ -1,11 +1,13 @@
-Dir["#{File.dirname(__FILE__)}/symbolic/*.rb"].each { |f|
-  require f
+Dir["#{File.dirname(__FILE__)}/symbolic/**/*.rb"].each { |f|
+  case File.basename(f)
+  when 'matrix.rb'
+    require f if Object.const_defined? 'Matrix'
+  when 'rational.rb'
+    require f if RUBY_VERSION == '1.8.7'
+  else
+    require f
+  end
 }
-
-require 'symbolic/extensions/kernel'
-require 'symbolic/extensions/numeric'
-require 'symbolic/extensions/matrix' if Object.const_defined? 'Matrix'
-require 'symbolic/extensions/rational' if RUBY_VERSION == '1.8.7'
 
 module Symbolic
   def +@
