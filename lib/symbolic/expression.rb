@@ -23,7 +23,7 @@ module Symbolic
       end
 
       def unite_numeric(numeric1, numeric2)
-        numeric1.send operation, numeric2
+        numeric1.send self::OPERATION, numeric2
       end
 
       def convert(var)
@@ -39,7 +39,7 @@ module Symbolic
       end
 
       def one(symbolic)
-        new identity_element, symbolic => 1
+        new self::IDENTITY_ELEMENT, symbolic => 1
       end
 
       def simple?(var)

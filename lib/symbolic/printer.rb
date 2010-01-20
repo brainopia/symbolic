@@ -5,8 +5,26 @@ Two formats will be soon supported: standard and LaTeX
 module Symbolic
   class Printer
     class << self
+      def brackets(var)
+        [Numeric, Variable, Function].any? {|c| var.is_a? c } ? var.to_s : "(#{var})"
+      end
+      
       def rational(r)
-        (r.round == r ? r.to_i : r.to_f).to_s
+        "#{r.round == r ? r.to_i : r.to_f}"
+      end
+      
+      def coef(c, sign = false)
+        "#{(c > 0) ? (sign ? '+' : '') : '-' }#{"#{rational c.abs}*" if c.abs != 1}"
+      end
+      
+      # Factors
+      def exponent(base, exponent)
+        "#{brackets base}#{"**#{brackets exponent}" if exponent != 1}"
+      end
+      
+      # Summands
+      def remainder(n)
+        "#{'+' if n > 0}#{n}"
       end
     end
   end

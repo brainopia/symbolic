@@ -1,14 +1,8 @@
 module Symbolic
   class Factors < Expression
+    OPERATION = :*
+    IDENTITY_ELEMENT = 1
     class << self
-      def operation
-        '*'
-      end
-
-      def identity_element
-        1
-      end
-
       def summands(summands)
         one summands
       end
@@ -48,14 +42,14 @@ module Symbolic
       end
 
       def simplify_expression!(factors)
-        factors[1].delete_if {|base, exp| (base == identity_element) || (exp == 0) }
+        factors[1].delete_if {|base, exp| (base == IDENTITY_ELEMENT) || (exp == 0) }
         factors[0] = 0 if factors[1].any? {|base, exp| base == 0 }
       end
 
       def simplify(numeric, symbolic)
         if numeric == 0 || symbolic.empty?
           (numeric.round == numeric) ? numeric.to_i : numeric.to_f
-        elsif numeric == identity_element && symbolic.size == 1 && symbolic.values.first == 1
+        elsif numeric == IDENTITY_ELEMENT && symbolic.size == 1 && symbolic.values.first == 1
           symbolic.keys.first
         end
       end
@@ -64,7 +58,7 @@ module Symbolic
         if base.is_a? Factors
           return base.numeric**exponent, Hash[*base.symbolic.map {|base,exp| [base,exp*exponent] }.flatten]
         else
-          [identity_element, { base => exponent }]
+          [IDENTITY_ELEMENT, { base => exponent }]
         end
       end
     end
@@ -83,30 +77,18 @@ module Symbolic
       simplify_output
     end
 
-    def coefficient_to_string(numeric)
-      "#{'-' if numeric < 0}#{"#{Printer.rational numeric.abs}*" if numeric.abs != 1}"
-    end
-
-    def exponent_to_string(base, exponent)
-      "#{brackets base}#{"**#{brackets exponent}" if exponent != 1}"
-    end
-
-    def brackets(var)
-      [Numeric, Variable, Function].any? {|klass| var.is_a? klass } ? var : "(#{var})"
-    end
-
     def simplify_output
-      groups = @symbolic.group_by {|b,e| e.is_a?(Numeric) && e < 0 }
-      reversed_factors = groups[true] ? [1, Hash[*groups[true].flatten] ] : nil
-      factors = groups[false] ? [@numeric, Hash[*groups[false].flatten] ] : nil
+      groups = @symbolic.group_by { |b,e| e.is_a?(Numeric) && e < 0 }
+      reversed_factors = groups[true] ? [ 1, Hash[*groups[true].flatten] ] : nil
+      factors = groups[false] ? [ @numeric, Hash[*groups[false].flatten] ] : nil
       output = '' << (factors ? output(factors) : Printer.rational(@numeric))
       output << "/#{reversed_output reversed_factors}" if reversed_factors
       output
     end
 
     def output(factors)
-      coefficient_to_string(factors[0]) <<
-      factors[1].map {|base,exp| exponent_to_string base,exp }.join('*')
+      Printer.coef(factors[0]) <<
+      factors[1].map {|base,exp| Printer.exponent base,exp }.join(OPERATION)
     end
 
     def reversed_output(factors)
