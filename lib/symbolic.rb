@@ -1,11 +1,6 @@
-require 'symbolic/coerced'
-require 'symbolic/variable'
-require 'symbolic/expression'
-require 'symbolic/summands'
-require 'symbolic/factors'
-require 'symbolic/function'
-require 'symbolic/math'
-require 'symbolic/statistics'
+Dir["#{File.dirname(__FILE__)}/symbolic/*.rb"].each { |f|
+  require f
+}
 
 require 'symbolic/extensions/kernel'
 require 'symbolic/extensions/numeric'

@@ -84,7 +84,7 @@ module Symbolic
     end
 
     def coefficient_to_string(numeric)
-      "#{'-' if numeric < 0}#{"#{rational_to_string numeric.abs}*" if numeric.abs != 1}"
+      "#{'-' if numeric < 0}#{"#{Printer.rational numeric.abs}*" if numeric.abs != 1}"
     end
 
     def exponent_to_string(base, exponent)
@@ -99,7 +99,7 @@ module Symbolic
       groups = @symbolic.group_by {|b,e| e.is_a?(Numeric) && e < 0 }
       reversed_factors = groups[true] ? [1, Hash[*groups[true].flatten] ] : nil
       factors = groups[false] ? [@numeric, Hash[*groups[false].flatten] ] : nil
-      output = '' << (factors ? output(factors) : rational_to_string(@numeric))
+      output = '' << (factors ? output(factors) : Printer.rational(@numeric))
       output << "/#{reversed_output reversed_factors}" if reversed_factors
       output
     end
@@ -112,10 +112,6 @@ module Symbolic
     def reversed_output(factors)
       result = output [factors[0], Hash[*factors[1].map {|b,e| [b,-e] }.flatten]]
       (factors[1].length > 1) ? "(#{result})" : result
-    end
-
-    def rational_to_string(numeric)
-      ((numeric.round == numeric) ? numeric.to_i : numeric.to_f).to_s
     end
   end
 end
