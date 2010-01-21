@@ -107,15 +107,17 @@ describe "Symbolic" do
     'x**2*(-1)*x**(-1)' => '-x',
     'x + y - x' => 'y',
     '2*x + x**1 - y**2/y - y' => '3*x - 2*y',
-    '-(x+4)' => '-x-4'
+    '-(x+4)' => '-x-4',
+    
+    '(x/y)/(x/y)' => '1',
+    '(y/x)/(x/y)' => 'y**2/x**2',
   end
 
   describe 'general methods:' do
     should_equal \
     'x.variables' => '[x]',
     '(-(x+y)).variables' => '[x,y]',
-    '(-x**y-4*y+5-y/x).operations' =>
-    '{"+" => 1, "-" => 2, "*" => 1, "/" => 1, "-@" => 1, "**" => 1}'
+    '(-x**y-4*y+5-y/x).operations' => '{:+ => 1, :- => 2, :* => 1, :/ => 1, :-@ => 1, :** => 1}'
   end
 
   describe "to_s:" do
