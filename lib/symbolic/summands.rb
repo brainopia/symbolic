@@ -2,17 +2,17 @@
 module Symbolic
   class Summands < Expression
     OPERATION = :+
-    IDENTITY_ELEMENT = 0
+    IDENTITY = 0
     class << self
       def summands(summands)
         summands
       end
 
       def factors(factors)
-        if factors.symbolic.length == 1 && factors.symbolic.values.first == 1
-          new IDENTITY_ELEMENT, factors.symbolic.keys.first => factors.numeric
+        if factors.symbolic.length == 1 && factors.symbolic.first[1] == Factors::IDENTITY
+          new IDENTITY, factors.symbolic.first[0] => factors.numeric
         else
-          new IDENTITY_ELEMENT, Factors.new(1, factors.symbolic) => factors.numeric
+          new IDENTITY, Factors.new(1, factors.symbolic) => factors.numeric
         end
       end
 
@@ -23,8 +23,8 @@ module Symbolic
       def simplify(numeric, symbolic)
         if symbolic.empty?
           numeric
-        elsif numeric == IDENTITY_ELEMENT && symbolic.size == 1
-          symbolic.values.first * symbolic.keys.first
+        elsif numeric == IDENTITY && symbolic.size == 1
+          symbolic.first[1] * symbolic.first[0]
         end
       end
     end

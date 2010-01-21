@@ -39,7 +39,7 @@ module Symbolic
       end
 
       def one(symbolic)
-        new self::IDENTITY_ELEMENT, symbolic => 1
+        new self::IDENTITY, symbolic => 1
       end
 
       def simple?(var)

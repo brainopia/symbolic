@@ -1,7 +1,7 @@
 module Symbolic
   class Factors < Expression
     OPERATION = :*
-    IDENTITY_ELEMENT = 1
+    IDENTITY = 1
     class << self
       def summands(summands)
         one summands
@@ -42,23 +42,23 @@ module Symbolic
       end
 
       def simplify_expression!(factors)
-        factors[1].delete_if {|base, exp| (base == IDENTITY_ELEMENT) || (exp == 0) }
-        factors[0] = 0 if factors[1].any? {|base, exp| base == 0 }
+        factors[1].delete_if {|base, exp| (base == IDENTITY) || (exp == 0) }
+        factors[0] = 0 if factors[1].any? {|base, _| base == 0 }
       end
 
       def simplify(numeric, symbolic)
         if numeric == 0 || symbolic.empty?
           (numeric.round == numeric) ? numeric.to_i : numeric.to_f
-        elsif numeric == IDENTITY_ELEMENT && symbolic.size == 1 && symbolic.values.first == 1
-          symbolic.keys.first
+        elsif numeric == IDENTITY && symbolic.size == 1 && symbolic.first[1] == 1
+          symbolic.first[0]
         end
       end
 
       def unite_exponents(base, exponent)
         if base.is_a? Factors
-          return base.numeric**exponent, Hash[*base.symbolic.map {|base,exp| [base,exp*exponent] }.flatten]
+          [base.numeric**exponent, Hash[*base.symbolic.map {|b,e| [b, e*exponent] }.flatten]]
         else
-          [IDENTITY_ELEMENT, { base => exponent }]
+          [IDENTITY, { base => exponent }]
         end
       end
     end
