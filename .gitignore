@@ -1,3 +1,6 @@
+## self
+.gitignore
+
 ## MAC OS
 .DS_Store
 
@@ -20,3 +23,6 @@ pkg
 *.gemspec
 
 ## PROJECT::SPECIFIC
+
+## Others, personal tests
+spec/sample.rb
