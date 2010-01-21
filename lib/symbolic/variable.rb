@@ -11,14 +11,20 @@ module Symbolic
     attr_accessor :name, :proc
     attr_writer :value
 
-    def initialize(options={}, &proc)
-      @name, @value = options.values_at(:name, :value)
-      @name = @name.to_s if @name
-      @proc = proc
-    end
+		# Create a new Symbolic::Variable, with optional name, value and proc
+		def initialize(*args, &proc)
+			args.each do |arg|
+				case arg
+				when Numeric then @value = arg
+				when String, Symbol then @name = arg.to_s
+				else raise ArgumentError, "Bad argument(String|Symbol name, Numeric value, Proc proc) : #{arg}(#{arg.class})"
+				end
+			end
+			@proc = proc
+		end
 
     def value
-      @value || @proc && @proc.call.value
+      @value || (@proc && @proc.call.value)
     end
 
     def to_s

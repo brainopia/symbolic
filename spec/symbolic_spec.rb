@@ -2,8 +2,8 @@ require File.expand_path(File.dirname(__FILE__) +'/spec_helper')
 
 describe "Symbolic" do
   before(:all) do
-    @x = var :name => :x, :value => 1
-    @y = var :name => :y, :value => 2
+    @x = var :x, 1
+    @y = var :y, 2
   end
 
   def expression(string)

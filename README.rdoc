@@ -20,10 +20,10 @@ First, you need to create a symbolic variable.
   x = var
 
   # you can set a name of variable (useful if you print equations)
-  angle = var :name => 'θ'
+  angle = var 'θ'
 
   # or starting value
-  pi = var :value => 3.14
+  pi = var 3.14
 
   # or bind its value to a proc
   y = var { x ** 2 }
