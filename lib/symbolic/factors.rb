@@ -68,7 +68,7 @@ module Symbolic
     end
 
     def value
-      if variables.all? &:value
+      if variables.all?(&:value)
         @symbolic.inject(numeric) {|value, (base, exp)| value * base.value ** exp.value }
       end
     end
@@ -78,12 +78,13 @@ module Symbolic
     end
 
     def simplify_output
-      groups = @symbolic.group_by { |b,e| e.is_a?(Numeric) && e < 0 }
-      reversed_factors = groups[true] ? [ 1, Hash[*groups[true].flatten] ] : nil
-      factors = groups[false] ? [ @numeric, Hash[*groups[false].flatten] ] : nil
-      output = '' << (factors ? output(factors) : Printer.rational(@numeric))
-      output << "/#{reversed_output reversed_factors}" if reversed_factors
-      output
+      reversed_factors, factors = @symbolic.partition { |b,e| e.is_a?(Numeric) && e < 0 }
+      reversed_factors = reversed_factors.empty? ? nil : [ 1, Hash[*reversed_factors.flatten] ]
+      factors = factors.empty? ? nil : [ @numeric, Hash[*factors.flatten] ]
+      
+      s = (factors ? output(factors) : Printer.rational(@numeric))
+      s << "/#{reversed_output reversed_factors}" if reversed_factors
+      s
     end
 
     def output(factors)

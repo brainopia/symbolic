@@ -110,7 +110,7 @@ describe "Symbolic" do
     '-(x+4)' => '-x-4',
     
     '(x/y)/(x/y)' => '1',
-    '(y/x)/(x/y)' => 'y**2/x**2',
+    '(y/x)/(x/y)' => 'y**2/x**2'
   end
 
   describe 'general methods:' do

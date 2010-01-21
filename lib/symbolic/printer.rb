@@ -13,8 +13,11 @@ module Symbolic
         "#{r.round == r ? r.to_i : r.to_f}"
       end
       
-      def coef(c, sign = false)
-        "#{(c > 0) ? (sign ? '+' : '') : '-' }#{"#{rational c.abs}*" if c.abs != 1}"
+      def coef(c)
+        "#{'-' if c < 0}#{"#{rational c.abs}*" if c.abs != 1}"
+      end
+      def coef_with_sign(c)
+        "#{ c < 0 ? '-' : '+'}#{"#{rational c.abs}*" if c.abs != 1}"
       end
       
       # Factors

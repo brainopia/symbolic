@@ -30,20 +30,20 @@ module Symbolic
     end
 
     def value
-      if variables.all? &:value
+      if variables.all?(&:value)
         symbolic.inject(numeric) {|value, (base, coef)| value + base.value * coef.value }
       end
     end
 
     def to_s
-      output = symbolic.map {|base, coef| Printer.coef(coef,:with_sign) + base.to_s }
+      output = symbolic.map {|base, coef| Printer.coef_with_sign(coef) + base.to_s }
       output << Printer.remainder(numeric) if numeric != 0
       output[0].sub!(/^\+/, '')
       output.join
     end
 
     def reverse
-      self.class.new -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten]
+      self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end
   end
 end
