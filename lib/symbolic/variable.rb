@@ -13,7 +13,7 @@ module Symbolic
 
 		# Create a new Symbolic::Variable, with optional name, value and proc
 		def initialize(*args, &proc)
-			@value, @name = nil, nil
+			@value = nil
 			args.each do |arg|
 				case arg
 				when Numeric then @value = arg
@@ -25,11 +25,11 @@ module Symbolic
 		end
 
     def value
-			@value or @proc && @proc.call.value
+			@value || @proc && @proc.call.value
     end
 
     def to_s
-      @name || 'unnamed_variable'
+      name || 'unnamed_variable'
     end
 
     def variables
