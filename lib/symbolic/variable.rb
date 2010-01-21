@@ -13,7 +13,7 @@ module Symbolic
 
 		# Create a new Symbolic::Variable, with optional name, value and proc
 		def initialize(*args, &proc)
-			@value, @name = nil, 'unnamed_variable'
+			@value, @name = nil, nil
 			args.each do |arg|
 				case arg
 				when Numeric then @value = arg
@@ -21,7 +21,6 @@ module Symbolic
 				else raise ArgumentError, "Bad argument(String|Symbol name, Numeric value, Proc proc) : #{arg}(#{arg.class})"
 				end
 			end
-			@value ||= nil
 			@proc = proc
 		end
 
@@ -30,7 +29,7 @@ module Symbolic
     end
 
     def to_s
-      @name
+      @name || 'unnamed_variable'
     end
 
     def variables
