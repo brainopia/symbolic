@@ -6,7 +6,7 @@
       if other.is_a?(Numeric) && other < 0
         Rational.new!(self, 1)**other
       else
-        self.old_power(other)
+        old_power(other)
       end
     end
   end
