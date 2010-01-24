@@ -72,29 +72,5 @@ module Symbolic
         @symbolic.inject(numeric) {|value, (base, exp)| value * base.value ** exp.value }
       end
     end
-
-    def to_s
-      simplify_output
-    end
-
-    def simplify_output
-      reversed_factors, factors = @symbolic.partition { |b,e| e.is_a?(Numeric) && e < 0 }
-      reversed_factors = reversed_factors.empty? ? nil : [ 1, Hash[*reversed_factors.flatten] ]
-      factors = factors.empty? ? nil : [ @numeric, Hash[*factors.flatten] ]
-      
-      s = (factors ? output(factors) : Printer.rational(@numeric))
-      s << "/#{reversed_output reversed_factors}" if reversed_factors
-      s
-    end
-
-    def output(factors)
-      Printer.coef(factors[0]) <<
-      factors[1].map {|base,exp| Printer.exponent base,exp }.join(OPERATION)
-    end
-
-    def reversed_output(factors)
-      result = output [factors[0], Hash[*factors[1].map {|b,e| [b,-e] }.flatten]]
-      (factors[1].length > 1) ? "(#{result})" : result
-    end
   end
 end

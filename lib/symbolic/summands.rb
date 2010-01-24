@@ -35,13 +35,6 @@ module Symbolic
       end
     end
 
-    def to_s
-      output = symbolic.map {|base, coef| Printer.coef_with_sign(coef) + base.to_s }
-      output << Printer.remainder(numeric) if numeric != 0
-      output[0].sub!(/^\+/, '')
-      output.join
-    end
-
     def reverse
       self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end

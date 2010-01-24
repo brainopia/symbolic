@@ -21,10 +21,6 @@ If value isn't set for variable, but there is an associated proc, then value is 
       get_value || @proc && @proc.call.value
     end
 
-    def to_s
-      Printer.variable(self)
-    end
-
     def variables
       [self]
     end

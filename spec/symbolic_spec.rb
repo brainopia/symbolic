@@ -152,7 +152,7 @@ describe "Symbolic" do
     it 'math method' do
       cos = Symbolic::Math.cos(x)
       x.value = 0
-      cos.value.should == 1.0
+      [cos.value, cos.to_s].should == [1.0, 'cos(x)']
     end
   end
 

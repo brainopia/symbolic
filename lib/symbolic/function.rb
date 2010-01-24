@@ -3,13 +3,9 @@ class Symbolic::Function
   This class is proxy for methods from Math module.
 =end
   include Symbolic
-
+  attr_reader :argument, :operation
   def initialize(argument, operation)
     @argument, @operation = argument, operation
-  end
-
-  def to_s
-    "#{@operation}(#{@argument})"
   end
 
   def value

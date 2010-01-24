@@ -67,7 +67,7 @@ module Symbolic
     end
 
     def ==(object)
-      (object.numeric == @numeric) and (object.symbolic == @symbolic) rescue false
+      (object.numeric == @numeric and object.symbolic == @symbolic) rescue false
     end
   end
 end
