@@ -115,17 +115,18 @@ describe "Symbolic" do
   end
 
   describe 'Variable methods:' do
-    x, y = var(:x), var(:y)
-    
     #initialize
-    it '(var without value).value = nil' do
-      var('c').value.should == nil
+    it 'var(:name)' do
+      v = var(:name)
+      [v.name, v.value].should == [:name, nil]
     end
-    it '(var without name).to_s == "unnamed_variable"' do
-      (2*var).to_s.should == "2*unnamed_variable"
+    it 'var.to_s == "unnamed_variable"' do
+      v = var
+      [v.to_s, v.value].should == ["unnamed_variable", nil]
     end
     it 'var init' do
-      var('x', 2).name.should == 'x' and var('x', 2).value.should == 2
+      v = var('x', 2)
+      [v.name, v.value].should == ['x', 2]
     end
     it 'proc value' do
       x = var :x, 2
@@ -134,6 +135,7 @@ describe "Symbolic" do
       (x*y).value.should == 27
     end
 
+    x, y = var(:x), var(:y)
     #variables
     it 'expression variables' do
       x.variables.should == [x]
@@ -146,7 +148,7 @@ describe "Symbolic" do
     it 'operations' do
       (-x**y-4*y+5-y/x).operations.should == {:+ => 1, :- => 2, :* => 1, :/ => 1, :-@ => 1, :** => 1}
     end
-    
+
     it 'math method' do
       cos = Symbolic::Math.cos(x)
       x.value = 0

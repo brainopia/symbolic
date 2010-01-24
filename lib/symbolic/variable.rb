@@ -11,15 +11,9 @@ If value isn't set for variable, but there is an associated proc, then value is 
     attr_accessor :name, :proc, :value
 
     # Create a new Symbolic::Variable, with optional name, value and proc
-    def initialize(*args, &proc)
-      args.each do |arg|
-        case arg
-        when Numeric then @value = arg
-        when String, Symbol then @name = arg.to_s
-        else raise ArgumentError, "Bad argument(String|Symbol name, Numeric value, Proc proc) : #{arg}(#{arg.class})"
-        end
-      end
-      @proc = proc
+    def initialize(*args, &proc) # () or (name) or (value) or (name, value) => not (value, name)
+      args.unshift nil if Numeric === args.first
+      (@name, @value), @proc = args, proc
     end
 
     alias :get_value :value
@@ -28,7 +22,7 @@ If value isn't set for variable, but there is an associated proc, then value is 
     end
 
     def to_s
-      name || 'unnamed_variable'
+      Printer.variable(self)
     end
 
     def variables

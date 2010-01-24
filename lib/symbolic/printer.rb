@@ -29,6 +29,11 @@ module Symbolic
       def remainder(n)
         "#{'+' if n > 0}#{n}"
       end
+      
+      # Variable
+      def variable(v)
+        "#{v.name || :unnamed_variable}"
+      end
     end
   end
 end
