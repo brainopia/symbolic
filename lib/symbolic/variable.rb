@@ -24,7 +24,7 @@ If value isn't set for variable, but there is an associated proc, then value is 
 
     alias :get_value :value
     def value
-      get_value or @proc && @proc.call.value
+      get_value || @proc && @proc.call.value
     end
 
     def to_s
