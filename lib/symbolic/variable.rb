@@ -8,8 +8,7 @@ If value isn't set for variable, but there is an associated proc, then value is 
 =end
   class Variable
     include Symbolic
-    attr_accessor :name, :proc
-    attr_writer :value
+    attr_accessor :name, :proc, :value
 
     # Create a new Symbolic::Variable, with optional name, value and proc
     def initialize(*args, &proc)
@@ -23,8 +22,9 @@ If value isn't set for variable, but there is an associated proc, then value is 
       @proc = proc
     end
 
+    alias :get_value :value
     def value
-      instance_variable_defined?(:@value) ? @value : @proc && @proc.call.value
+      get_value or @proc && @proc.call.value
     end
 
     def to_s
