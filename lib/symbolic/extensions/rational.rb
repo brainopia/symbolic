@@ -2,6 +2,7 @@
 if RUBY_VERSION == '1.8.7'
   [Fixnum,Bignum].each do |klass|
     klass.class_eval do
+      # this method is copy-pasted from ruby std, the only change is conditional for Numeric
       def rpower(other)
         if other.is_a?(Numeric) && other < 0
           Rational.new!(self, 1)**other
