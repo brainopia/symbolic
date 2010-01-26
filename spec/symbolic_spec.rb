@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby -w
-require 'spec_helper'
+require File.dirname(__FILE__)+'/spec_helper'
 
 describe "Symbolic" do
   before(:all) do
