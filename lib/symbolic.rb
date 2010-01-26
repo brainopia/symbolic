@@ -36,6 +36,7 @@ module Symbolic
   def to_s
     Printer.print(self)
   end
+
   def inspect
     "Symbolic(#{to_s})"
   end
