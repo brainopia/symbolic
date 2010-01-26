@@ -2,14 +2,14 @@
 if RUBY_VERSION == '1.8.7'
   [Fixnum,Bignum].each do |klass|
     klass.class_eval do
-      alias :old_power :**
-      def **(other)
+      def rpower(other)
         if other.is_a?(Numeric) && other < 0
           Rational.new!(self, 1)**other
         else
-          old_power(other)
+          self.power!(other)
         end
       end
-    end
-  end
-end
+      alias ** rpower
+    end # class_eval
+  end # each
+end # if

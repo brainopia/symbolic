@@ -9,7 +9,7 @@ module Symbolic
         when :-  then /[^(]-/
         when :*  then /[^*]\*[^*]/
         when :-@ then /\(-|^-/
-        else /#{Regexp.escape(op)}/
+        else /#{Regexp.escape(op.to_s)}/
         end
         ).size
       })
