@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) +'/spec_helper')
 
 describe "Symbolic" do
   before(:all) do
-    @x = var :x, 1
-    @y = var :y, 2
+    @x = var :name => :x, :value => 1
+    @y = var :name => :y, :value => 2
   end
 
   def expression(string)
@@ -116,26 +116,26 @@ describe "Symbolic" do
 
   describe 'Variable methods:' do
     #initialize
-    it 'var(:name)' do
-      v = var(:name)
-      [v.name, v.value].should == [:name, nil]
+    it 'var(:name => :v)' do
+      v = var(:name => :v)
+      [v.name, v.value].should == ['v', nil]
     end
     it 'var.to_s == "unnamed_variable"' do
       v = var
       [v.to_s, v.value].should == ["unnamed_variable", nil]
     end
     it 'var init' do
-      v = var('x', 2)
+      v = var(:name => :x, :value => 2)
       [v.name, v.value].should == ['x', 2]
     end
     it 'proc value' do
-      x = var :x, 2
+      x = var :name => :x, :value => 2
       y = var { x**2 }
       x.value = 3
       (x*y).value.should == 27
     end
 
-    x, y = var(:x), var(:y)
+    x, y = var(:name => :x), var(:name => :y)
     #variables
     it 'expression variables' do
       x.variables.should == [x]

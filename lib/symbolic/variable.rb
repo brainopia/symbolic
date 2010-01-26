@@ -12,9 +12,9 @@ If value isn't set for variable, but there is an associated proc, then value is 
     attr_writer :value
 
     # Create a new Symbolic::Variable, with optional name, value and proc
-    def initialize(*args, &proc) # () or (name) or (value) or (name, value) => not (value, name)
-      args.unshift nil if Numeric === args.first
-      (@name, @value), @proc = args, proc
+    def initialize(options={}, &proc)
+      (@name, @value), @proc = options.values_at(:name, :value), proc
+      @name = @name.to_s if @name
     end
 
     def value
