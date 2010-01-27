@@ -1,14 +1,16 @@
-# Fix for rational on 1.8.7
-if RUBY_VERSION == '1.8.7'
+# Fix for Integer#** defined in stdlib rational.rb on ruby < 1.9
+# We need to redefine Integer#**(other)
+# Because, with Rational, it uses a comparaison such as other >= 0
+# That cannot work with Symbolic::Variable (or make sense)
+if RUBY_VERSION < '1.9'
   require 'rational'
   [Fixnum,Bignum].each do |klass|
     klass.class_eval do
-      # this method is copy-pasted from ruby std, the only change is conditional for Numeric
-      remove_method :**
+      alias :old_power :**
       def **(other)
-        if other.is_a?(Numeric) && other < 0
-          Rational.new!(self, 1)**other
-        else
+        if Numeric === other # If other is Numeric, we can use rpower(the new #** defined in stdlib rational.rb)
+          old_power(other)
+        else # But if not, we want the old behaviour(that was aliased to power!, and does not check if >= 0)
           power!(other)
         end
       end
