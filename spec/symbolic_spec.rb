@@ -179,21 +179,23 @@ describe "Symbolic" do
 end
 
 describe "Symbolic plugins" do
-  describe "autovarname" do
-    require "symbolic/plugins/autovarname"
-    it 'single variable' do
-      x = var
-      x.name.should == 'x'
-    end
-    
-    it 'single variable with value' do
-      x = var :value => 7
-      [x.name, x.value].should == ['x', 7]
-    end
-    
-    it 'multiple variables' do
-      x, yy, zzz = vars
-      [x.name, yy.name, zzz.name].should == ['x', 'yy', 'zzz']
+  if RUBY_VERSION > '1.9' # Not yet compatible with 1.8
+    describe "autovarname" do
+      require "symbolic/plugins/autovarname"
+      it 'single variable' do
+        x = var
+        x.name.should == 'x'
+      end
+
+      it 'single variable with value' do
+        x = var :value => 7
+        [x.name, x.value].should == ['x', 7]
+      end
+
+      it 'multiple variables' do
+        x, yy, zzz = vars
+        [x.name, yy.name, zzz.name].should == ['x', 'yy', 'zzz']
+      end
     end
   end
 end
