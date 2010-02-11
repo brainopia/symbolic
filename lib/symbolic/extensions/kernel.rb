@@ -1,5 +1,5 @@
 module Kernel
-  def var(*args, &proc)
-    Symbolic::Variable.new(*args, &proc)
+  def var(options={}, &proc)
+    Symbolic::Variable.new(options, &proc)
   end
 end

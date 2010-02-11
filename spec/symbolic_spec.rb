@@ -121,7 +121,7 @@ describe "Symbolic" do
       [v.name, v.value].should == ['v', nil]
     end
     it 'var.to_s == "unnamed_variable"' do
-      v = var
+      v = var :name => nil # This is because it will auto add a name with the plugin 'autovarname'
       [v.to_s, v.value].should == ["unnamed_variable", nil]
     end
     it 'var init' do
@@ -175,5 +175,25 @@ describe "Symbolic" do
     'x**(y-4)' => 'x**(y-4)',
     '(x+1)**(y*2)' => '(x+1)**(2*y)',
     '-(x**y -2)+5' => '-x**y+7'
+  end
+end
+
+describe "Symbolic plugins" do
+  describe "autovarname" do
+    require "symbolic/plugins/autovarname"
+    it 'single variable' do
+      x = var
+      x.name.should == 'x'
+    end
+    
+    it 'single variable with value' do
+      x = var :value => 7
+      [x.name, x.value].should == ['x', 7]
+    end
+    
+    it 'multiple variables' do
+      x, yy, zzz = vars
+      [x.name, yy.name, zzz.name].should == ['x', 'yy', 'zzz']
+    end
   end
 end

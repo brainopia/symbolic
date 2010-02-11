@@ -1,4 +1,7 @@
-Dir[File.dirname(__FILE__) + "/symbolic/**/*.rb"].each {|it| require it }
+(
+Dir[File.dirname(__FILE__) + "/symbolic/*.rb"] +
+Dir[File.dirname(__FILE__) + "/symbolic/extensions/*.rb"]
+).each {|it| require it }
 
 module Symbolic
   def +@
