@@ -14,18 +14,35 @@ module Symbolic
     # and can be or a number, or a variable, or another Abelian (so a Symbolic expression)
     def initialize(numeric, symbolic)
       @numeric, @symbolic = numeric, symbolic
+      @exponent = 1
     end
     
     def operation
       self.class::OPERATION
     end
     
-    def to_s # TEMP
-      [@numeric, operation, @symbolic]
+    def coerce(numeric)
+      [MyCoerced.new(self), numeric]
+    end
+    
+    def simplify
+      
+    end
+    
+    def show # TEMP
+      simplify
+      [
+        @numeric,
+        operation,
+        (@exponent == 1 ? @symbolic : {@symbolic => @exponent})
+      ]
+    end
+    def to_s
+      show.to_s
     end
     
     def value # TEMP
-      @numeric.value.send(operation, @symbolic.value)
+      @numeric.value.send(operation, @symbolic.value ** @exponent.value)
     end
   end
 end

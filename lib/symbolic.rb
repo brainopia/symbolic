@@ -40,9 +40,9 @@ module Symbolic
     Printer.print(self)
   end
 
-  def inspect
-    "Symbolic(#{to_s})"
-  end
+  # def inspect
+  #   "Symbolic(#{to_s})"
+  # end
 
   private
 

@@ -30,10 +30,10 @@ require File.expand_path('../../lib/symbolic', __FILE__)
 def ivars(o)
    o.instance_variables.
    map { |ivar| [ivar, o.instance_variable_get(ivar)] }.
-   each_with_object({}) { |e, h|
-      var, val = e
+   each_with_object({}) { |ivar, h|
+      var, val = ivar
       if Hash === val
-         p val.keys.each_with_object({}) { |e, o| o[e] = e.class } # [Symbolic::Summands, Symbolic::Factors].include?
+         p val.keys.each_with_object({}) { |e, r| r[e] = e.class } # [Symbolic::Summands, Symbolic::Factors].include?
       end
       h[var] = val
    }
@@ -54,4 +54,7 @@ include Symbolic
 # 2 + 3*4*5
 p e = Summand.new(2, Factor.new(3, Factor.new(4, 5)))
 p e.value
+
+p f = Factor.new(1, 2)
+p f * 3
 
