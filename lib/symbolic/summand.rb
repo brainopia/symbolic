@@ -1,4 +1,6 @@
 module Symbolic
-  class Summand
+  class Summand < Abelian
+    OPERATION = :+
+    IDENTITY = 0
   end
 end

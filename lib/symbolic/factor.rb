@@ -1,4 +1,6 @@
 module Symbolic
-  class Factor
+  class Factor < Abelian
+    OPERATION = :*
+    IDENTITY = 1
   end
 end
