@@ -24,5 +24,9 @@ If value isn't set for variable, but there is an associated proc, then value is 
     def variables
       [self]
     end
+    def substitute(to_replace, replacement)
+      return replacement if self == to_replace
+      self
+    end
   end
 end

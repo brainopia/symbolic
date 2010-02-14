@@ -72,5 +72,9 @@ module Symbolic
         @symbolic.inject(numeric) {|value, (base, exp)| value * base.value ** exp.value }
       end
     end
+
+    def substitute(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.substitute(to_replace, replacement) ** exponential}
+    end
   end
 end

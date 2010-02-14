@@ -66,6 +66,11 @@ module Symbolic
       def function(f)
         "#{f.operation}(#{f.argument})"
       end
+      
+      # Sums
+      def sum(s)
+	"Sum(#{s.term}, #{s.index} = #{s.lb}..#{s.ub})"
+      end
     end
   end
 end

@@ -38,5 +38,9 @@ module Symbolic
     def reverse
       self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end
+
+    def substitute(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.substitute(to_replace, replacement)}
+    end
   end
 end
