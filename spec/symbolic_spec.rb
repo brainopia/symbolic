@@ -180,8 +180,8 @@ end
 
 describe "Symbolic plugins" do
   if RUBY_VERSION > '1.9' # Not yet compatible with 1.8
-    describe "autovarname" do
-      require "symbolic/plugins/autovarname"
+    describe "var_name" do
+      require "symbolic/plugins/var_name"
       it 'single variable' do
         x = var
         x.name.should == 'x'
