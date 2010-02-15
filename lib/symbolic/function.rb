@@ -21,7 +21,12 @@ class Symbolic::Function
   end
 
   def subs(to_replace, replacement)
-    Function.new(@argument.subs(to_replace, replacement), @operation)
+    new_arg = @argument.subs(to_replace, replacement)
+    if new_arg.is_a?(Numeric)
+      ::Math.send @operation, new_arg
+    else
+      Function.new(new_arg, @operation)
+    end
   end
   
   def diff(wrt)

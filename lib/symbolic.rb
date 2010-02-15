@@ -44,6 +44,16 @@ module Symbolic
     "Symbolic(#{to_s})"
   end
 
+  def taylor(var, about, numterms=5)
+    term = self
+    #inject needs initial value to prevent it from eating the first term
+    (0..numterms-1).inject(0) do |sum,n|
+      to_add = term.subs(var,about) * (var - about) ** n / Symbolic.factorial(n)
+      term = term.diff(var) #save a little time by not having to do all the derivites every time
+      sum + to_add
+    end
+  end
+  
   private
 
   def variables_of(var)
