@@ -8,25 +8,25 @@ module Symbolic
       def print(o)
         send(o.class.name[o.class.name.rindex('::')+2..-1].downcase, o)
       end
-      
+
       def brackets(var)
-        [Numeric, Variable, Function].any? { |c| var.is_a? c } ? var.to_s : "(#{var})"
+        [::Numeric, Variable, Function].any? { |c| var.is_a? c } ? var.to_s : "(#{var})"
       end
-      
+
       def rational(r)
         "#{r.round == r ? r.to_i : r.to_f}"
       end
-      
+
       def coef(c)
         "#{'-' if c < 0}#{"#{rational c.abs}*" if c.abs != 1}"
       end
       def coef_with_sign(c)
         "#{ c < 0 ? '-' : '+'}#{"#{rational c.abs}*" if c.abs != 1}"
       end
-      
+
       # Factors
       def factors(f)
-        rfactors, factors = f.symbolic.partition { |b,e| e.is_a?(Numeric) && e < 0 }
+        rfactors, factors = f.symbolic.partition { |b,e| e.is_a?(::Numeric) && e < 0 }
         rfactors = rfactors.empty? ? nil : [ 1, Hash[*rfactors.flatten] ]
         factors = factors.empty? ? nil : [ f.numeric, Hash[*factors.flatten] ]
 
@@ -44,7 +44,7 @@ module Symbolic
       def exponent(base, exponent)
         "#{brackets base}#{"**#{brackets exponent}" if exponent != 1}"
       end
-      
+
       # Summands
       def summands(s)
         out = s.symbolic.map { |base, coef| coef_with_sign(coef) + base.to_s }
@@ -52,21 +52,21 @@ module Symbolic
         out[0].sub!(/^\+/, '')
         out.join
       end
-      
+
       def remainder(n)
         "#{'+' if n > 0}#{n unless n.zero?}"
       end
-      
+
       # Variable
       def variable(v)
         "#{v.name || :unnamed_variable}"
       end
-      
+
       # Function
       def function(f)
         "#{f.operation}(#{f.argument})"
       end
-      
+
       # Sums
       def sum(s)
 	"Sum(#{s.term}, #{s.index} = #{s.lb}..#{s.ub})"
