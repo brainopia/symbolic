@@ -73,8 +73,19 @@ module Symbolic
       end
     end
 
-    def substitute(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.substitute(to_replace, replacement) ** exponential}
+    def subs(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement) ** exponential}
+    end
+    
+    def diff(wrt)
+      return 0 unless self.variables.include?(wrt) #speed things up a bit
+      first_base, first_exp = @symbolic.to_a[0]
+      first = first_base ** first_exp #the first factor
+      self_without_first = self / first #the expression with the first factor removed
+      #product rule to find derivitive
+      udv = self_without_first.is_a?(Symbolic) ? first * self_without_first.diff(wrt) : 0
+      vdu = first_base.is_a?(Symbolic) ? first_exp * first_base ** (first_exp - 1 ) * first_base.diff(wrt) * self_without_first : 0
+      udv + vdu
     end
   end
 end

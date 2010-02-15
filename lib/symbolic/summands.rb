@@ -39,8 +39,12 @@ module Symbolic
       self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end
 
-    def substitute(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.substitute(to_replace, replacement)}
+    def subs(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement)}
+    end
+    
+    def diff(wrt)
+      @symbolic.inject(0){|m,(base,coefficient)| m + coefficient * base.diff(wrt)}
     end
   end
 end
