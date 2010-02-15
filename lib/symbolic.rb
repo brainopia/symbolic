@@ -1,7 +1,4 @@
-(
-Dir[File.dirname(__FILE__) + "/symbolic/*.rb"] +
-Dir[File.dirname(__FILE__) + "/symbolic/extensions/*.rb"]
-).each {|it| require it }
+Dir[File.dirname(__FILE__) + "/symbolic/{,extensions/}*.rb"].each {|it| require it }
 
 module Symbolic
   def +@
@@ -53,7 +50,7 @@ module Symbolic
       sum + to_add
     end
   end
-  
+
   private
 
   def variables_of(var)
