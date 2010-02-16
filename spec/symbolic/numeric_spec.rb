@@ -6,11 +6,6 @@ describe Symbolic::Numeric do
     numeric.should == :value
   end
 
-  it 'should have a shortcut to initialize new object' do
-    numeric = Symbolic::Numeric :value
-    numeric.should == :value
-  end
-
   it 'should return an empty array when asked for variables' do
     numeric = Symbolic::Numeric.new :value
     numeric.variables == []
