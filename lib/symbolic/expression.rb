@@ -30,7 +30,7 @@ module Symbolic
         case var
         when Summands then summands var
         when Factors  then factors var
-        when ::Numeric  then numeric var
+        when Numeric  then numeric var
         else one var; end
       end
 
@@ -44,7 +44,7 @@ module Symbolic
 
       def simple?(var)
         case var
-        when ::Numeric, Variable, Function
+        when Numeric, Variable, Function
           true
         when Summands
           false

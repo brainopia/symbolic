@@ -10,7 +10,7 @@ module Symbolic
       end
 
       def brackets(var)
-        [::Numeric, Variable, Function].any? { |c| var.is_a? c } ? var.to_s : "(#{var})"
+        [Numeric, Variable, Function].any? { |c| var.is_a? c } ? var.to_s : "(#{var})"
       end
 
       def rational(r)
@@ -26,7 +26,7 @@ module Symbolic
 
       # Factors
       def factors(f)
-        rfactors, factors = f.symbolic.partition { |b,e| e.is_a?(::Numeric) && e < 0 }
+        rfactors, factors = f.symbolic.partition { |b,e| e.is_a?(Numeric) && e < 0 }
         rfactors = rfactors.empty? ? nil : [ 1, Hash[*rfactors.flatten] ]
         factors = factors.empty? ? nil : [ f.numeric, Hash[*factors.flatten] ]
 
