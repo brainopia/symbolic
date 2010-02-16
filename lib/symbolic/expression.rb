@@ -63,7 +63,7 @@ module Symbolic
     end
 
     def variables
-      @symbolic.map {|k,v| [variables_of(k), variables_of(v)] }.flatten.uniq
+      @symbolic.map {|k,v| [k.variables, v.variables] }.flatten.uniq
     end
 
     def ==(object)

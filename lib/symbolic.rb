@@ -50,10 +50,4 @@ module Symbolic
       sum + to_add
     end
   end
-
-  private
-
-  def variables_of(var)
-    var.variables rescue []
-  end
 end
