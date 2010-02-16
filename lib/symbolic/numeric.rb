@@ -1,14 +1,17 @@
+require 'delegate'
+
 module Symbolic
   def self.Numeric(value)
     Numeric.new value
   end
 
-  class Numeric
-    include Symbolic
-    attr_reader :value
-
+  class Numeric < DelegateClass(Numeric)
     def initialize(value)
-      @value = value
+      super value
+    end
+
+    def variables
+      []
     end
   end
 end
