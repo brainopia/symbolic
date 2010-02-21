@@ -1,13 +1,7 @@
-require_relative 'summands'
 module Symbolic
   class Summand < Abelian
     OPERATION = :+
     IDENTITY = 0
-    GROUP = Symbolic::Summands
-    
-    def value
-      @coef + @base * @exp
-    end
     
     def -@
       @numeric  *= -1
@@ -16,7 +10,8 @@ module Symbolic
     end
     
     def +(o)
-      group << o # Summands.new(self, o)
+      @symbolic = Summand.new(@symbolic, o)
+      self
     end
     
     def -(o)

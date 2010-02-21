@@ -6,28 +6,28 @@ module Symbolic
  so we set a receiver as Coerced.new(symbolic) to reverse arguments back after coercing.
 =end
   class Coerced
-    def initialize(symbolic)
-      @symbolic = symbolic
-    end
-
-    def +(numeric)
-      Summands.add numeric, @symbolic
-    end
-
-    def -(numeric)
-      Summands.subtract numeric, @symbolic
-    end
-
-    def *(numeric)
-      Factors.add numeric, @symbolic
-    end
-
-    def /(numeric)
-      Factors.subtract numeric, @symbolic
-    end
-
-    def **(numeric)
-      Factors.power numeric, @symbolic
-    end
+#    def initialize(symbolic)
+#      @symbolic = symbolic
+#    end
+#
+#    def +(numeric)
+#      Summands.new numeric, @symbolic
+#    end
+#
+#    def -(numeric)
+#      Summands.new numeric, -@symbolic
+#    end
+#
+#    def *(numeric)
+#      Factors.new numeric, @symbolic
+#    end
+#
+#    def /(numeric)
+#      Factors.new numeric, @symbolic**-1
+#    end
+#
+#    def **(numeric)
+#      Factors.new(1, numeric) ** @symbolic
+#    end
   end
 end

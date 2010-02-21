@@ -1,13 +1,7 @@
-require_relative 'factors'
 module Symbolic
   class Factor < Abelian
     OPERATION = :*
     IDENTITY = 1
-    GROUP = Symbolic::Factors
-    
-    def value
-      @coef * @base ** @exp
-    end
     
     def -@
       @numeric *= -1
