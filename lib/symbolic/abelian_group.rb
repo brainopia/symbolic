@@ -22,6 +22,11 @@ module Symbolic
       @members.inject(identity) { |val, member| val.send(operation, member.value) }
     end
     
+    # Create a new group, yielding every element(with |base, power|)
+    def new(&block)
+      self.class.new @members.map { |member| member.new(&block) }
+    end
+    
     class << self
       def group_of(member)
         case member

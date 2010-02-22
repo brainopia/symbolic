@@ -25,6 +25,11 @@ module Symbolic
       self.class::IDENTITY
     end
     
+    # Create a new element with old |base, power|
+    def new
+      self.class.new *yield(@base, @power)
+    end
+    
     #TEMP
     def to_s
       "<#{self.class.simple_name} #{@base}#{

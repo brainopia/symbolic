@@ -21,11 +21,11 @@ module Symbolic
             case op
             when :*
               if Numeric === o
-                group.class.new group.members.map { |m| m.class.new(m.base, m.power * o) }
-                # Result in Summands[Summand(base, power*o), ...]
+                # group.class.new group.members.map { |m| m.class.new(m.base, m.power * o) }
+                # That line was really too long, no? :)
+                group.new { |b,p| [b, p * o] }
               else
                 Factors.new(self) << o
-                # Result in Factors[Summands[Summand, ...], Factor]
               end
             end
           elsif Factors === group
