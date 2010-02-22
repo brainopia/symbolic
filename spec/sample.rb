@@ -60,30 +60,21 @@ require 'pp'
 two = Summand.new(2)
 
 e = two + 3 + 4
-p e
-puts
-
-pp e #=>
-# #<Symbolic::Summands:0x00000100845db8
-#  @members=
-#   [#<Symbolic::Summand:0x00000100845e30
-#     @base=2,
-#     @coef=0,
-#     @exp=1,
-#     @group=#<Symbolic::Summands:0x00000100845db8 ...>>,
-#    #<Symbolic::Summand:0x00000100845d68
-#     @base=3,
-#     @coef=0,
-#     @exp=1,
-#     @group=#<Symbolic::Summands:0x00000100845db8 ...>>,
-#    #<Symbolic::Summand:0x00000100845cf0
-#     @base=4,
-#     @coef=0,
-#     @exp=1,
-#     @group=#<Symbolic::Summands:0x00000100845db8 ...>>]>
-
-puts
+pp e
 p e.value #=> 9
+puts
+
+pp e + 5
+p (e+5).value
+#<Symbolic::Summands:0x00000100842118
+# @members=[<Summand 2>, <Summand 3>, <Summand 4>, <Summand 5>]>
+
+puts
+
+pp e2 = e * 5 #=>
+#<Symbolic::Summands:0x0000010083db18
+# @members=[<Summand 2 * 5>, <Summand 3 * 5>, <Summand 4 * 5>]>
+p e2.value
 
 #require 'pp'
 #puts
