@@ -33,13 +33,13 @@ module Symbolic
           group = group_class.new(self)
         end
         
+        if o == group.identity
+          return self
+        end
+        
         case op
         when group.operation
-          if o == group.identity
-            self
-          else
-            group << o
-          end
+          group << o
         when Operators.inverse(group.operation)
           #raise
           #group << o.inverse # -@ for Sum, **-1 for Fact
