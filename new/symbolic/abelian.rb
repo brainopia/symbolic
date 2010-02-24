@@ -11,11 +11,7 @@ module Symbolic
     # For * : ... * (1 ** 2) * ...
     # For + : ... + (1 *  2) + ...
     def initialize(base, power = 1)
-      #if self.class === base
-      #  @base, @power = base.base, base.power * power
-      #else
-        @base, @power = base, power
-      #end
+      @base, @power = base, power
     end
     
     def value
@@ -23,24 +19,17 @@ module Symbolic
       if !group.nil?
         @base.value.send(OPERATORS_RISING[group.operation], @power.value)
       else
-        if @power.one?
+        if @power == 1
           @base.value
         else
           raise
         end
       end
     end
-
-    # def operation
-    #   self.class::OPERATION
-    # end
-    # def identity
-    #   self.class::IDENTITY
-    # end
     
     # Create a new element with old |base, power|
     def new
-      self.class.new *yield(@base, @power)
+      Abelian.new(*yield(@base, @power))
     end
     
     #TEMP
@@ -48,12 +37,13 @@ module Symbolic
       group = block_given? ? yield : nil
       simplify!(group)
       "<#{self.class.simple_name} #{@base}#{
-        " #{OPERATORS_RISING[group.operation]} #{@power}" if !@power.one? and !group.nil?
+        " #{OPERATORS_RISING[group.operation]} #{@power}" if @power != 1 and !group.nil?
         # " #{@power}" unless @power.one?
       }>"
     end
     
     def simplify!(group)
+      # @power
       if Numeric === @power and @power < 0 and !group.nil?
         if group.operation == :+ and @base.respond_to?(:-@)
           @base, @power = -@base, -@power
@@ -62,10 +52,10 @@ module Symbolic
         end
       end
     end
-
-#    def coerce(numeric)
-#      [Coerced.new(self), numeric]
-#    end
+    
+    def simple?
+      Numeric === @base and Numeric === @power
+    end
 
     class << self
       alias :_new :new

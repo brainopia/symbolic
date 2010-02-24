@@ -15,6 +15,7 @@ If value isn't set for variable, but there is an associated proc, then value is 
     def initialize(options={}, &proc)
       (@name, @value), @proc = options.values_at(:name, :value), proc
       @name = @name.to_s if @name
+      super(self)
     end
 
     def value

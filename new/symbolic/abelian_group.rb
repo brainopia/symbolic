@@ -10,7 +10,7 @@ module Symbolic
       #   to_add.each { |ta| first << ta }
       #   members = [first, *others]
       # end
-      @members = members.map { |member| Abelian.new(member) }
+      @members = members.map { |member| Abelian.new(member) }#.select { |m| m.value{self} != identity }
     end
     
     def << o
@@ -25,16 +25,29 @@ module Symbolic
     end
     
     def value
-      @members.inject(identity) { |val, member| val.send(operation, member.value{self} ) }
+      @members.inject(identity) { |val, member| val.send(operation, member.value{self}) }
     end
     
     def to_s
-      "{#{self.class.simple_name} #{@members.map { |m| m.to_s { self } }.join(', ')}}"
+      # simplify!
+      "{#{self.class.simple_name} #{@members.map { |m| m.to_s{self} }.join(', ')}}"
+    end
+    
+    def simplify!
+      # multiple Numeric values
+      simple, others = @members.partition { |m| m.simple? }
+      if !simple.empty?
+        @members = [Abelian.new(self.class.new(*simple).value)] + others
+      end
     end
     
     # Create a new group, yielding every element(with |base, power|)
     def new(&block)
-      self.class.new @members.map { |member| member.new(&block) }
+      self.class.new(*@members.map { |member| member.new(&block) })
+    end
+    
+    def simple?
+      false
     end
     
     def single?

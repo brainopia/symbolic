@@ -25,6 +25,7 @@ module Symbolic
       if OPERATORS.include?(op) and args.length == 1
         o = args[0]
         group_class = OPERATORS_GROUPS[op]
+        operands = [self, o]
         
         if self.is_a? AbelianGroup
           group = self
@@ -35,35 +36,25 @@ module Symbolic
         
         case op
         when group.operation
-          group << o
+          if operands.any? { |operand| operand == group.identity }
+            o == group.identity ? self : o
+          else
+            group << o
+          end
         when Operators.inverse(group.operation)
           #raise
           #group << o.inverse # -@ for Sum, **-1 for Fact
           group << Abelian.new(o, -1)
-        else
+        when :* # Summands * o
           group_class.new(group, o)
+        when :** # OPERATORS_RISING[group.operation]
+            group.new { |b,p| [b, o*p] }
+        else
+          raise # group_class.new(group, o)
         end
         
       else
         super
-      end
-    end
-    
-    def Summands(group, op, o)
-      case op
-      when :*
-        group.single? ? group.new { |b,p| [b, p * o] } : Factors.new(self) << o
-      end
-    end
-    
-    def Factors(op, o)
-      
-    end
-    
-    def AbelianGroup(op, o)
-      case op
-      when :+
-        Summands.new(self, o)
       end
     end
     
