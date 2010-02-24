@@ -25,7 +25,6 @@ module Symbolic
       if OPERATORS.include?(op) and args.length == 1
         o = args[0]
         group_class = OPERATORS_GROUPS[op]
-        operands = [self, o]
         
         if self.is_a? AbelianGroup
           group = self
@@ -36,8 +35,8 @@ module Symbolic
         
         case op
         when group.operation
-          if operands.any? { |operand| operand == group.identity }
-            o == group.identity ? self : o
+          if o == group.identity
+            self
           else
             group << o
           end
