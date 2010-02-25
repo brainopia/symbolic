@@ -1,6 +1,7 @@
 module Symbolic
   module Operators
     OPERATORS = [ :+, :-, :*, :/, :**]
+    UNARY_OPERATORS = [ :+@, :-@ ]
     
     OPERATORS_HASH = { :+ => :-, :* => :/ }
     
@@ -22,10 +23,16 @@ module Symbolic
     end
     
     def method_missing(op, *args, &blk)
-      if OPERATORS.include?(op) and args.length == 1
+      if UNARY_OPERATORS.include?(op) and args.length == 0
+        case op
+        when :+@
+          self
+        when :-@
+          Summands.new(self).new { |b,p| [b, p*-1] }
+        end
+      elsif OPERATORS.include?(op) and args.length == 1
         o = args[0]
         group_class = OPERATORS_GROUPS[op]
-        
         if self.is_a? AbelianGroup
           group = self
         else
@@ -35,6 +42,8 @@ module Symbolic
         
         if o == group.identity
           return self
+        elsif Abelian === self and self.simple? and self.value == group.identity
+          return o
         end
         
         case op

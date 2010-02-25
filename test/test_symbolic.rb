@@ -12,7 +12,7 @@ class TestSymbolic < Test::Unit::TestCase
   include Symbolic
   
   def cs(actual, expected = [], expected_value = 0)
-    assert_equal(eval(expected.to_s), eval(actual.show.to_s))
+    assert_equal(eval(expected.to_s), eval(actual.to_s))
     assert_equal(expected_value, actual.value)
   end
   

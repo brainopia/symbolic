@@ -36,9 +36,20 @@ module Symbolic
     def simplify!
       # multiple Numeric values
       simple, others = @members.partition { |m| m.simple? }
-      if !simple.empty?
+      unless simple.empty?
         @members = [Abelian.new(self.class.new(*simple).value)] + others
       end
+    end
+    
+    def optimize
+      o = self
+      # Nested same groups can be 'flatten'
+      # nested, others = o.members.partition { |m| o.class === m }
+      # unless nested.empty?
+      #   o = o.class.new(others)
+      #   nested.each { |n| n.members.each { |member| o << member } }
+      # end
+      o
     end
     
     # Create a new group, yielding every element(with |base, power|)
@@ -53,7 +64,7 @@ module Symbolic
     def single?
       @members.length == 1
     end
-    
+
     class << self
       def operation
         self::OPERATION
