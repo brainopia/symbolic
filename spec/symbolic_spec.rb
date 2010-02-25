@@ -17,7 +17,7 @@ describe Symbolic do
   end
 
   it 'should handle binary plus' do
-    Symbolic::Summands.should_receive(:add).with(@var, :other_var).and_return(:result)
+    Symbolic::Summands.should_receive(:new).with(@var, Abelian.new(:other_var)).and_return(:result)
     (@var + :other_var).should == :result
   end
 

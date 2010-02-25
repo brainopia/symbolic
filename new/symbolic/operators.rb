@@ -28,7 +28,11 @@ module Symbolic
         when :+@
           self
         when :-@
-          Summands.new(self).new { |b,p| [b, p*-1] }
+          if Abelian === self
+            Summand.new(self, -1)
+          else
+            Summands.new(self).new { |b,p| [b, p*-1] }
+          end
         end
       elsif OPERATORS.include?(op) and args.length == 1
         o = args[0]
@@ -40,10 +44,14 @@ module Symbolic
           group = group_class.new(self)
         end
         
-        if o == group.identity
+        if o == group.identity # + 0, - 0, * 1, / 1 is doing nothing
           return self
-        elsif Abelian === self and self.simple? and self.value == group.identity
+        elsif Abelian === self and self.value == group.identity and op == group.operation
+          # 0 +, 1 * is doing nothing
           return o
+        elsif Abelian === self and self.value == group.identity and op == Operators.inverse(group.operation)
+          # 0 -, 1 /
+          return group.member_class.new(o, -1) # o.new { |b,p|  }
         end
         
         case op
@@ -53,12 +61,12 @@ module Symbolic
           #raise
           #group << o.inverse # -@ for Sum, **-1 for Fact
           group << Abelian.new(o, -1)
-        when :* # Summands * o
+        when :+, :* # Factors + o , Summands * o
           group_class.new(group, o)
         when :** # OPERATORS_RISING[group.operation]
             group.new { |b,p| [b, o*p] }
         else
-          raise # group_class.new(group, o)
+          raise "#{self}(#{group}) #{op} #{o}"# group_class.new(group, o)
         end
         
       else

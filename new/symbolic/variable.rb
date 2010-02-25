@@ -25,6 +25,10 @@ If value isn't set for variable, but there is an associated proc, then value is 
     def to_s
       "#{name || :unnamed_variable}"
     end
+    
+    def == object
+      self.value == object.value rescue false
+    end
 
     def variables
       [self]

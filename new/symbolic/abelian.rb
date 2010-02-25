@@ -11,13 +11,17 @@ module Symbolic
     # For * : ... * (1 ** 2) * ...
     # For + : ... + (1 *  2) + ...
     def initialize(base, power = 1)
-      @base, @power = base, power
+      if base.class == self.class and !base.power.nil?
+        @base, @power = base.base, base.power * power
+      else
+        @base, @power = base, power
+      end
+      simplify!
     end
     
     def value
-      group = block_given? ? yield : nil
-      if !group.nil?
-        @base.value.send(OPERATORS_RISING[group.operation], @power.value)
+      unless self.class == Abelian
+        @base.value.send(OPERATORS_RISING[operation], @power.value)
       else
         if @power == 1
           @base.value
@@ -34,34 +38,44 @@ module Symbolic
     
     #TEMP
     def to_s
-      group = block_given? ? yield : nil
-      simplify!(group)
-      "<#{self.class.simple_name} #{@base}#{
-        " #{OPERATORS_RISING[group.operation]} #{@power}" if @power != 1 and !group.nil?
-        # " #{@power}" unless @power.one?
-      }>"
+      # simplify!
+      s = "<#{self.class.simple_name} #{@base}"
+      unless @power == 1
+        if self.respond_to? :operation
+          s << " #{OPERATORS_RISING[operation]} #{@power}"
+        else
+          raise "Abelian with power != 1(#{@power}) with no operation: #{super}"
+        end
+      end
+      s << ">"
     end
     
-    def simplify!(group)
+    def simplify!
       # @power
-      if Numeric === @power and @power < 0 and !group.nil?
-        if group.operation == :+ and @base.respond_to?(:-@)
+      if Numeric === @power and @power < 0
+        if Summand === self and @base.respond_to?(:-@)
           @base, @power = -@base, -@power
-        elsif group.operation == :*
+        elsif Factor === self and Numeric === @base
           @base, @power = Rational(1, @base), -@power
         end
       end
     end
     
-    def simple?
+    def numeric?
       Numeric === @base and Numeric === @power
+    end
+    
+    def == object
+      @base == object.base and @power == object.power rescue false
     end
 
     class << self
       alias :_new :new
       def new(*args)
-        if args.length == 1 and (self === args[0] or AbelianGroup === args[0])
+        if args.length == 1 and (self === args[0] or AbelianGroup === args[0]) # Already a subclass of Abelian or an AbelianGroup
           args[0]
+        elsif args.length == 1 and Abelian == args[0].class and self != Abelian # an Abelian, undeterminated
+          self.new(args[0].base, args[0].power)
         else
           _new(*args)
         end

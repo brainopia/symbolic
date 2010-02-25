@@ -2,17 +2,14 @@ module Symbolic
   module Operators
   end
   
-  class Abelian
-  end
-  class Variable < Abelian
-  end
+  class Abelian; end
+  class Summand < Abelian; end
+  class Factor < Abelian; end
+  class Variable < Abelian; end
   
-  class AbelianGroup
-  end
-  class Summands < AbelianGroup
-  end
-  class Factors < AbelianGroup
-  end
+  class AbelianGroup; end
+  class Summands < AbelianGroup; end
+  class Factors < AbelianGroup; end
   # def to_s
   #   Printer.print(self)
   # end
