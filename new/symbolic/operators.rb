@@ -1,15 +1,15 @@
 module Symbolic
   module Operators
-    OPERATORS = [ :+, :-, :*, :/, :**]
     UNARY_OPERATORS = [ :+@, :-@ ]
-    
+    BINARY_OPERATORS = [ :+, :-, :*, :/, :**]
+
     OPERATORS_HASH = { :+ => :-, :* => :/ }
-    
+
     OPERATORS_RISING = {
       :+ => :*, :* => :**,
       :- => :/ #, :/ => :~
     }
-    
+
     OPERATORS_GROUPS = {
       :+ => Summands,
       :- => Summands,
@@ -17,24 +17,20 @@ module Symbolic
       :/ => Factors,
       :** => Factors
     }
-    
+
     def coerce(numeric)
       [Abelian.new(numeric), self]
     end
-    
+
     def method_missing(op, *args, &blk)
       if UNARY_OPERATORS.include?(op) and args.length == 0
         case op
         when :+@
           self
         when :-@
-          if Abelian === self
-            Summand.new(self, -1)
-          else
-            Summands.new(self).new { |b,p| [b, p*-1] }
-          end
+          Summand.new(self, -1)
         end
-      elsif OPERATORS.include?(op) and args.length == 1
+      elsif BINARY_OPERATORS.include?(op) and args.length == 1
         o = args[0]
         group_class = OPERATORS_GROUPS[op]
         if self.is_a? AbelianGroup
@@ -43,17 +39,19 @@ module Symbolic
           # Make me a group !
           group = group_class.new(self)
         end
-        
+
         if o == group.identity # + 0, - 0, * 1, / 1 is doing nothing
           return self
-        elsif Abelian === self and self.value == group.identity and op == group.operation
-          # 0 +, 1 * is doing nothing
-          return o
-        elsif Abelian === self and self.value == group.identity and op == Operators.inverse(group.operation)
-          # 0 -, 1 /
-          return group.member_class.new(o, -1) # o.new { |b,p|  }
+        elsif Abelian === self and self.value == group.identity and ( !(Variable === self) )
+          if op == group.operation
+            # 0 +, 1 * is doing nothing
+            return o
+          elsif op == Operators.inverse(group.operation)
+            # 0 -, 1 /
+            return group.member_class.new(o, -1) # o.new { |b,p|  }
+          end
         end
-        
+
         case op
         when group.operation
           group << o
@@ -64,16 +62,20 @@ module Symbolic
         when :+, :* # Factors + o , Summands * o
           group_class.new(group, o)
         when :** # OPERATORS_RISING[group.operation]
-            group.new { |b,p| [b, o*p] }
+          if o == 0
+            1
+          else
+            group.renew { |b,p| [b, p*o] }
+          end
         else
           raise "#{self}(#{group}) #{op} #{o}"# group_class.new(group, o)
         end
-        
+
       else
         super
       end
     end
-    
+
     class << self
       def inverse(op)
         OPERATORS_HASH[op] || OPERATORS_HASH.key(op)

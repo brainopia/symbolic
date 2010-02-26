@@ -6,17 +6,7 @@ module Symbolic
     MEMBERS = {Summands => Summand, Factors => Factor}
 
     def initialize(*members)
-      # to_add, others = members.partition { |m| self.class === m }
-      # unless to_add.empty?
-      #   first = to_add.shift
-      #   to_add.each { |ta| first << ta }
-      #   members = [first, *others]
-      # end
-      if members.length == 1 and self.class === members[0]
-        @members = members[0].members
-      else
-        @members = members.map { |member| MEMBERS[self.class].new(member) }#.select { |m| m.value != identity }
-      end
+      @members = members.map { |member| MEMBERS[self.class].new(member) }#.select { |m| m.value != identity }
       optimize!
     end
 
@@ -25,11 +15,7 @@ module Symbolic
     end
 
     def << o
-      if self.class === o # Let's not create nested group, but merge the members
-        self.class.new( *(@members+o.members) )
-      else
-        self.class.new( *@members, o )
-      end
+      self.class.new( *@members, o )
     end
 
     def operation
@@ -62,27 +48,23 @@ module Symbolic
       numbers, others = @members.partition { |m| m.numeric? }
       @members = numbers + others
       
-      if @members.length >= 2 and @members[0].numeric? and @members[0].value < 0
+      # Two or more elements and first with negative sign, then put it at the end
+      if @members.length >= 2 and (
+          @members[0].numeric? and @members[0].value < 0 or
+          Summand === @members[0] and @members[0].power < 0
+        )
         @members = @members.rotate(1)
       end
     end
 
     def optimize!
-      # Nested same groups can be 'flatten'
-      # nested, others = @members.partition { |m| self.class === m }
-      # unless nested.empty?
-      #   @members = others
-      #   nested.each { |n| n.members.each { |member| @members << member } }
-      # end
-      
       simplify!
       sort!
-      self
     end
 
     # Create a new group, yielding every element(with |base, power|)
-    def new(&block)
-      self.class.new(*@members.map { |member| member.new(&block) })
+    def renew(&block)
+      self.class.new(*@members.map { |member| member.renew(&block) })
     end
 
     def numeric?
@@ -102,6 +84,16 @@ module Symbolic
     end
 
     class << self
+      alias :_new :new
+      def new(*args)
+        raise "can't instantiate an AbelianGroup" if self == AbelianGroup
+        if args.all? { |arg| self === arg } # We will not nest same groups
+          # currently not used
+          self._new args.inject(args.shift.members) { |global, nested| global + nested }
+        end
+        _new(*args)
+      end
+      
       def operation
         self::OPERATION
       end

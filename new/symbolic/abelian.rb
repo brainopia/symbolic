@@ -20,19 +20,19 @@ module Symbolic
     end
     
     def value
-      unless self.class == Abelian
+      if self.class != Abelian
         @base.value.send(OPERATORS_RISING[operation], @power.value)
       else
         if @power == 1
           @base.value
         else
-          raise
+          raise "Can't know value of #{self} because @power != 1 and self is an undeterminated Abelian"
         end
       end
     end
     
     # Create a new element with old |base, power|
-    def new
+    def renew
       Abelian.new(*yield(@base, @power))
     end
     
@@ -44,7 +44,7 @@ module Symbolic
         if self.respond_to? :operation
           s << " #{OPERATORS_RISING[operation]} #{@power}"
         else
-          raise "Abelian with power != 1(#{@power}) with no operation: #{super}"
+          raise "Abelian with power != 1(#{@power}) with no operation: <#{self.class.simple_name} @base=#{@base} @power=#{@power}>"
         end
       end
       s << ">"
@@ -66,19 +66,27 @@ module Symbolic
     end
     
     def == object
-      @base == object.base and @power == object.power rescue false
+      if Abelian === object
+        @base == object.base and @power == object.power # rescue false
+      elsif Numeric === object
+        self.value == object
+      else
+        false
+      end
     end
 
     class << self
       alias :_new :new
       def new(*args)
-        if args.length == 1 and (self === args[0] or AbelianGroup === args[0]) # Already a subclass of Abelian or an AbelianGroup
-          args[0]
-        elsif args.length == 1 and Abelian == args[0].class and self != Abelian # an Abelian, undeterminated
-          self.new(args[0].base, args[0].power)
-        else
-          _new(*args)
+        if args.length == 1
+          o = args[0]
+          if o.class == Abelian # an Abelian, undeterminated
+            return self.new(o.base, o.power) # We cast it in the right subclass
+          elsif (self === o or AbelianGroup === o) # Already a subclass of Abelian or an AbelianGroup
+            return o
+          end
         end
+        _new(*args)
       end
     end
   end
