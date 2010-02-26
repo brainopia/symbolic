@@ -6,12 +6,8 @@ module Symbolic
     MEMBERS = {Summands => Summand, Factors => Factor}
 
     def initialize(*members)
-      @members = members.map { |member| MEMBERS[self.class].new(member) }#.select { |m| m.value != identity }
+      @members = members.map { |member| self.class.member_class.new(member) }#.select { |m| m.value != identity }
       optimize!
-    end
-
-    def member_class
-      MEMBERS[self.class]
     end
 
     def << o
@@ -99,6 +95,10 @@ module Symbolic
       end
       def identity
         self::IDENTITY
+      end
+      
+      def member_class
+        MEMBERS[self]
       end
     end
   end
