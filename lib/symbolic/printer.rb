@@ -64,7 +64,7 @@ module Symbolic
 
       # Function
       def function(f)
-        "#{f.operation}(#{f.argument})"
+        "#{f.name}(#{f.argument})"
       end
 
       # Sums

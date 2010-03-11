@@ -6,11 +6,14 @@ module Symbolic::Math
     instance_eval <<-CODE, __FILE__, __LINE__ + 1
       def #{method}(argument)
         unless argument.is_a? Numeric
-          Symbolic::Function.new argument, :#{method}
+          Symbolic::Function.new(argument,#{method}){|x| ::Math.#{method}(x)}
         else
-          ::Math.#{method} argument
+          ::Math.#{method}(argument)
         end
       end
     CODE
+  end
+  def hstep
+    
   end
 end
