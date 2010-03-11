@@ -53,7 +53,7 @@ module Symbolic
   end
   
   #class combines a function with an argument or arguments
-  #this class is what allows functions to be used in sumbolic expressions
+  #this class is what allows functions to be used in symbolic expressions
   class FunctionWrapper
     include Symbolic  
     attr_reader :argument, :function

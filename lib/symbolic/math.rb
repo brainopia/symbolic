@@ -3,8 +3,6 @@ module Symbolic::Math
   This module is a reflection for Math module which allows to use symbolic expressions as parameters for its methods.
 =end
   
-  require '/home/leon/Development/symbolic/lib/symbolic/function.rb'
-
   #first, make the functions and take care of most of the derivatives
   Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
   Exp   = Symbolic::Function.new('exp',nil)
