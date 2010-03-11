@@ -4,66 +4,37 @@ module Symbolic::Math
 =end
   
   require '/home/leon/Development/symbolic/lib/symbolic/function.rb'
-  
-  #sqrt = Symbolic::Function.new(nil,'sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)}) {|arg| ::Math.sqrt(arg)}
-  def sqrt(arg)
-    #sqrt[arg]
-    arg ** Rational(1,2)
-  end
-  exp = Symbolic::Function.new(nil,'exp',nil) {|arg| ::Math.exp(arg)}
-  exp.set_derivative(exp)
-  def exp(arg)
-    exp[arg]
-  end
-  log = Symbolic::Function.new(nil,'log', proc{|arg| 1 / arg}) {|arg| ::Math.log(arg)}
-  def log(arg)
-    log[arg]
-  end
-  log10 = Symbolic::Function.new(nil,'log10', proc{|arg| 1 / arg / ::Math.log(10)}) {|arg| ::Math.log10(arg)} #since log10(x) = log(x) / log(10)
-  def log10(arg)
-    log10[arg]
-  end
-  cos = Symbolic::Function.new(nil,'cos',nil) {|arg| ::Math.cos(arg)}
-  sin = Symbolic::Function.new(nil,'sin',cos) {|arg| ::Math.sin(arg)}
-  cos.set_derivative(proc{|arg| - cos[arg]})
-  def cos(arg)
-    cos[arg]
-  end
-  def sin(arg)
-    sin[arg]
-  end
-  tan = Symbolic::Function.new(nil,'tan', proc{|arg| 1 / cos[arg] ** 2}) {|arg| ::Math.tan(arg)}
-#     when 'cosh' then Symbolic::Math.sinh(arg) #no negative sign
-#     when 'sinh' then Symbolic::Math.cosh(arg)
-#     when 'tanh' then 1 / Symbolic::Math.cosh(arg) ** 2
-#     when 'acos' then - 1 / (1 - arg) ** Rational(1,2)
-#     when 'asin' then 1 / (1 - arg) ** Rational(1,2)
-#     when 'atan' then 1/ (arg**2 + 1)
-#     when 'acosh' then 1 / (1 - arg) ** Rational(1,2)
-#     when 'asinh' then 1 / (1 + arg) ** Rational(1,2)
-#     when 'atanh' then 1/ (1 - arg**2)
 
+  #first, make the functions and take care of most of the derivatives
+  Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
+  Exp   = Symbolic::Function.new('exp',nil)
+  Log   = Symbolic::Function.new('log', proc{|arg| 1 / arg})
+  Log10 = Symbolic::Function.new('log10', proc{|arg| 1 / arg / ::Math.log(10)}) #since log10(x) = log(x) / log(10)
+  Cos   = Symbolic::Function.new('cos',nil)
+  Sin   = Symbolic::Function.new('sin',Cos)
+  Tan   = Symbolic::Function.new('tan', proc{|arg| 1 / Cos[arg] ** 2})
+  Cosh  = Symbolic::Function.new('cosh',nil)
+  Sinh  = Symbolic::Function.new('sinh',Cosh)
+  Tanh  = Symbolic::Function.new('tanh',proc{|arg| 1 / Cosh(arg) ** 2})
+  Acos  = Symbolic::Function.new('acos',proc{|arg| - 1 / (1 - arg) ** Rational(1,2)})
+  Asin  = Symbolic::Function.new('asin',proc{|arg| 1 / (1 - arg) ** Rational(1,2)})
+  Atan  = Symbolic::Function.new('atan',proc{|arg| 1/ (arg**2 + 1)})
+  Acosh = Symbolic::Function.new('acosh',proc{|arg| 1 / (1 - arg) ** Rational(1,2)})
+  Asinh = Symbolic::Function.new('asinh',proc{|arg| 1 / (1 + arg) ** Rational(1,2)})
+  Atanh = Symbolic::Function.new('atanh',proc{|arg| 1/ (1 - arg**2)})
+
+  #take care of the remaining derivitves
+  Exp.set_derivative(Exp)
+  Cos.set_derivative(proc{|arg| - Sin[arg]})
+  Cosh.set_derivative(Sinh)
   
-  
-#     def Function.operator_derivative(name,arg)
-#     case name
-#     when 'sqrt' then Rational(1,2) / arg ** Rational(1,2) #could keep it in terms of sqrt
-#     when 'exp' then Symbolic::Math.exp(arg)
-#     when 'log' then 1 / arg
-#     when 'log10' then 1 / arg / Symbolic::Math.log(10) #since log10(x) = log(x) / log(10)
-#     when 'cos' then - Symbolic::Math.sin(arg)
-#     when 'sin' then Symbolic::Math.cos(arg)
-#     when 'tan' then 1 / Symbolic::Math.cos(arg) ** 2
-#     when 'cosh' then Symbolic::Math.sinh(arg) #no negative sign
-#     when 'sinh' then Symbolic::Math.cosh(arg)
-#     when 'tanh' then 1 / Symbolic::Math.cosh(arg) ** 2
-#     when 'acos' then - 1 / (1 - arg) ** Rational(1,2)
-#     when 'asin' then 1 / (1 - arg) ** Rational(1,2)
-#     when 'atan' then 1/ (arg**2 + 1)
-# #     when :atan2 then
-#     when 'acosh' then 1 / (1 - arg) ** Rational(1,2)
-#     when 'asinh' then 1 / (1 + arg) ** Rational(1,2)
-#     when 'atanh' then 1/ (1 - arg**2)
-#     end
-#   end
+  #make functions of the form fctn(arg) and add operation to each function
+  Symbolic::Math.constants.each do |fctn|
+    instance_eval <<-CODE, __FILE__, __LINE__ + 1
+      #{fctn}.set_operation(proc{|arg| ::Math.#{fctn.downcase}(arg)})
+      def #{fctn.downcase}(argument)
+        #{fctn}[argument]
+      end
+    CODE
+  end
 end

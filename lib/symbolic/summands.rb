@@ -1,4 +1,5 @@
 # TODO: 2*symbolic is a 2 power of symbolic Summand
+require "#{File.dirname(__FILE__)}/expression.rb"
 module Symbolic
   class Summands < Expression
     OPERATION = :+

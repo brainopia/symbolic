@@ -63,7 +63,7 @@ module Symbolic
       end
 
       # Function
-      def function(f)
+      def functionwrapper(f)
         "#{f.name}(#{f.argument})"
       end
 
