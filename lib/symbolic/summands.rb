@@ -1,6 +1,7 @@
 # TODO: 2*symbolic is a 2 power of symbolic Summand
 require "#{File.dirname(__FILE__)}/expression.rb"
 module Symbolic
+  require "#{File.dirname(__FILE__)}/expression.rb"
   class Summands < Expression
     OPERATION = :+
     IDENTITY = 0
@@ -40,8 +41,8 @@ module Symbolic
       self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end
 
-    def subs(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement)}
+    def subs(to_replace, replacement, expect_numeric = false)
+      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement, expect_numeric)}
     end
     
     def diff(wrt)

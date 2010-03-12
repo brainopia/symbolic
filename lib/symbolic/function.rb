@@ -18,7 +18,7 @@ module Symbolic
       #only allow it to be set if @derivative is nil
       @deriv = deriv if @deriv == nil
     end
-
+ 
     def set_operation(op)
       #only allow it to be set if @derivative is nil
       @operation = op if @operation == nil
@@ -69,17 +69,17 @@ module Symbolic
     def value
       @function.call(@argument.value) if variables.all?(&:value)
     end
-
+ 
     def variables
       @argument.variables
     end
-
+ 
     def detailed_operations
       @argument.detailed_operations.tap {|it| it[@operation] += 1}
     end    
     
-    def subs(to_replace, replacement)
-      @function[@argument.subs(to_replace, replacement)]
+    def subs(to_replace, replacement, expect_numeric = false)
+      @function[@argument.subs(to_replace, replacement, expect_numeric)]
     end
     
     #simply dumps @argument in to the function -- no gaurentee that the function

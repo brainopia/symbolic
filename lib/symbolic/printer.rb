@@ -66,7 +66,10 @@ module Symbolic
       def functionwrapper(f)
         "#{f.name}(#{f.argument})"
       end
-
+      
+      def constant(c)
+        "#{c.name || :unnamed_variable}"
+      end
       # Sums
       def sum(s)
 	"Sum(#{s.term}, #{s.index} = #{s.lb}..#{s.ub})"
