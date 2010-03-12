@@ -66,7 +66,10 @@ module Symbolic
       def function(f)
         "#{f.operation}(#{f.argument})"
       end
-
+      
+      def constant(c)
+        "#{c.name || :unnamed_variable}"
+      end
       # Sums
       def sum(s)
 	"Sum(#{s.term}, #{s.index} = #{s.lb}..#{s.ub})"

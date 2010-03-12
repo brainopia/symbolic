@@ -20,8 +20,8 @@ class Symbolic::Function
     @argument.detailed_operations.tap {|it| it[@operation] += 1}
   end
 
-  def subs(to_replace, replacement)
-    new_arg = @argument.subs(to_replace, replacement)
+  def subs(to_replace, replacement, expect_numeric = false)
+    new_arg = @argument.subs(to_replace, replacement, expect_numeric)
     if new_arg.is_a?(::Numeric)
       ::Math.send @operation, new_arg
     else

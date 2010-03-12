@@ -73,8 +73,8 @@ module Symbolic
       end
     end
 
-    def subs(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement) ** exponential}
+    def subs(to_replace, replacement, expect_numeric = false)
+      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement, expect_numeric) ** exponential}
     end
     
     def diff(wrt)

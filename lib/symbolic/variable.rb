@@ -24,8 +24,10 @@ If value isn't set for variable, but there is an associated proc, then value is 
     def variables
       [self]
     end
-    def subs(to_replace, replacement)
+    def subs(to_replace, replacement, expect_numeric = false)
       return replacement if self == to_replace
+      #Consider the possibility that @value is not numeric?
+      return self.value if expect_numeric
       self
     end
     def diff(wrt)
