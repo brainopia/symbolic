@@ -2,16 +2,22 @@ module Symbolic::Math
 =begin
   This module is a reflection for Math module which allows to use symbolic expressions as parameters for its methods.
 =end
+  require "#{File.dirname(__FILE__)}/function.rb"
+  require 'rational'  
   
-  #first, make the functions and take care of most of the derivatives
+  #for use in defining derivatives
+  Arg = Symbolic::Variable.new(:name=>'arg')
+  
+  #first, make the functions with derivatives
   Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
-  Exp   = Symbolic::Function.new('exp',nil)
+#   Sqrt  = Symbolic::Function.new('sqrt', Rational(1,2) / Arg ** Rational(1,2))
+  Exp   = Symbolic::Function.new('exp',proc{|arg| Exp[arg]})
   Log   = Symbolic::Function.new('log', proc{|arg| 1 / arg})
-  Log10 = Symbolic::Function.new('log10', proc{|arg| 1 / arg / ::Math.log(10)}) #since log10(x) = log(x) / log(10)
-  Cos   = Symbolic::Function.new('cos',nil)
+  Log10 = Symbolic::Function.new('log10',proc{|arg| 1 / arg / ::Math.log(10)}) #since log10(x) = log(x) / log(10)
+  Cos   = Symbolic::Function.new('cos',proc{|arg| - Sin[arg]})
   Sin   = Symbolic::Function.new('sin',Cos)
   Tan   = Symbolic::Function.new('tan', proc{|arg| 1 / Cos[arg] ** 2})
-  Cosh  = Symbolic::Function.new('cosh',nil)
+  Cosh  = Symbolic::Function.new('cosh',proc{|arg| Sinh[arg]})
   Sinh  = Symbolic::Function.new('sinh',Cosh)
   Tanh  = Symbolic::Function.new('tanh',proc{|arg| 1 / Cosh(arg) ** 2})
   Acos  = Symbolic::Function.new('acos',proc{|arg| - 1 / (1 - arg) ** Rational(1,2)})
@@ -21,13 +27,8 @@ module Symbolic::Math
   Asinh = Symbolic::Function.new('asinh',proc{|arg| 1 / (1 + arg) ** Rational(1,2)})
   Atanh = Symbolic::Function.new('atanh',proc{|arg| 1/ (1 - arg**2)})
 
-  #take care of the remaining derivitves
-  Exp.set_derivative(Exp)
-  Cos.set_derivative(proc{|arg| - Sin[arg]})
-  Cosh.set_derivative(Sinh)
-  
   #make functions of the form fctn(arg) and add operation to each function
-  Symbolic::Math.constants.each do |fctn|
+  Symbolic::Math.constants.find_all{|c| c.is_a?(Symbolic::Function)}.each do |fctn|
     instance_eval <<-CODE, __FILE__, __LINE__ + 1
       #{fctn}.set_operation(proc{|arg| ::Math.#{fctn.downcase}(arg)})
       def #{fctn.downcase}(argument)

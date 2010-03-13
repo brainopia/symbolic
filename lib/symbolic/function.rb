@@ -42,6 +42,8 @@ module Symbolic
     def derivative(arg)
       if @deriv.is_a?(Proc)
 	@deriv.call(arg)
+      elsif @deriv.is_a?(Symbolic)
+	@deriv.subs(Symbolic::Math::Arg,arg)
       else #it's a function
 	@deriv[arg]
       end      
