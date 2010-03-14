@@ -28,7 +28,7 @@ module Symbolic::Math
   Atanh = Symbolic::Function.new('atanh',proc{|arg| 1/ (1 - arg**2)})
 
   #make functions of the form fctn(arg) and add operation to each function
-  Symbolic::Math.constants.find_all{|c| c.is_a?(Symbolic::Function)}.each do |fctn|
+  Symbolic::Math.constants.reject{|c| c == 'Arg'}.each do |fctn|
     instance_eval <<-CODE, __FILE__, __LINE__ + 1
       #{fctn}.set_operation(proc{|arg| ::Math.#{fctn.downcase}(arg)})
       def #{fctn.downcase}(argument)
