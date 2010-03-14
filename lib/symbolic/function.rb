@@ -41,12 +41,12 @@ module Symbolic
     #returns the derivitve with arg plugged in -- for use with chainrule
     def derivative(arg)
       if @deriv.is_a?(Proc)
-	@deriv.call(arg)
-      elsif @deriv.is_a?(Symbolic)
-	@deriv.subs(Symbolic::Math::Arg,arg)
-      else #it's a function
-	@deriv[arg]
-      end      
+        @deriv.call(arg)
+      elsif @deriv.is_a?(Function)
+        @deriv[arg]
+      else  #by process of elimination, it's a Symbolic
+        @deriv.subs(Symbolic::Math::Arg,arg)
+      end
     end
     
     def call(arg)
