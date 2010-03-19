@@ -1,10 +1,107 @@
-require File.expand_path('../spec_helper', __FILE__)
+$:.unshift File.expand_path('../../new', __FILE__)
+require "test/unit"
+require "symbolic"
 
-describe "Symbolic" do
-  before(:all) do
+class TestSymbolic < Test::Unit::TestCase
+  @@I = 0
+  def setup
     @x = var :name => :x, :value => 1
     @y = var :name => :y, :value => 2
   end
+  
+  def test_evaluation
+    x, y = @x, @y
+    {
+      x         => 1,
+      y         => 2,
+      +x        => 1,
+      -x        => -1,
+      x + 4     => 5,
+      3 + x     => 4,
+      x + y     => 3,
+      x - 1     => 0,
+      1 - x     => 0,
+      x - y     => -1,
+      -x + 3    => 2,
+      -y - x    => -3,
+      x*3       => 3,
+      4*y       => 8,
+      (+x)*(-y) => -2,
+      x/2       => 0.5,
+      y/2       => 1,
+      -2/x      => -2,
+      4/(-y)    => -2,
+      x**2      => 1,
+      4**y      => 16,
+      y**x      => 2
+    }.each_pair { |expr, val|
+      assert_equal(val, expr.value)
+    }
+  end
+  
+  #def test_optimization
+    x = var :name => :x, :value => 1
+    y = var :name => :y, :value => 2
+    {
+      -(-x)       => x,
+
+      0 + x       => x,
+      x + 0       => x,
+      x + (-2)    => x - 2,
+      -2 + x      => x - 2,
+      -x + 2      => 2 - x,
+      x + (-y)    => x - y,
+      -y + x      => x - y,
+
+      0 - x       => -x,
+      x - 0       => x,
+      x - (-2)    => x + 2,
+      -2 - (-x)   => x - 2,
+      x - (-y)    => x + y,
+
+      0 * x       => 0,
+      x * 0       => 0,
+      1 * x       => x,
+      x * 1       => x,
+      -1 * x      => -x,
+      x * (-1)    => -x,
+      x * (-3)    => -(x*3),
+      -3 * x      => -(x*3),
+      -3 * (-x)   => x*3,
+      x*(-y)      => -(x*y),
+      -x*y        => -(x*y),
+      (-x)*(-y)   => x*y,
+
+      0 / x       => 0,
+      x / 1       => x,
+
+      0**x        => 0,
+      1**x        => 1,
+      x**0        => 1,
+      x**1        => x,
+      (-x)**1     => -x,
+      (-x)**2     => x**2,
+      (x**2)**y   => x**(2*y),
+
+      x*4*x       => 4*x**2,
+      x*(-1)*x**(-1) => -1,
+      x**2*(-1)*x**(-1) => -x,
+      x + y - x => y,
+#      2*x + x**1 - y**2/y - y => 3*x - 2*y,
+      -(x+4) => -x-4,
+
+      (x/y)/(x/y) => 1,
+      (y/x)/(x/y) => y**2/x**2
+    }.each_pair { |expr, optimized|
+      define_method(:"test_#{@@I+=1}") {
+        assert_equal(optimized, expr.optimized)
+      }
+    }
+  #end
+end
+
+=begin
+describe "Symbolic" do
 
   def expression(string)
     eval string.gsub(/[xy]/, '@\0')

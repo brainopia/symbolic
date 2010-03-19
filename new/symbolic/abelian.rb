@@ -74,6 +74,14 @@ module Symbolic
         false
       end
     end
+    
+    def optimized
+      if @power == 1
+        @base
+      else
+        self
+      end
+    end
 
     class << self
       alias :_new :new

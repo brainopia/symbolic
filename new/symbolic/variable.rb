@@ -26,8 +26,10 @@ If value isn't set for variable, but there is an associated proc, then value is 
       "#{name || :unnamed_variable}"
     end
     
-    def == object
-      self.value == object.value rescue false
+    def == v
+      # self.value == object.value rescue false
+      # This was not strict enough
+      Variable === v and name == v.name and value == v.value
     end
 
     def variables

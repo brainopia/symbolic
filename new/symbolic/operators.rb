@@ -22,13 +22,18 @@ module Symbolic
       [Abelian.new(numeric), self]
     end
 
-    def method_missing(op, *args, &blk)
+    def method_missing(op, *args, &block)
       if UNARY_OPERATORS.include?(op) and args.length == 0
         case op
         when :+@
           self
         when :-@
-          Summand.new(self, -1)
+          case self
+          when Factors
+            self << -1
+          else
+            Summand.new(self, -1)
+          end
         end
       elsif BINARY_OPERATORS.include?(op) and args.length == 1
         o = args[0]
@@ -40,6 +45,9 @@ module Symbolic
           group = group_class.new(self)
         end
 
+        # * 0 #=> 0
+        return 0 if op == :* and [self, o].include? 0
+
         if o == group.identity # + 0, - 0, * 1, / 1 is doing nothing
           return self
         elsif Abelian === self and self.value == group.identity and ( !(Variable === self) )
@@ -48,7 +56,7 @@ module Symbolic
             return o
           elsif op == Operators.inverse(group.operation)
             # 0 -, 1 /
-            return group.member_class.new(o, -1) # o.new { |b,p|  }
+            return group_class.member_class.new(o, -1) # o.new { |b,p|  }
           end
         end
 

@@ -6,12 +6,13 @@ module Symbolic
     MEMBERS = {Summands => Summand, Factors => Factor}
 
     def initialize(*members)
+      members = members[0] if members.length == 1 and Array === members[0]
       @members = members.map { |member| self.class.member_class.new(member) }#.select { |m| m.value != identity }
       optimize!
     end
 
     def << o
-      self.class.new( *@members, o )
+      self.class.new( @members + [o] )
     end
 
     def operation
@@ -35,7 +36,7 @@ module Symbolic
       # multiple Numeric values
       numbers, others = @members.partition { |m| m.numeric? }
       if !numbers.empty? and numbers.length > 1
-        @members = others.unshift member_class.new( numbers.inject(identity) { |val, member| val.send(operation, member.value) } )
+        @members = others.unshift self.class.member_class.new( numbers.inject(identity) { |val, member| val.send(operation, member.value) } )
       end
     end
 
@@ -77,6 +78,10 @@ module Symbolic
       else
         false
       end
+    end
+    
+    def optimized
+      self
     end
 
     class << self
