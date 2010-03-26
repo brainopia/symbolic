@@ -93,7 +93,7 @@ class TestSymbolic < Test::Unit::TestCase
       (x/y)/(x/y) => 1,
       (y/x)/(x/y) => y**2/x**2
     }.each_pair { |expr, optimized|
-      define_method(:"test_#{@@I+=1}") {
+      define_method(:"test_optimization_#{@@I+=1}") {
         assert_equal(optimized, expr.optimized)
       }
     }
