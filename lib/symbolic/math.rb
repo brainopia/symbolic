@@ -9,8 +9,9 @@ module Symbolic::Math
   Arg = Symbolic::Variable.new(:name=>'arg')
   
   #first, make the functions with derivatives
-  Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
-#   Sqrt  = Symbolic::Function.new('sqrt', Rational(1,2) / Arg ** Rational(1,2))
+  Abs   = Symbolic::Function.new('abs', proc{|arg| arg/Abs[arg]}){|arg| arg.abs}
+#  Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
+  Sqrt  = Symbolic::Function.new('sqrt', Rational(1,2) / Arg ** Rational(1,2))
   Exp   = Symbolic::Function.new('exp',proc{|arg| Exp[arg]})
   Log   = Symbolic::Function.new('log', proc{|arg| 1 / arg})
   Log10 = Symbolic::Function.new('log10',proc{|arg| 1 / arg / ::Math.log(10)}) #since log10(x) = log(x) / log(10)
@@ -28,7 +29,7 @@ module Symbolic::Math
   Atanh = Symbolic::Function.new('atanh',proc{|arg| 1/ (1 - arg**2)})
 
   #make functions of the form fctn(arg) and add operation to each function
-  Symbolic::Math.constants.reject{|c| c == 'Arg'}.each do |fctn|
+  Symbolic::Math.constants.reject{|c| ['Arg','Abs'].include?(c)}.each do |fctn|
     instance_eval <<-CODE, __FILE__, __LINE__ + 1
       #{fctn}.set_operation(proc{|arg| ::Math.#{fctn.downcase}(arg)})
       def #{fctn.downcase}(argument)
