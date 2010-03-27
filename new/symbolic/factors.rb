@@ -10,10 +10,15 @@ module Symbolic
 
     # {Factors <Factor -1>, <Factor x>} => Summand x * -1
     def optimized
-      if @members.length == 2 and @members.all? { |m| Factor === m } and @members.find { |m| m == -1 } # This final comparaison is too large
-        p @members
-        other = @members.find { |m| m != -1 }
-        # return Summand.new(other.base, -other.power)
+      return 0 if @members.any? { |m| m == 0 }
+      
+      #if @members.length >= 2 and @members[0] == 1
+      #  
+      #end
+      
+      if @members.length == 2 and @members.all? { |m| Factor === m } and
+          @members.find { |m| m == -1 } and (other = @members.find { |m| m != -1 }) # This final comparaison is too large
+        #return Summand.new(other.base, -other.power)
       end
       super
     end

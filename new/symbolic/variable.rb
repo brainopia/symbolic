@@ -6,7 +6,7 @@ Name is neccessary for printing meaningful symbolic expressions.
 Value is neccesary for calculation of symbolic expressions.
 If value isn't set for variable, but there is an associated proc, then value is taken from evaluating the proc.
 =end
-  class Variable < Abelian
+  class Variable
     include Operators
     attr_accessor :name, :proc
     attr_writer :value
@@ -15,7 +15,6 @@ If value isn't set for variable, but there is an associated proc, then value is 
     def initialize(options={}, &proc)
       (@name, @value), @proc = options.values_at(:name, :value), proc
       @name = @name.to_s if @name
-      super(self)
     end
 
     def value

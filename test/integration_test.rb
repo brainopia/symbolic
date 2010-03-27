@@ -87,16 +87,16 @@ class TestSymbolic < Test::Unit::TestCase
       x*(-1)*x**(-1) => -1,
       x**2*(-1)*x**(-1) => -x,
       x + y - x => y,
-#      2*x + x**1 - y**2/y - y => 3*x - 2*y,
+      2*x + x**1 - y**2/y - y => 3*x - 2*y,
       -(x+4) => -x-4,
 
       (x/y)/(x/y) => 1,
       (y/x)/(x/y) => y**2/x**2
-    }.each_pair { |expr, optimized|
-      define_method(:"test_optimization_#{@@I+=1}") {
-        assert_equal(optimized, expr.optimized)
+      }.each_pair { |expr, optimized|
+        define_method(:"test_optimization_#{@@I+=1}") {
+          assert_equal(optimized, expr)
+        }
       }
-    }
   #end
 end
 

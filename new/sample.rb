@@ -1,6 +1,6 @@
 require File.expand_path('../symbolic', __FILE__)
 
-include Symbolic
+#include Symbolic
 =begin
 one = Abelian.new(1)
 
@@ -49,6 +49,25 @@ p e= (x**x * 2)**x # => {Factors <Factor x ** {Factors <Factor x>, <Factor x>}>,
 p e.value # => 64
 =end
 
-x = var :name => 'x', :value => 1
-e = -1 * x
+# x = var :name => 'x', :value => 1
+# e = -1 * x
+# p e
+puts
+x = var :name => 'x'#, :value => 1
+y = var :name => 'y'#, :value => 2
+e= x - (-y)
 p e
+puts
+
+e= -3 * (-x)
+p e
+puts
+
+e = 4 * x**2
+p e
+puts
+
+p 1**x
+puts
+
+p x*4*x

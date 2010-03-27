@@ -5,7 +5,7 @@ module Symbolic
   class Abelian; end
   class Summand < Abelian; end
   class Factor < Abelian; end
-  class Variable < Abelian; end
+  class Variable; end
   
   class AbelianGroup; end
   class Summands < AbelianGroup; end
