@@ -63,8 +63,8 @@ module Symbolic
       end
 
       # Function
-      def function(f)
-        "#{f.operation}(#{f.argument})"
+      def functionwrapper(f)
+        "#{f.name}(#{f.argument})"
       end
       
       def constant(c)

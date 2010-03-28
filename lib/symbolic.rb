@@ -1,5 +1,3 @@
-Dir[File.dirname(__FILE__) + "/symbolic/{,extensions/}*.rb"].each {|it| require it }
-
 module Symbolic
   def +@
     self
@@ -50,4 +48,13 @@ module Symbolic
       sum + to_add
     end
   end
+end
+
+#in order they should be loaded
+['symbolic/expression.rb','symbolic/coerced.rb','symbolic/constants.rb','symbolic/factors.rb',
+'symbolic/printer.rb','symbolic/sum.rb','symbolic/variable.rb','symbolic/constant.rb',
+'symbolic/function.rb','symbolic/misc.rb','symbolic/statistics.rb',
+'symbolic/summands.rb','symbolic/extensions/kernel.rb','symbolic/extensions/matrix.rb',
+'symbolic/extensions/numeric.rb','symbolic/extensions/rational.rb','symbolic/math.rb'].each do |file|
+  require File.dirname(__FILE__) + '/' + file
 end
