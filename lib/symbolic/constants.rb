@@ -7,4 +7,5 @@ module Symbolic::Constants
   else
     PI = Symbolic::Constant.new(::Math::PI,'π')
   end
+  I = Symbolic::Constant.new(::Complex::I,'i')
 end

@@ -6,27 +6,26 @@ module Symbolic::Math
   require 'rational'  
   
   #for use in defining derivatives
-  Arg = Symbolic::Variable.new(:name=>'arg')
+  Arg = Symbolic::Variable.new(:name=>'Arg')
   
   #first, make the functions with derivatives
   Abs   = Symbolic::Function.new('abs', proc{|arg| arg/Abs[arg]}){|arg| arg.abs}
-#  Sqrt  = Symbolic::Function.new('sqrt', proc{|arg| Rational(1,2) / arg ** Rational(1,2)})
   Sqrt  = Symbolic::Function.new('sqrt', Rational(1,2) / Arg ** Rational(1,2))
-  Exp   = Symbolic::Function.new('exp',proc{|arg| Exp[arg]})
-  Log   = Symbolic::Function.new('log', proc{|arg| 1 / arg})
-  Log10 = Symbolic::Function.new('log10',proc{|arg| 1 / arg / ::Math.log(10)}) #since log10(x) = log(x) / log(10)
-  Cos   = Symbolic::Function.new('cos',proc{|arg| - Sin[arg]})
-  Sin   = Symbolic::Function.new('sin',Cos)
-  Tan   = Symbolic::Function.new('tan', proc{|arg| 1 / Cos[arg] ** 2})
-  Cosh  = Symbolic::Function.new('cosh',proc{|arg| Sinh[arg]})
-  Sinh  = Symbolic::Function.new('sinh',Cosh)
-  Tanh  = Symbolic::Function.new('tanh',proc{|arg| 1 / Cosh(arg) ** 2})
-  Acos  = Symbolic::Function.new('acos',proc{|arg| - 1 / (1 - arg) ** Rational(1,2)})
-  Asin  = Symbolic::Function.new('asin',proc{|arg| 1 / (1 - arg) ** Rational(1,2)})
-  Atan  = Symbolic::Function.new('atan',proc{|arg| 1/ (arg**2 + 1)})
-  Acosh = Symbolic::Function.new('acosh',proc{|arg| 1 / (1 - arg) ** Rational(1,2)})
-  Asinh = Symbolic::Function.new('asinh',proc{|arg| 1 / (1 + arg) ** Rational(1,2)})
-  Atanh = Symbolic::Function.new('atanh',proc{|arg| 1/ (1 - arg**2)})
+  Exp   = Symbolic::Function.new('exp'); Exp.set_derivative(Exp)
+  Log   = Symbolic::Function.new('log', 1 / Arg)
+  Log10 = Symbolic::Function.new('log10', 1 / Arg / ::Math.log(10)) #since log10(x) = log(x) / log(10)
+  Cos   = Symbolic::Function.new('cos')
+  Sin   = Symbolic::Function.new('sin',Cos); Cos.set_derivative(-Sin[Arg])
+  Tan   = Symbolic::Function.new('tan', 1 / Cos[Arg] ** 2)
+  Cosh  = Symbolic::Function.new('cosh')
+  Sinh  = Symbolic::Function.new('sinh',Cosh); Cosh.set_derivative(Sinh)
+  Tanh  = Symbolic::Function.new('tanh',1 / Cosh[Arg] ** 2)
+  Acos  = Symbolic::Function.new('acos',- 1 / (1 - Arg) ** Rational(1,2))
+  Asin  = Symbolic::Function.new('asin',1 / (1 - Arg) ** Rational(1,2))
+  Atan  = Symbolic::Function.new('atan',1 / (Arg**2 + 1))
+  Acosh = Symbolic::Function.new('acosh',1 / (1 - Arg) ** Rational(1,2))
+  Asinh = Symbolic::Function.new('asinh',1 / (1 + Arg) ** Rational(1,2))
+  Atanh = Symbolic::Function.new('atanh',1/ (1 - Arg**2))
 
   #make functions of the form fctn(arg) and add operation to each function
   Symbolic::Math.constants.reject{|c| ['Arg','Abs'].include?(c)}.each do |fctn|
