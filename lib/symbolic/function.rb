@@ -69,7 +69,7 @@ module Symbolic
     end
     
     def value
-      @function.call(@argument.value) if variables.all?(&:value)
+      @function.call(@argument.value)
     end
  
     def variables
@@ -80,8 +80,8 @@ module Symbolic
       @argument.detailed_operations.tap {|it| it[@operation] += 1}
     end    
     
-    def subs(to_replace, replacement, expect_numeric = false)
-      @function[@argument.subs(to_replace, replacement, expect_numeric)]
+    def subs(to_replace, replacement)
+      @function[@argument.subs(to_replace, replacement)]
     end
     
     #simply dumps @argument in to the function -- no gaurentee that the function

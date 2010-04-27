@@ -40,9 +40,11 @@ module Symbolic
     def reverse
       self.class.new( -numeric, Hash[*symbolic.map {|k,v| [k,-v]}.flatten] )
     end
-
-    def subs(to_replace, replacement, expect_numeric = false)
-      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement, expect_numeric)}
+    def value
+      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.value}    
+    end
+    def subs(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement)}
     end
     
     def diff(wrt)

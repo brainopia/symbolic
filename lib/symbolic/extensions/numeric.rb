@@ -6,4 +6,8 @@ class Numeric
   def variables
     []
   end
+  
+  def subs(to_replace, replacement)
+    self
+  end
 end

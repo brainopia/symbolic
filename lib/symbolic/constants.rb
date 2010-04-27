@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+require 'complex'
 module Symbolic::Constants
   require "#{File.dirname(__FILE__)}/constant.rb"
   if RUBY_VERSION < '1.9'

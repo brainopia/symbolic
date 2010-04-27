@@ -8,10 +8,8 @@ module Symbolic
       @name, @value = name, value
       @name = @name.to_s if @name
     end
-    def subs(to_replace, replacement, expect_numeric = false)
+    def subs(to_replace, replacement)
       return replacement if self == to_replace
-      #Consider the possibility that @value is not numeric?
-      return @value if expect_numeric
       self
     end
     def diff(wrt)

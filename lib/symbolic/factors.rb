@@ -73,10 +73,14 @@ module Symbolic
       end
     end
 
-    def subs(to_replace, replacement, expect_numeric = false)
-      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement, expect_numeric) ** exponential}
+    def subs(to_replace, replacement)
+      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement) ** exponential.subs(to_replace, replacement)}
     end
-    
+
+    def value
+      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.value ** exponential.value}
+    end
+
     def diff(wrt)
       return 0 unless self.variables.include?(wrt) #speed things up a bit
       first_base, first_exp = @symbolic.to_a[0]
