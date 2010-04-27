@@ -22,7 +22,7 @@ blah
       if @term.diff(wrt) != 0
         Sum.new(@term.diff(wrt),@index,@lb,@ub)
       else
-	0
+        0
       end
     end
     def variables

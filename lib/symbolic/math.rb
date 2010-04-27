@@ -28,7 +28,8 @@ module Symbolic::Math
   Atanh = Symbolic::Function.new('atanh',1/ (1 - Arg**2))
 
   #make functions of the form fctn(arg) and add operation to each function
-  Symbolic::Math.constants.reject{|c| ['Arg','Abs'].include?(c)}.each do |fctn|
+  #for ruby 1.9, we have to convert them to strings (they were strings in 1.8)
+  Symbolic::Math.constants.collect{|c| c.to_s}.reject{|c| ['Arg','Abs'].include?(c)}.each do |fctn|
     instance_eval <<-CODE, __FILE__, __LINE__ + 1
       #{fctn}.set_operation(proc{|arg| ::Math.#{fctn.downcase}(arg)})
       def #{fctn.downcase}(argument)
