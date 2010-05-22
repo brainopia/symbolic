@@ -6,7 +6,7 @@ module Symbolic
   class Printer
     class << self
       def print(o)
-        send(o.class.name[o.class.name.rindex('::')+2..-1].downcase, o)
+        send(o.class.simple_name.downcase, o)
       end
 
       def brackets(var)
