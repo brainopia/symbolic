@@ -67,7 +67,25 @@ module Symbolic
     end
 
     def ==(object)
-      (object.numeric == @numeric and object.symbolic == @symbolic) rescue false
+      begin
+        #we need to make sure the classes are the same because both Factors and
+        #Summands have .numeric and .symbolic, but we can't say they're equal
+        eq =  (object.class == self.class)
+        eq &= (object.numeric == @numeric) #check that the numeric parts are equal
+	#next, make sure that we have the same number of elements, otherwise the
+	#next step could give false positives
+        eq &= (object.symbolic.size == @symbolic.size)
+        #hash's == function only checks that the object_ids are equal, but we
+	#could have different instances of the same object (mathematically speaking). We
+        #need to check that eqach thing in @symbolic appears in object.symbolic as well.
+        eq &= object.symbolic.inject(true) do |memo,(key,value)| #go through each kv pair in object.symbolic
+	  memo and @symbolic.inject(false) do |memo2,(key2,value2)|#and make sure it appears in @symbolic
+	    memo2 or (key2 == key and value2 == value)
+	  end
+	end
+      rescue
+	false
+      end
     end
   end
 end

@@ -90,6 +90,10 @@ module Symbolic
       @function.call(@argument)
     end
     
+    def ==(object)
+      (object.function == @function and object.argument == @argument) rescue false
+    end
+    
     def diff(wrt)
       return 0 unless self.variables.member?(wrt)
       #chain rule

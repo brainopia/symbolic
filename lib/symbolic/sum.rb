@@ -1,4 +1,4 @@
-module Symbolic
+module Symbolic::Misc
 =begin
 blah
 =end
