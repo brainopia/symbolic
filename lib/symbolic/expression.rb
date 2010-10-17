@@ -66,13 +66,20 @@ module Symbolic
       @symbolic.map {|k,v| [k.variables, v.variables] }.flatten.uniq
     end
 
-    def ==(object)
+    def numeric_equal(object)
       begin
-        #we need to make sure the classes are the same because both Factors and
+	object.numeric == @numeric
+      rescue
+	false
+      end
+    end
+    
+    def symbolic_equal(object)
+      begin
+	#we need to make sure the classes are the same because both Factors and
         #Summands have .numeric and .symbolic, but we can't say they're equal
-        eq =  (object.class == self.class)
-        eq &= (object.numeric == @numeric) #check that the numeric parts are equal
-	#next, make sure that we have the same number of elements, otherwise the
+        eq = (object.class == self.class)
+	#make sure that we have the same number of elements, otherwise the
 	#next step could give false positives
         eq &= (object.symbolic.size == @symbolic.size)
         #hash's == function only checks that the object_ids are equal, but we
@@ -85,7 +92,11 @@ module Symbolic
 	end
       rescue
 	false
-      end
+      end      
+    end
+    
+    def ==(object)
+      self.numeric_equal(object) and self.symbolic_equal(object)
     end
   end
 end

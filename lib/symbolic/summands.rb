@@ -9,7 +9,7 @@ module Symbolic
       def summands(summands)
         summands
       end
-
+      
       def factors(factors)
         if factors.symbolic.length == 1 && factors.symbolic.first[1] == Factors::IDENTITY
           new IDENTITY, factors.symbolic.first[0] => factors.numeric
@@ -23,11 +23,25 @@ module Symbolic
       end
 
       def simplify(numeric, symbolic)
-        if symbolic.empty?
+        if symbolic.empty? #only the numeric portion
           numeric
-        elsif numeric == IDENTITY && symbolic.size == 1
+        elsif numeric == IDENTITY && symbolic.size == 1 #no numeric to add and only one symbolic, so can just return the one base*coefficient
           symbolic.first[1] * symbolic.first[0]
-        end
+	elsif symbolic.size > 1 #let's look to see if any base gets repeated, so that they can be combined
+	  temp = []
+	  symbolic.each_key do |base1|
+	    temp = symbolic.find_all{|base2,v2| base1 == base2} #temp is an array of form [[b,c1],[b,c2]...]
+	    break if temp.size > 1 #found a duplicate base
+	  end
+	  if temp.size > 1
+	    repeated_base = temp[0][0]
+	    new_coef = temp.inject(0){|sum, (b,coeff)| sum + coeff} #sum up the old coefficients
+	    #it could be that there is more than one repeated base, but the next line effectively is recursion, and it'll take care of that
+	    Summands.new(numeric, symbolic.reject{|k,v| k == repeated_base}) + new_coef * repeated_base
+	  else
+	    nil
+	  end
+	end
       end
     end
 
