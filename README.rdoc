@@ -42,11 +42,11 @@ To get value of symbolic expression you just call value:
 
 You can accomplish the same thing with subs:
 
-f.subs(x,3) # => 7
+  f.subs(x,3) # => 7
 
 Or make a more complicated substitution:
 
-f.subs(x,x**2) # => 2*x**2+1
+  f.subs(x,x**2) # => 2*x**2+1
 
 If symbolic expression contains variables without value then it returns nil.
 
@@ -82,10 +82,10 @@ You can get information about the number of different operations used in a symbo
 
 You can also take derivitives and do taylor expansions:
 
-Symbolic::Math.cos(x**2).diff(x)
-# => -2*(sin(x**2))*x
-Symbolic::Math.cos(x).taylor(x,0,3)
-# => -0.5*x**2+1.0
+  Symbolic::Math.cos(x**2).diff(x)
+  # => -2*(sin(x**2))*x
+  Symbolic::Math.cos(x).taylor(x,0,3)
+  # => -0.5*x**2+1.0
 
 
 == TODO
