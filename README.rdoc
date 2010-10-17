@@ -11,7 +11,7 @@ This gem can help you
 - if you want to speed up similar calculations
 - if you need an abstraction layer for math
 
-Symbolic doesn't have any external dependencies. It uses only pure ruby (less than 400 lines of code).
+Symbolic doesn't have any external dependencies.
 
 == Tutorial
 
@@ -40,6 +40,14 @@ To get value of symbolic expression you just call value:
 
   f.value # => 7
 
+You can accomplish the same thing with subs:
+
+f.subs(x,3) # => 7
+
+Or make a more complicated substitution:
+
+f.subs(x,x**2) # => 2*x**2+1
+
 If symbolic expression contains variables without value then it returns nil.
 
   z = var
@@ -67,16 +75,22 @@ So you can get a list of variables without value:
 
   (x+y+1).variables.select {|var| var.value.nil? }
 
-You can get an information about number of different operations used in a symbolic expression:
+You can get information about the number of different operations used in a symbolic expression:
 
   f = (2*x-y+2)*x-2**(x*y)
   f.operations # => {"+"=>1, "-"=>2, "*"=>3, "/"=>0, "**"=>1, "-@"=>0}
+
+You can also take derivitives and do taylor expansions:
+
+Symbolic::Math.cos(x**2).diff(x)
+# => -2*(sin(x**2))*x
+Symbolic::Math.cos(x).taylor(x,0,3)
+# => -0.5*x**2+1.0
 
 
 == TODO
 - a lot of refactoring (code is pretty messy at this stage)
 - plotting capabilities
-- derivatives
 - integrals
 - thorough documentation
 
