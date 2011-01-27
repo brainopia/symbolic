@@ -11,7 +11,7 @@ begin
     gem.email = "ravwar@gmail.com"
     gem.homepage = "http://brainopia.github.com/symbolic"
     gem.authors = ["brainopia"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "rspec", ">= 2.4"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
