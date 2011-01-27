@@ -21,22 +21,22 @@ module Kernel
         $1
       })
     end
-  	_var(options, &proc)
+    _var(options, &proc)
   end
-  
-  def vars
-  	file, ln = caller[0].split(':')
 
-  	File.open(file) { |f|
-  		f.each_line.take(ln.to_i)[-1]
-  	}.match(/
-  		((?:\s*[[:word:]]+?,?)+)
-  		\s*=
-  		\s*vars/x
-  	) {
-  		$1
-  	}.scan(/([[:word:]]+)/).map { |capture|
-  		_var(:name => capture[0])
-  	}
+  def vars
+    file, ln = caller[0].split(':')
+
+    File.open(file) { |f|
+      f.each_line.take(ln.to_i)[-1]
+    }.match(/
+      ((?:\s*[[:word:]]+?,?)+)
+      \s*=
+      \s*vars/x
+    ) {
+      $1
+    }.scan(/([[:word:]]+)/).map { |capture|
+      _var(:name => capture[0])
+    }
   end
 end

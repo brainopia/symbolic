@@ -1,4 +1,4 @@
-module Symbolic  
+module Symbolic
   class Constant
     include Symbolic
     attr_reader :name, :value

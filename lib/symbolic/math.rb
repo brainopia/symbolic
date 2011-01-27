@@ -3,11 +3,11 @@ module Symbolic::Math
   This module is a reflection for Math module which allows to use symbolic expressions as parameters for its methods.
 =end
   require "#{File.dirname(__FILE__)}/function.rb"
-  require 'rational'  
-  
+  require 'rational'
+
   #for use in defining derivatives
   Arg = Symbolic::Variable.new(:name=>'Arg')
-  
+
   #first, make the functions with derivatives
   Abs   = Symbolic::Function.new('abs', proc{|arg| arg/Abs[arg]}){|arg| arg.abs}
   Sqrt  = Symbolic::Function.new('sqrt', Rational(1,2) / Arg ** Rational(1,2))

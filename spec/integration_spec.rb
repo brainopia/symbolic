@@ -99,7 +99,7 @@ describe Symbolic do
     let(:v) { var :name => :v }
     let(:x) { var :name => :x, :value => 2 }
     let(:y) { var :name => :y }
-    
+
     #initialize
     it 'var(:name => :v)' do
       v.name.should == 'v'
