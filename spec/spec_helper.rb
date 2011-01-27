@@ -10,6 +10,4 @@ if RUBY_VERSION > "1.9"
 end
 
 require 'symbolic'
-require 'rubygems'
-require 'spec'
-require 'spec/autorun'
+require 'rspec'
