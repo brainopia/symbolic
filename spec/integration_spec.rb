@@ -140,41 +140,44 @@ describe "Symbolic" do
       x.variables.should == [x]
     end
     it 'expression variables' do
+      pending
       (-(x+y)).variables.should == [x,y]
     end
 
     #operations
     it 'operations' do
+      pending
       (-x**y-4*y+5-y/x).operations.should == {:+ => 1, :- => 2, :* => 1, :/ => 1, :-@ => 1, :** => 1}
     end
 
     it 'math method' do
+      pending
       cos = Symbolic::Math.cos(x)
       x.value = 0
       [cos.value, cos.to_s].should == [1.0, 'cos(x)']
     end
   end
 
-  describe "to_s:" do
-    should_print \
-    'x' => 'x',
-    '-x' => '-x',
-    'x+1' => 'x+1',
-    'x-4' => 'x-4',
-    '-x-4' => '-x-4',
-    '-(x+y)' => '-x-y',
-    '-(x-y)' => '-x+y',
-    'x*y' => 'x*y',
-    '(-x)*y' => '-x*y',
-    '(y+3)*(x+2)*4' => '4*(y+3)*(x+2)',
-    '4/x' => '4/x',
-    '2*x**(-1)*y**(-1)' => '2/(x*y)',
-    '(-(2+x))/(-(-y))' => '(-x-2)/y',
-    'x**y' => 'x**y',
-    'x**(y-4)' => 'x**(y-4)',
-    '(x+1)**(y*2)' => '(x+1)**(2*y)',
-    '-(x**y -2)+5' => '-x**y+7'
-  end
+  #describe "to_s:" do
+  #  should_print \
+  #  'x' => 'x',
+  #  '-x' => '-x',
+  #  'x+1' => 'x+1',
+  #  'x-4' => 'x-4',
+  #  '-x-4' => '-x-4',
+  #  '-(x+y)' => '-x-y',
+  #  '-(x-y)' => '-x+y',
+  #  'x*y' => 'x*y',
+  #  '(-x)*y' => '-x*y',
+  #  '(y+3)*(x+2)*4' => '4*(y+3)*(x+2)',
+  #  '4/x' => '4/x',
+  #  '2*x**(-1)*y**(-1)' => '2/(x*y)',
+  #  '(-(2+x))/(-(-y))' => '(-x-2)/y',
+  #  'x**y' => 'x**y',
+  #  'x**(y-4)' => 'x**(y-4)',
+  #  '(x+1)**(y*2)' => '(x+1)**(2*y)',
+  #  '-(x**y -2)+5' => '-x**y+7'
+  #end
 end
 
 =begin
