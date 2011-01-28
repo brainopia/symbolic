@@ -84,25 +84,25 @@ module Symbolic
     end
 
     class << self
-      alias :_new :new
       def new(*args)
         if args.length == 1
           o = args[0]
           if o.class == Variable
-            return self._new(o)
+            return super(o)
           elsif o.class == Abelian # an Abelian, undeterminated
-            return self._new(o.base, o.power) # We cast it in the right subclass
+            return super(o.base, o.power) # We cast it in the right subclass
           elsif self === o or AbelianGroup === o # Already a subclass of Abelian or an AbelianGroup
             return o
           end
         end
         
-        if self == Summand and args.length == 2 and args[1] != 1
-          p :bad
-          #return Factors.new(*args) # We don't want power for Summand!
-        end
+        #if self == Summand and args.length == 2 and args[1] != 1
+        #  p :bad
+        #  #return Factors.new(*args) # We don't want power for Summand!
+        #  return super(*args)
+        #end
         
-        _new(*args)
+        super(*args)
       end
     end
   end
