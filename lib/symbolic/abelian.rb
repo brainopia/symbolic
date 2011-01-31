@@ -1,3 +1,5 @@
+require_relative 'operators'
+
 module Symbolic
   # Basically, we have two main operations: + and *
   # They are the two Abelian groups:
@@ -18,7 +20,7 @@ module Symbolic
       end
       simplify!
     end
-    
+
     def value
       if self.class != Abelian
         @base.value.send(OPERATORS_RISING[operation], @power.value) rescue nil
@@ -30,12 +32,12 @@ module Symbolic
         end
       end
     end
-    
+
     # Create a new element with old |base, power|
     def renew
       Abelian.new(*yield(@base, @power))
     end
-    
+
     #TEMP
     def to_s
       # simplify!
@@ -49,7 +51,7 @@ module Symbolic
       end
       s << ">"
     end
-    
+
     def simplify!
       # @power
       if Numeric === @power and @power < 0
@@ -60,11 +62,11 @@ module Symbolic
         end
       end
     end
-    
+
     def numeric?
       Numeric === @base and Numeric === @power
     end
-    
+
     def == object
       if Abelian === object
         @base == object.base and @power == object.power # rescue false
@@ -74,7 +76,7 @@ module Symbolic
         false
       end
     end
-    
+
     def optimized
       if @power == 1
         @base
@@ -95,13 +97,13 @@ module Symbolic
             return o
           end
         end
-        
+
         #if self == Summand and args.length == 2 and args[1] != 1
         #  p :bad
         #  #return Factors.new(*args) # We don't want power for Summand!
         #  return super(*args)
         #end
-        
+
         super(*args)
       end
     end

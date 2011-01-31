@@ -3,8 +3,6 @@ module Symbolic
     include Operators
     attr_reader :members
 
-    MEMBERS = {Summands => Summand, Factors => Factor}
-
     def initialize(*members)
       @members = members.map { |member| member_class.new(member) }
       simplify!
@@ -36,10 +34,10 @@ module Symbolic
       if numeric.length > 1
         numeric = [ member_class.new(numeric.inject(identity) { |val, n| val.send(operation, n.value) }) ]
       end
-      
+
       # If it's identity, we can remove it
       numeric = [] if !numeric.empty? and numeric[0].value == identity
-      
+
       # We can group members with same base
       if self.class == Factors
         vars, subgroups = symbolic.partition { |m| m.respond_to?(:base) and Variable === m.base }
@@ -47,11 +45,11 @@ module Symbolic
           each_pair.map { |(base, pow)| member_class.new(base, pow) }.reject { |m| m.power == 0 }
         symbolic = vars + subgroups
       end
-      
+
       @members = numeric + symbolic
-      
+
       ## Sorting
-      
+
       # Two or more elements and first with negative sign, then put it at the end
       # if @members.length >= 2 and (
       #     @members[0].numeric? and @members[0].value < 0 or
@@ -59,7 +57,7 @@ module Symbolic
       #   )
       #   @members = @members.rotate(1)
       # end
-      
+
       if @members.length >= 2
         neg, pos = @members.partition { |m|
           if m.numeric?
@@ -72,7 +70,7 @@ module Symbolic
         }
         @members = pos + neg
       end
-      
+
     end
 
     # Create a new group, yielding every element(with |base, power|)
@@ -87,7 +85,7 @@ module Symbolic
     def == object
       self.class == object.class and self.members == object.members
     end
-    
+
     def optimized
       if @members.length == 2 and @members[0].numeric? and @members[0] == identity
         @members[1]
@@ -95,7 +93,7 @@ module Symbolic
       return @members[0].optimized if @members.length == 1
       self
     end
-    
+
     def member_class
       MEMBERS[self.class]
     end
@@ -110,14 +108,14 @@ module Symbolic
 #        end
 #        _new(*args)
       end
-      
+
       def operation
         self::OPERATION
       end
       def identity
         self::IDENTITY
       end
-      
+
       def member_class
         MEMBERS[self]
       end
