@@ -1,9 +1,12 @@
 require_relative 'abelian_group'
+require_relative 'factor'
 
 module Symbolic
   class Factors < AbelianGroup
     OPERATION = :*
     IDENTITY = 1
+
+    AbelianGroup::MEMBERS[self] = Factor
 
     def simplify!
       super

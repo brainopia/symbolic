@@ -2,6 +2,7 @@ module Symbolic
   class AbelianGroup
     include Operators
     attr_reader :members
+    MEMBERS = {} # Will be filled by registering classes
 
     def initialize(*members)
       @members = members.map { |member| member_class.new(member) }
