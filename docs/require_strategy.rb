@@ -61,4 +61,5 @@ symbolic = g.node('Symbolic')
   g.node(top) >> symbolic
 }
 
+# can be seen at http://brainopia.github.com/symbolic/require_strategy.svg
 g.output svg: 'require_strategy.svg'
