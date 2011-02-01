@@ -1,4 +1,4 @@
-Dir[File.expand_path '../symbolic/**/*.rb', __FILE__].each {|it| require it }
+Dir[File.expand_path('../symbolic/**/*.rb', __FILE__)].each(&method(:require))
 
 module Symbolic
   class AbelianGroup
