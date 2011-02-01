@@ -10,6 +10,8 @@ module Symbolic
       :- => :/ #, :/ => :~
     }
 
+    OPERATORS_GROUPS = {} # Will be filled by registering classes
+
     def coerce(numeric)
       [Abelian.new(numeric), self]
     end

@@ -7,6 +7,9 @@ module Symbolic
     IDENTITY = 1
 
     AbelianGroup::MEMBERS[self] = Factor
+    Operators::OPERATORS_GROUPS[:*] = self
+    Operators::OPERATORS_GROUPS[:/] = self
+    Operators::OPERATORS_GROUPS[:**] = self
 
     def simplify!
       super
