@@ -11,13 +11,13 @@ describe Symbolic::Summand do
     summand.base.should == :base
     summand.power.should == 1
   end
-  
+
   it 'has the specified power' do
     summand = Summand.new :base, :power
     summand.base.should == :base
     summand.power.should == :power
   end
-  
+
   it 'keeps that power' do
     x = var :name => 'x', :value => 3
     summand = Summand.new x, 2
