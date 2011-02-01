@@ -1,3 +1,5 @@
+require_relative 'abelian'
+
 module Symbolic
   class Summand < Abelian
     OPERATION = :+

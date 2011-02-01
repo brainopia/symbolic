@@ -1,9 +1,11 @@
+require_relative 'operators'
+
 module Symbolic
   class AbelianGroup
     include Operators
-    attr_reader :members
     MEMBERS = {} # Will be filled by registering classes
 
+    attr_reader :members
     def initialize(*members)
       @members = members.map { |member| member_class.new(member) }
       simplify!

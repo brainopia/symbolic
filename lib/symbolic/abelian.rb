@@ -8,6 +8,7 @@ module Symbolic
   # a * b | 1        | **      | 1/a
   class Abelian
     include Operators
+
     attr_reader :base, :power
     # 1:base, 2:power
     # For * : ... * (1 ** 2) * ...
