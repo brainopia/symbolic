@@ -27,18 +27,6 @@ module Symbolic
       end.optimized
     end
 
-    def method_missing(op, *args, &block)
-      result = if UNARY_OPERATORS.include?(op) and args.length == 0
-        unary_operation(op)
-      elsif BINARY_OPERATORS.include?(op) and args.length == 1
-        binary_operation(op, args[0])
-      else
-        super
-      end
-      puts "#{self} #{op} #{args} => #{result}" if $VERBOSE
-      result
-    end
-
     class << self
       def inverse(op)
         OPERATORS_HASH[op] || OPERATORS_HASH.key(op)
