@@ -1,4 +1,4 @@
-require File.expand_path('../symbolic', __FILE__)
+require_relative '../lib/symbolic'
 
 #include Symbolic
 =begin
