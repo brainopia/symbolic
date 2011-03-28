@@ -31,9 +31,13 @@ blah
     def value
       self.expand.value
     end
-    def subs(to_replace, replacement)
+    def subs(to_replace, replacement=nil)
       #TODO: error if to_replace is @index
-      Sum.new(@term.subs(to_replace, replacement),@index,@lb,@ub)
+      if replacement == nil and to_replace.is_a?(Hash)
+	super(to_replace)
+      else
+	Sum.new(@term.subs(to_replace, replacement),@index,@lb,@ub)
+      end
     end
   end
 end

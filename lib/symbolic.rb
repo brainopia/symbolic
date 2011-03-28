@@ -48,6 +48,14 @@ module Symbolic
       sum + to_add
     end
   end
+  
+  #make multiple substitutions using a hash. Ex: (x+y+z).subs({x=>2*y,z=>y**2}) results in y**2+3*y
+  def subs(hsh)
+    temp = self
+    hsh.each{|k,v| temp = temp.subs(k,v)}
+    temp
+  end
+  
 end
 
 #in order they should be loaded

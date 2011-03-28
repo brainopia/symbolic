@@ -80,8 +80,12 @@ module Symbolic
       @argument.detailed_operations.tap {|it| it[@operation] += 1}
     end
 
-    def subs(to_replace, replacement)
-      @function[@argument.subs(to_replace, replacement)]
+    def subs(to_replace, replacement=nil)
+      if replacement == nil and to_replace.is_a?(Hash)
+	super(to_replace)
+      else
+	@function[@argument.subs(to_replace, replacement)]
+      end
     end
 
     #simply dumps @argument in to the function -- no gaurentee that the function

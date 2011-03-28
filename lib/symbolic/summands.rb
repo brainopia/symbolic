@@ -57,8 +57,12 @@ module Symbolic
     def value
       @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.value}
     end
-    def subs(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement)}
+    def subs(to_replace, replacement=nil)
+      if replacement == nil and to_replace.is_a?(Hash)
+	super(to_replace)
+      else
+	@symbolic.inject(@numeric){|m,(base,coefficient)| m + coefficient * base.subs(to_replace, replacement)}
+      end
     end
 
     def diff(wrt)

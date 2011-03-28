@@ -8,9 +8,13 @@ module Symbolic
       @name, @value = name, value
       @name = @name.to_s if @name
     end
-    def subs(to_replace, replacement)
-      return replacement if self == to_replace
-      self
+    def subs(to_replace, replacement=nil)
+      if replacement == nil and to_replace.is_a?(Hash)
+	super(to_replace)
+      else
+	return replacement if self == to_replace
+	self
+      end
     end
     def diff(wrt)
       0

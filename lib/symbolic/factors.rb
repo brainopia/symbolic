@@ -73,8 +73,12 @@ module Symbolic
       end
     end
 
-    def subs(to_replace, replacement)
-      @symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement) ** exponential.subs(to_replace, replacement)}
+    def subs(to_replace, replacement=nil)
+      if replacement == nil and to_replace.is_a?(Hash)
+	super(to_replace)
+      else
+	@symbolic.inject(@numeric){|m,(base,exponential)| m * base.subs(to_replace, replacement) ** exponential.subs(to_replace, replacement)}
+      end
     end
 
     def value
