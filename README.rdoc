@@ -2,6 +2,8 @@ Symbolic math for ruby.
 
 == Installation
 
+Symbolic needs Ruby 1.9.
+
 gem install symbolic
 
 == Introduction
