@@ -40,6 +40,10 @@ To get value of symbolic expression you just call value:
 
   f.value # => 7
 
+If you want to get an absolute value, append abs after value:
+  x.value = -7
+  puts x.value.abs # => 7
+
 You can accomplish the same thing with subs:
 
   f.subs(x,3) # => 7
