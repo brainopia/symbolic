@@ -23,3 +23,13 @@ pkg
 
 ## Others, personal tests
 sample.rb
+
+## RVM
+.rvmrc
+
+## Bundler
+Gemfile
+Gemfile.lock
+
+## RSPEC
+.rspec
