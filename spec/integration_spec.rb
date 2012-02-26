@@ -27,7 +27,8 @@ describe Symbolic do
       4/(-y)    => -2,
       x**2      => 1,
       4**y      => 16,
-      y**x      => 2
+      y**x      => 2,
+      x-(y+x)/5 => Rational(2,5),
     }.each_pair { |expr, value|
       it expr do
         expr.value.should == value
@@ -87,7 +88,9 @@ describe Symbolic do
       -(x+4) => -x-4,
 
       (x/y)/(x/y) => 1,
-      (y/x)/(x/y) => y**2/x**2
+      (y/x)/(x/y) => y**2/x**2,
+
+      x - (y+x)/5 => 0.8*x-0.2*y,
     }.each_pair { |non_optimized, optimized|
       it non_optimized do
         non_optimized.should == optimized
@@ -156,7 +159,8 @@ describe Symbolic do
       x**y              => 'x**y',
       x**(y-4)          => 'x**(y-4)',
       (x+1)**(y*2)      => '(x+1)**(2*y)',
-      -(x**y-2)+5       => '-x**y+7'
+      -(x**y-2)+5       => '-x**y+7',
+      x-(y+x)/5         => 'x-0.2*(y+x)',
     }.each_pair { |expr, str|
       it str do
         expr.to_s.should == str

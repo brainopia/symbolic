@@ -47,7 +47,7 @@ module Symbolic
 
       # Summands
       def summands(s)
-        out = s.symbolic.map { |base, coef| coef_with_sign(coef) + base.to_s }
+        out = s.symbolic.map { |base, coef| coef_with_sign(coef) + brackets(base) }
         out << remainder(s.numeric)
         out[0].sub!(/^\+/, '')
         out.join
