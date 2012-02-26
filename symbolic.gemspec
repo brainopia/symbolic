@@ -41,7 +41,8 @@ Gem::Specification.new do |s|
     "spec/integration_spec.rb",
     "spec/spec_helper.rb",
     "spec/symbolic/equal_spec.rb",
-    "spec/symbolic_spec.rb"
+    "spec/symbolic_spec.rb",
+    "symbolic.gemspec"
   ]
   s.homepage = "http://brainopia.github.com/symbolic"
   s.require_paths = ["lib"]
